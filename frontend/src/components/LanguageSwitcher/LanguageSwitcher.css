@@ -31,7 +31,6 @@
     display: flex;
     flex-direction: column;
     transform: translateX(50%);
-    pointer-events: none;
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
@@ -43,6 +42,4 @@
     cursor: pointer;
 }
 
-.language-switcher__option:hover {
-    background-color: #f0f0f0;
-}
+
