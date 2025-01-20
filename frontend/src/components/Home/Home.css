@@ -1,0 +1,48 @@
+.home__banner {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: calc(100vh - 90px); /* Растягиваем на высоту экрана */
+    background-image: url('/src/components/Home/banner.webp');
+    background-size: cover; /* Покрывает весь блок */
+    background-position: center; /* Центрирует изображение */
+    background-repeat: no-repeat; /* Убирает повторение */
+}
+
+.home__banner-container {
+    max-width: 1264px;
+    /*padding: 0 16px;*/
+    margin: 0 auto;
+}
+
+.home__banner__content {
+    display: flex;
+    margin: 0 auto;
+}
+
+.home__banner__сontent-col {
+    flex: 0 0 55%;
+    text-align: left;
+    margin-left: auto;
+    background: #fff;
+    padding: 1.5rem;
+}
+
+.home__banner__сontent-button {
+    padding: 16px 24px;
+    background: #87be73;
+    border: none;
+    font-weight: 500;
+}
+
+@media (max-width: 960px) {
+    .home__banner__сontent-col {
+        flex: 0 0 92%;
+    }
+
+    h1 {
+        font-size: 2.25rem;
+        line-height: 3rem;
+    }
+
+}
