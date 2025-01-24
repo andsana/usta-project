@@ -1,49 +1,91 @@
-import { useState } from 'react';
-import { FaTelegramPlane } from 'react-icons/fa';
-import { IoClose, IoMenu } from 'react-icons/io5';
+import { useEffect, useState } from 'react';
+import { IoChatbubblesOutline, IoClose, IoMenu } from 'react-icons/io5';
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher.tsx';
 import './Header.css';
+import { useSinglePrismicDocument } from '@prismicio/react';
+import { useLocation } from 'react-router-dom';
+
+interface MenuItem {
+  name: string;
+  link: { url: string };
+}
+
+interface HeaderData {
+  logo: { url: string };
+  logolink: { url: string };
+  menu_items: MenuItem[];
+  buttonname?: string;
+  buttonlink?: { url: string };
+  buttonicon?: { url: string };
+}
+
+const getLanguageFromUrl = (pathname: string): string =>
+  pathname.startsWith('/en') ? 'en-us' : 'ru';
 
 const Header = () => {
+  const location = useLocation();
+  const [language, setLanguage] = useState(() => getLanguageFromUrl(location.pathname));
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+  const [document] = useSinglePrismicDocument('header', { lang: language });
 
-  interface MenuItem {
-    name: string;
-    url: string;
+  const headerData = document?.data as HeaderData | undefined;
+
+  useEffect(() => {
+    setLanguage(getLanguageFromUrl(location.pathname));
+  }, [location.pathname]);
+
+  if (!headerData) {
+    return <div>Loading header...</div>;
   }
 
-  const menuItems: MenuItem[] = [
-    { name: 'О нас', url: '#' },
-    { name: 'Проекты', url: '#' },
-    { name: 'Контакты', url: '#' },
-  ];
+  const toggleMenu = () => {
+    setMenuOpen(prevState => !prevState);
+  };
 
   return (
     <header className="header">
       <div className="header__container">
-        <a className="header__logo" href="#">
-          <img src="/public/logo.svg" alt="Logo" />
+        {/* Логотип с правильной ссылкой */}
+        <a className="header__logo" href={headerData.logolink.url}>
+          <img src={headerData.logo.url} alt="Logo" />
         </a>
         <div className="header__inner">
           <nav className={`header__nav ${menuOpen ? 'open' : ''}`}>
             <ul className="header__nav-list">
-              {menuItems.map((item, index) => (
-                <li key={index} className="header__nav-item">
-                  <a className="header__nav-link" href={item.url}>
-                    {item.name}
-                  </a>
-                </li>
-              ))}
+              {/* Элементы меню */}
+              {headerData.menu_items && headerData.menu_items.length > 0 ? (
+                headerData.menu_items.map((item: MenuItem, index) => (
+                  <li key={index} className="header__nav-item">
+                    <a className="header__nav-link" href={item.link.url}>
+                      {item.name}
+                    </a>
+                  </li>
+                ))
+              ) : null} {/* Если меню пустое, ничего не рендерим */}
             </ul>
-            <a className="header__message" href="https://t.me/usta_media" target="_blank" rel="noopener noreferrer">
-              <FaTelegramPlane className="header__message-icon" />
-              Написать нам
-            </a>
+            {/* Проверка на существование ссылки и текста кнопки */}
+            {headerData.buttonlink && headerData.buttonname && (
+              <a
+                className="header__message"
+                href={headerData.buttonlink.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {/* Проверка наличия иконки */}
+                {headerData.buttonicon && (
+                  <img
+                    src={headerData.buttonicon.url}
+                    alt=""
+                    className="header__button-icon"
+                  />
+                )}
+                <IoChatbubblesOutline className="header__message-icon" />
+                {headerData.buttonname}
+              </a>
+            )}
           </nav>
+
 
           <div className="header__actions">
             <LanguageSwitcher />
@@ -52,12 +94,9 @@ const Header = () => {
             </button>
           </div>
         </div>
-
-
       </div>
     </header>
   );
 };
 
 export default Header;
-

@@ -1,14 +1,24 @@
-import { useState } from 'react';
-import { useLanguage } from '../context/LanguageContext.tsx';
+import { useEffect, useState } from 'react';
 import { MdLanguage } from 'react-icons/md';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import './LanguageSwitcher.css';
-import { useOutsideClick } from '../../app/hooks/useOutsideClick.ts';
+import { useOutsideClick } from '../../app/hooks/useOutsideClick.ts';  // Не удаляю этот импорт
+import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '../../app/hooks/useLanguage.ts';
 
 const LanguageSwitcher = () => {
   const { language, setLanguage } = useLanguage();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    // Синхронизация языка с URL при первой загрузке
+    if (language === 'en-us') {
+      navigate('/en');
+    } else {
+      navigate('/');
+    }
+  }, [language, navigate]);
 
   const closeDropdown = () => setIsDropdownOpen(false);
 
@@ -18,6 +28,13 @@ const LanguageSwitcher = () => {
     console.log('Changing language to:', lang);
     setLanguage(lang);
     setIsDropdownOpen(false);
+
+    // Обновляем URL в зависимости от выбранного языка
+    if (lang === 'en-us') {
+      navigate('/en'); // Переход на английский
+    } else {
+      navigate('/'); // Переход на русский
+    }
   };
 
   const toggleDropdown = () => {
@@ -44,11 +61,8 @@ const LanguageSwitcher = () => {
           </div>
         )}
       </div>
-
     </div>
-
   );
 };
 
 export default LanguageSwitcher;
-
