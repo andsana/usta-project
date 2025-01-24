@@ -6,7 +6,7 @@ import App from './App.tsx';
 import { BrowserRouter } from 'react-router-dom';
 import { PrismicProvider } from '@prismicio/react';
 import PrismicClient from './prismicClient.ts';
-import { LanguageProvider } from './components/context/LanguageContext.tsx';
+import { LanguageProvider } from './app/contexts/LanguageContext.tsx';
 
 
 createRoot(document.getElementById('root')!).render(
