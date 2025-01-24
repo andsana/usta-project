@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { IoChatbubblesOutline, IoClose, IoMenu } from 'react-icons/io5';
-import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher.tsx';
-import './Header.css';
 import { useSinglePrismicDocument } from '@prismicio/react';
-import { useLocation } from 'react-router-dom';
+import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher.tsx';
+import { LanguageContext } from '../../app/contexts/LanguageContext.tsx';
+import './Header.css';
 
 interface MenuItem {
   name: string;
@@ -19,21 +19,20 @@ interface HeaderData {
   buttonicon?: { url: string };
 }
 
-const getLanguageFromUrl = (pathname: string): string =>
-  pathname.startsWith('/en') ? 'en-us' : 'ru';
-
 const Header = () => {
-  const location = useLocation();
-  const [language, setLanguage] = useState(() => getLanguageFromUrl(location.pathname));
+  const context = useContext(LanguageContext);
+
+  if (!context) {
+    throw new Error('LanguageContext must be used within a LanguageProvider');
+  }
+
+  const { language } = context;
+
   const [menuOpen, setMenuOpen] = useState(false);
 
   const [document] = useSinglePrismicDocument('header', { lang: language });
 
   const headerData = document?.data as HeaderData | undefined;
-
-  useEffect(() => {
-    setLanguage(getLanguageFromUrl(location.pathname));
-  }, [location.pathname]);
 
   if (!headerData) {
     return <div>Loading header...</div>;

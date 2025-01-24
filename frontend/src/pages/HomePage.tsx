@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useContext } from 'react';
 import { SliceZone, usePrismicDocumentByUID } from '@prismicio/react';
 import { pageComponents } from '../app/constants/pageComponents.ts';
+import { LanguageContext } from '../app/contexts/LanguageContext.tsx';
 
 const HomePage = () => {
-  const location = useLocation();
-  const [language, setLanguage] = useState('ru');
+  const context = useContext(LanguageContext);
 
-  useEffect(() => {
-    const langFromUrl = location.pathname.startsWith('/en-us') ? 'en-us' : 'ru';
-    setLanguage(langFromUrl);
-  }, [location]);
+  if (!context) {
+    throw new Error('LanguageContext must be used within a LanguageProvider');
+  }
+
+  const { language } = context;
 
   const [document] = usePrismicDocumentByUID('page_new', 'home', { lang: language });
   console.log(document);
@@ -25,7 +25,7 @@ const HomePage = () => {
     <>
       <SliceZone
         slices={document.data.body}
-        components={{...pageComponents}}
+        components={{ ...pageComponents }}
       />
     </>
   );

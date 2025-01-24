@@ -11,12 +11,12 @@ import { LanguageProvider } from './app/contexts/LanguageContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <LanguageProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <LanguageProvider>
         <PrismicProvider client={PrismicClient}>
           <App />
         </PrismicProvider>
-      </BrowserRouter>
-    </LanguageProvider>
+      </LanguageProvider>
+    </BrowserRouter>
   </StrictMode>,
 );
