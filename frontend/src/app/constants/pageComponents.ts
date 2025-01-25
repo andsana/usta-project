@@ -4,5 +4,4 @@ export const pageComponents = {
   banner: Banner,
 };
 
-console.log(pageComponents);
 

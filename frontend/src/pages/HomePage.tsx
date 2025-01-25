@@ -1,25 +1,29 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { SliceZone, usePrismicDocumentByUID } from '@prismicio/react';
 import { pageComponents } from '../app/constants/pageComponents.ts';
 import { LanguageContext } from '../app/contexts/LanguageContext.tsx';
+import { LoadingContext } from '../app/contexts/LoadingContext.tsx';
 
 const HomePage = () => {
-  const context = useContext(LanguageContext);
+  const languageContext = useContext(LanguageContext);
+  const loadingContext = useContext(LoadingContext);
 
-  if (!context) {
-    throw new Error('LanguageContext must be used within a LanguageProvider');
+  if (!languageContext || !loadingContext) {
+    throw new Error('Contexts must be used within their respective Providers');
   }
 
-  const { language } = context;
+  const { language } = languageContext;
+  const { setLoading } = loadingContext;
 
-  const [document] = usePrismicDocumentByUID('page_new', 'home', { lang: language });
-  console.log(document);
+  const [document, { state }] = usePrismicDocumentByUID('page_new', 'home', { lang: language });
 
-  if (!document) {
-    return <div>Loading...</div>;
+  useEffect(() => {
+    setLoading(state === 'loading'); // Преобразуем состояние в булевое значение
+  }, [state, setLoading]);
+
+  if (!document || !document.data) {
+    return null;
   }
-
-  console.log(document.data);
 
   return (
     <>

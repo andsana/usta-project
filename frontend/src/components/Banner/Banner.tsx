@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Banner.css';
+import { useScreenDetector } from '../../app/hooks/useScreenDetector.ts';
+
 
 interface BannerSliceProps {
   primary: {
@@ -8,7 +10,7 @@ interface BannerSliceProps {
     buttonname: string;
     buttonlink: string;
     image: { url: string };
-    video?: { url: string };
+    video: { url?: string };
   };
 }
 
@@ -17,19 +19,31 @@ interface BannerProps {
 }
 
 const Banner: React.FC<BannerProps> = ({ slice }) => {
+  const { isMobile } = useScreenDetector();
+
   if (!slice) {
-    console.log('Слайс не найден');
     return null;
   }
-  
-  const bannerStyle = slice.primary.video
-    ? { background: `url(${slice.primary.image.url}) no-repeat center center / cover` }
+
+  console.log('slice', slice);
+
+  const bannerStyle = slice.primary.video.url && !isMobile
+    ? { backgroundImage: 'none' }
     : { backgroundImage: `url(${slice.primary.image.url})` };
 
   return (
-    <div className="home">
-      <div className="home__container">
-        <div className="home__banner" style={bannerStyle}>
+        <div className="home__banner"
+             style={bannerStyle}
+        >
+          {slice.primary.video.url && !isMobile && (
+            <video
+              className="home__banner-video"
+              src={slice.primary.video.url}
+              autoPlay
+              loop
+              muted
+            />
+          )}
           <div className="home__banner-container">
             <div className="home__banner__content">
               <div className="home__banner__content-col">
@@ -41,8 +55,6 @@ const Banner: React.FC<BannerProps> = ({ slice }) => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
   );
 };
 

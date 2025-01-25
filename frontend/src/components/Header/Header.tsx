@@ -1,8 +1,10 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { IoChatbubblesOutline, IoClose, IoMenu } from 'react-icons/io5';
 import { useSinglePrismicDocument } from '@prismicio/react';
-import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher.tsx';
+import { PrismicDocument } from '@prismicio/client';
 import { LanguageContext } from '../../app/contexts/LanguageContext.tsx';
+import { LoadingContext } from '../../app/contexts/LoadingContext.tsx';
+import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher.tsx';
 import './Header.css';
 
 interface MenuItem {
@@ -19,24 +21,34 @@ interface HeaderData {
   buttonicon?: { url: string };
 }
 
-const Header = () => {
-  const context = useContext(LanguageContext);
+interface HeaderPrismicDocument extends PrismicDocument {
+  data: HeaderData;
+}
 
-  if (!context) {
-    throw new Error('LanguageContext must be used within a LanguageProvider');
+const Header = () => {
+  const languageContext = useContext(LanguageContext);
+  const loadingContext = useContext(LoadingContext);
+
+  if (!languageContext || !loadingContext) {
+    throw new Error('Contexts must be used within their respective Providers');
   }
 
-  const { language } = context;
+  const { language } = languageContext;
+  const { setLoading } = loadingContext;
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [document, { state }] = useSinglePrismicDocument<HeaderPrismicDocument>('header', { lang: language });
 
-  const [document] = useSinglePrismicDocument('header', { lang: language });
 
-  const headerData = document?.data as HeaderData | undefined;
+  useEffect(() => {
+    setLoading(state === 'loading');
+  }, [state, setLoading]);
 
-  if (!headerData) {
-    return <div>Loading header...</div>;
+  if (!document || !document.data) {
+    return null;
   }
+
+  const headerData: HeaderData = document.data;
 
   const toggleMenu = () => {
     setMenuOpen(prevState => !prevState);
@@ -54,7 +66,7 @@ const Header = () => {
             <ul className="header__nav-list">
               {/* Элементы меню */}
               {headerData.menu_items && headerData.menu_items.length > 0 ? (
-                headerData.menu_items.map((item: MenuItem, index) => (
+                headerData.menu_items.map((item: MenuItem, index: number) => (
                   <li key={index} className="header__nav-item">
                     <a className="header__nav-link" href={item.link.url}>
                       {item.name}
@@ -84,7 +96,6 @@ const Header = () => {
               </a>
             )}
           </nav>
-
 
           <div className="header__actions">
             <LanguageSwitcher />

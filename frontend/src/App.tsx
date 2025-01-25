@@ -1,20 +1,22 @@
 import { Route, Routes } from 'react-router-dom';
-import './App.css';
 import Header from './components/Header/Header.tsx';
 import HomePage from './pages/HomePage.tsx';
+import Loader from './components/Loader/Loader.tsx';
+import './App.css';
 
 const App = () => {
+
   return (
     <>
-      <Routes>
-        {/*<Route path="/" element={<Header />} />*/}
-        {/*<Route path="/en" element={<Header />} />*/}
-        {/*<Route path="/en" element={<HomePage />} />*/}
-        <Route path="/" element={<><Header /><HomePage /></>} />
-        <Route path="/en" element={<><Header /><HomePage /></>} />
-      </Routes>
+      <Loader />
+      <Header />
+      <main>
+        <Routes>
+          <Route path="/en" element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+      </main>
     </>
-
   );
 };
 
