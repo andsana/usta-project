@@ -1,4 +1,4 @@
-.home__banner {
+.banner {
     display: flex;
     align-items: center;
     width: 100%;
@@ -8,28 +8,28 @@
     background-repeat: no-repeat;
 }
 
-.home__banner-video {
+.banner-video {
     width: 100%;
-    height: 100%;
+    height: calc(100vh - 90px);
     object-fit: cover; /* Обрезает видео по размеру блока */
     position: absolute; /* Накладывает видео как фон */
-    top: 0;
+    top: 90px;
     left: 0;
     z-index: -1;
 }
 
-.home__banner-container {
+.banner-container {
     max-width: 1264px;
     /*padding: 0 16px;*/
     margin: 0 auto;
 }
 
-.home__banner__content {
+.banner__content {
     display: flex;
     margin: 0 auto;
 }
 
-.home__banner__content-col {
+.banner__content-col {
     flex: 0 0 55%;
     text-align: left;
     margin-left: auto;
@@ -37,7 +37,7 @@
     padding: 1.5rem;
 }
 
-.home__banner__content-button {
+.banner__content-button {
     display: inline-block;
     padding: 16px 24px;
     background: #87be73;
@@ -46,7 +46,7 @@
 }
 
 @media (max-width: 960px) {
-    .home__banner__content-col {
+    .banner__content-col {
         flex: 0 0 92%;
     }
 }

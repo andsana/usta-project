@@ -32,23 +32,23 @@ const Banner: React.FC<BannerProps> = ({ slice }) => {
     : { backgroundImage: `url(${slice.primary.image.url})` };
 
   return (
-        <div className="home__banner"
+        <div className="banner"
              style={bannerStyle}
         >
           {slice.primary.video.url && !isMobile && (
             <video
-              className="home__banner-video"
+              className="banner-video"
               src={slice.primary.video.url}
               autoPlay
               loop
               muted
             />
           )}
-          <div className="home__banner-container">
-            <div className="home__banner__content">
-              <div className="home__banner__content-col">
+          <div className="banner-container">
+            <div className="banner__content">
+              <div className="banner__content-col">
                 <h1>{slice.primary.slogan}</h1>
-                <Link to={slice.primary.buttonlink} className="home__banner__content-button">
+                <Link to={slice.primary.buttonlink} className="banner__content-button">
                   {slice.primary.buttonname}
                 </Link>
               </div>
