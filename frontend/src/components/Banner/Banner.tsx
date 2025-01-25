@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Banner.css';
 
-interface BannerProps {
+interface BannerSliceProps {
   primary: {
     slogan: string;
     buttonname: string;
@@ -12,19 +12,16 @@ interface BannerProps {
   };
 }
 
-
-interface Props {
-  slice: BannerProps;
+interface BannerProps {
+  slice: BannerSliceProps;
 }
 
-const Banner: React.FC<Props> = ({ slice }) => {
+const Banner: React.FC<BannerProps> = ({ slice }) => {
   if (!slice) {
     console.log('Слайс не найден');
     return null;
   }
-
-  console.log('Слайс:', slice);
-
+  
   const bannerStyle = slice.primary.video
     ? { background: `url(${slice.primary.image.url}) no-repeat center center / cover` }
     : { backgroundImage: `url(${slice.primary.image.url})` };
