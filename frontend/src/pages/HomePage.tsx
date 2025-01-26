@@ -25,6 +25,14 @@ const HomePage = () => {
     return null;
   }
 
+  if (!document || !document.data) {
+    console.log("No document data"); // Логирование данных документа
+    return null;
+  }
+
+  console.log(document.data.body); // Логирование всех слайсов
+
+
   return (
     <>
       <SliceZone

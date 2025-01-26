@@ -1,0 +1,94 @@
+.ForInvestors {
+    /*background: #36383d;*/
+    /*background: #1E2A49;*/
+    /*background: linear-gradient(114.27deg, #00448a, #642355);*/
+    background: linear-gradient(120deg, #0055aa, #752a65);
+
+}
+
+.ForInvestors__container {
+    margin: 0 auto;
+    max-width: 1264px;
+    padding: 96px 16px;
+}
+
+.for-investors__title {
+    text-align: start;
+    color: #fff;
+}
+
+.for-investors__subtitle {
+    text-align: start;
+}
+
+.ForInvestors__cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-top: 40px;
+}
+
+.ForInvestors__card {
+    display: flex;
+    flex-direction: column;
+    margin-right: 7.25rem;
+    margin-bottom: 5rem;
+    width: calc(33.33% - 7.25rem);
+}
+
+.ForInvestors__card:last-child {
+    margin-bottom: 0;
+}
+
+.ForInvestors__card-value {
+    font-size: 5rem;
+    font-weight: 600;
+    text-align: left;
+    line-height: 1;
+    color: #fff;
+    margin-bottom: 8px;
+    white-space: nowrap;
+}
+
+.ForInvestors__card-label {
+    font-size: 1.25rem;
+    text-align: left;
+    color: #fff;
+}
+
+@media (max-width: 1024px) {
+    .ForInvestors__card {
+        width: calc(50% - 7.25rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .ForInvestors__card {
+        width: calc(50% - 3rem);
+        margin-right: 0;
+        margin-bottom: 3rem;
+    }
+
+    .ForInvestors__card-label {
+        font-size: 1.125rem;
+    }
+
+    .ForInvestors__container {
+        margin: 0 auto;
+        max-width: 1264px;
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+
+    .ForInvestors__card-value {
+        font-size: 3.25rem;
+    }
+}
+
+@media (max-width: 450px) {
+    .ForInvestors__card {
+        width: 100%;
+    }
+}
+
+
