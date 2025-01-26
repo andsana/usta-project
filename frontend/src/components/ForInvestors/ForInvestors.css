@@ -56,6 +56,19 @@
     color: #fff;
 }
 
+/*Animation*/
+.ForInvestors__card {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.ForInvestors__card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/*breakpoints*/
 @media (max-width: 1024px) {
     .ForInvestors__card {
         width: calc(50% - 7.25rem);
