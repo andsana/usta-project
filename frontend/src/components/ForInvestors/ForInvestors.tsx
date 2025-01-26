@@ -1,6 +1,7 @@
-import './ForInvestors.css';
 import React, { useRef } from 'react';
 import useInViewPort from '../../app/hooks/useInViewPort.ts';
+import useScrollTriggeredCountUp from '../../app/hooks/useScrollTriggeredCountUp.ts';
+import './ForInvestors.css';
 
 interface Card {
   value: string;
@@ -35,6 +36,11 @@ const ForInvestors: React.FC<ForInvestorsProps> = ({ slice }) => {
 
 const CardComponent: React.FC<{ item: Card; index: number }> = ({ item, index }) => {
   const ref = useRef<HTMLDivElement>(null);
+
+  const numericValue = parseInt(item.value.replace(/\D/g, '')) || 0;
+  const symbol = item.value.replace(/\d/g, '');
+
+  const count = useScrollTriggeredCountUp(ref, numericValue, 2000);
   const inViewport = useInViewPort(ref, { threshold: 0.3 });
 
   return (
@@ -43,7 +49,7 @@ const CardComponent: React.FC<{ item: Card; index: number }> = ({ item, index })
       className={`ForInvestors__card ${inViewport ? 'visible' : ''}`}
       style={{ transitionDelay: `${index * 100}ms` }}
     >
-      <span className="ForInvestors__card-value">{item.value}</span>
+      <span className="ForInvestors__card-value">{count}{symbol}</span>
       <span className="ForInvestors__card-label">{item.label}</span>
     </div>
   );
