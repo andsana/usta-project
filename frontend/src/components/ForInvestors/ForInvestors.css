@@ -13,8 +13,10 @@
 }
 
 .for-investors__title {
+    font-size: 1.375rem;
     text-align: start;
     color: #fff;
+    margin: 0;
 }
 
 .for-investors__subtitle {
