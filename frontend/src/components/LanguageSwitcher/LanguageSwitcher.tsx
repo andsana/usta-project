@@ -1,66 +1,67 @@
-import { useEffect, useState } from 'react';
-import { MdLanguage } from 'react-icons/md';
-import { MdKeyboardArrowDown } from 'react-icons/md';
+import { useCallback, useState } from 'react';
+import { MdKeyboardArrowDown, MdLanguage } from 'react-icons/md';
 import './LanguageSwitcher.css';
-import { useOutsideClick } from '../../app/hooks/useOutsideClick.ts';  // Не удаляю этот импорт
-import { useNavigate } from 'react-router-dom';
+import { useOutsideClick } from '../../app/hooks/useOutsideClick.ts';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useLanguage } from '../../app/hooks/useLanguage.ts';
 
 const LanguageSwitcher = () => {
   const { language, setLanguage } = useLanguage();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // Синхронизация языка с URL при первой загрузке
-    if (language === 'en-us') {
-      navigate('/en');
-    } else {
-      navigate('/');
-    }
-  }, [language, navigate]);
+  const location = useLocation();
 
   const closeDropdown = () => setIsDropdownOpen(false);
-
   const ref = useOutsideClick(closeDropdown);
 
-  const toggleLanguage = (lang: 'en-us' | 'ru') => {
-    console.log('Changing language to:', lang);
+  const toggleLanguage = useCallback((lang: 'en-us' | 'ru') => {
     setLanguage(lang);
     setIsDropdownOpen(false);
 
-    // Обновляем URL в зависимости от выбранного языка
-    if (lang === 'en-us') {
-      navigate('/en'); // Переход на английский
-    } else {
-      navigate('/'); // Переход на русский
-    }
-  };
+    const currentPath = location.pathname;
+    let newPath: string;
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
+    if (lang === 'en-us') {
+      if (currentPath === '/') {
+        newPath = '/en';
+      } else {
+        newPath = currentPath.startsWith('/en') ? currentPath : `/en${currentPath}`;
+      }
+    } else {
+      newPath = currentPath.replace(/^\/en/, '') || '/';
+    }
+
+    navigate(newPath);
+  }, [setLanguage, navigate, location.pathname]);
+
+  const toggleDropdown = useCallback(() => setIsDropdownOpen((prev) => !prev), []);
 
   return (
     <div ref={ref} className="language-switcher">
-      <div className="language-switcher">
-        <div onClick={toggleDropdown} className="language-switcher__button">
-          <MdLanguage className="language-switcher__icon" />
-          <span className="language-switcher__text">{language === 'en-us' ? 'EN' : 'RU'}</span>
-          <MdKeyboardArrowDown className="language-switcher__arrow" />
-        </div>
-
-        {isDropdownOpen && (
-          <div className="language-switcher__dropdown">
-            <button className="language-switcher__option" onClick={() => toggleLanguage('ru')}>
-              RU
-            </button>
-            <button className="language-switcher__option" onClick={() => toggleLanguage('en-us')}>
-              EN
-            </button>
-          </div>
-        )}
+      <div onClick={toggleDropdown} className="language-switcher__button">
+        <MdLanguage className="language-switcher__icon" />
+        <span className="language-switcher__text">
+          {language === 'en-us' ? 'EN' : 'RU'}
+        </span>
+        <MdKeyboardArrowDown className="language-switcher__arrow" />
       </div>
+
+      {isDropdownOpen && (
+        <div className="language-switcher__dropdown">
+          <button
+            className="language-switcher__option"
+            onClick={() => toggleLanguage('ru')}
+          >
+            RU
+          </button>
+          <button
+            className="language-switcher__option"
+            onClick={() => toggleLanguage('en-us')}
+          >
+            EN
+          </button>
+        </div>
+      )}
     </div>
   );
 };
