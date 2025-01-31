@@ -5,6 +5,7 @@ import { PrismicDocument } from '@prismicio/client';
 import { LanguageContext } from '../../app/contexts/LanguageContext.tsx';
 import { LoadingContext } from '../../app/contexts/LoadingContext.tsx';
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher.tsx';
+import MyLink from '../MyLink/MyLink.tsx';
 import './Header.css';
 
 interface MenuItem {
@@ -39,7 +40,6 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [document, { state }] = useSinglePrismicDocument<HeaderPrismicDocument>('header', { lang: language });
 
-
   useEffect(() => {
     setLoading(state === 'loading');
   }, [state, setLoading]);
@@ -54,28 +54,27 @@ const Header = () => {
     setMenuOpen(prevState => !prevState);
   };
 
+  console.log('Меню из Prismic:', headerData.menu_items);
+
   return (
     <header className="header">
       <div className="header__container">
-        {/* Логотип с правильной ссылкой */}
-        <a className="header__logo" href={headerData.logolink.url}>
+        <MyLink to={headerData.logolink.url}>
           <img src={headerData.logo.url} alt="Logo" />
-        </a>
+        </MyLink>
         <div className="header__inner">
           <nav className={`header__nav ${menuOpen ? 'open' : ''}`}>
             <ul className="header__nav-list">
-              {/* Элементы меню */}
               {headerData.menu_items && headerData.menu_items.length > 0 ? (
                 headerData.menu_items.map((item: MenuItem, index: number) => (
                   <li key={index} className="header__nav-item">
-                    <a className="header__nav-link" href={item.link.url}>
+                    <MyLink className="header__nav-link " to={item.link.url}>
                       {item.name}
-                    </a>
+                    </MyLink>
                   </li>
                 ))
-              ) : null} {/* Если меню пустое, ничего не рендерим */}
+              ) : null}
             </ul>
-            {/* Проверка на существование ссылки и текста кнопки */}
             {headerData.buttonlink && headerData.buttonname && (
               <a
                 className="header__message"
@@ -83,7 +82,6 @@ const Header = () => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {/* Проверка наличия иконки */}
                 {headerData.buttonicon && (
                   <img
                     src={headerData.buttonicon.url}
