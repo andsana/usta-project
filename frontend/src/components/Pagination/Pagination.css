@@ -1,0 +1,74 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.pagination__page {
+    font-size: 1rem;
+    padding: 5px 10px;
+    background: none;
+    border: none;
+    color: #000;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pagination__page:hover:not(.pagination__page--active) {
+    color: #80b86f;
+}
+
+.pagination__page--active {
+    color: #fff;
+    background: #80b86f;
+    border-radius: 4px;
+}
+
+.pagination__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.pagination__icon--disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.pagination__arrow {
+    font-size: 1.5rem;
+    color: #000;
+}
+
+.pagination__dots {
+    margin: 0 4px;
+}
+
+/* Мобильная адаптация */
+@media (max-width: 768px) {
+    .pagination__page {
+        padding: 5px;
+    }
+
+    .pagination__arrow {
+        font-size: 1.2rem;
+    }
+
+    .pagination__icon {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .pagination {
+        gap: 4px;
+    }
+}
