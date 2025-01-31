@@ -23,7 +23,7 @@ const ForInvestors: React.FC<ForInvestorsProps> = ({ slice }) => {
   return (
     <div className="ForInvestors">
       <div className="ForInvestors__container">
-        <h3 className="for-investors__title">{slice.primary.title}</h3>
+        <h4 className="for-investors__title">{slice.primary.title}</h4>
         <div className="ForInvestors__cards">
           {slice.items.map((item: Card, index: number) => (
             <CardComponent key={index} item={item} index={index} />
