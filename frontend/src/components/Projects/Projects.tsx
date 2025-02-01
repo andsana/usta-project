@@ -1,17 +1,20 @@
 import React, { useContext, useMemo, useState } from 'react';
 import Select from 'react-select';
-import { HiOutlineArrowRight } from 'react-icons/hi';
 import { useScreenDetector } from '../../app/hooks/useScreenDetector.ts';
 import Pagination from '../Pagination/Pagination.tsx';
-import './Projects.css';
 import { LanguageContext } from '../../app/contexts/LanguageContext.tsx';
+import ProjectCard from './ProjectCard/ProjectCard.tsx';
+import MyLink from '../MyLink/MyLink.tsx';
+import './Projects.css';
 
 const translations = {
   ru: {
     noProjects: 'Проекты не найдены.',
+    allProjects: 'Смотреть все',
   },
   'en-us': {
     noProjects: 'No projects found.',
+    allProjects: 'See all',
   },
 };
 
@@ -25,8 +28,10 @@ export interface Card {
 export interface ProjectsSliceProps {
   primary: {
     title: string;
-    description: string;
-    filterall: string;
+    description?: string;
+    filtershow: true;
+    buttonname?: string;
+    buttonlink: { url?: string };
   };
   items: Card[];
 }
@@ -38,7 +43,7 @@ export interface ProjectsProps {
 const Projects: React.FC<ProjectsProps> = ({ slice }) => {
 
   const { language } = useContext(LanguageContext)!;
-  const ALL_PROJECTS = slice.primary.filterall;
+  const ALL_PROJECTS = translations[language].allProjects;
   const ITEMS_PER_PAGE = 9;
 
   const uniqueCategories = [
@@ -82,10 +87,11 @@ const Projects: React.FC<ProjectsProps> = ({ slice }) => {
       <div className="projects__container">
         <div className="project__content">
           <h1 className="projects__title">{slice.primary.title}</h1>
-          <p className="project-description">{slice.primary.description}</p>
+          {slice.primary.description &&
+            (<p className="project-description">{slice.primary.description}</p>)}
         </div>
 
-        {uniqueCategories.length > 2 && (
+        {slice.primary.filtershow && (uniqueCategories.length > 2 && (
           <div className="projects-filter__list">
             {isMobile ? (
               <Select
@@ -111,28 +117,17 @@ const Projects: React.FC<ProjectsProps> = ({ slice }) => {
               ))
             )}
           </div>
-        )}
-
+        ))}
         <div className="projects-cards__list">
-          {paginatedProjects.map((project, index) => (
-            <div key={`${project.title}-${project.location}-${index}`} className="project-card">
-              <div className="project-card__image-wrapper">
-                <img src={project.image.url} alt={project.title} className="project-card__image" />
-              </div>
-              <div className="project-card__title-wrapper">
-                <div className="project-card__icon-wrapper">
-                  <HiOutlineArrowRight className="project-card__icon-arrow" />
-                </div>
-                <h3 className="project-card__title">{project.title}</h3>
-              </div>
-              <div className="project-card__details">
-                <span className="project-card__location">{project.location}</span>
-                <span className="project-card__separator"></span>
-                <span className="project-card__category">{project.category}</span>
-              </div>
-            </div>
+          {paginatedProjects.map((project) => (
+            <ProjectCard key={`${project.title}-${project.location}`} project={project} />
           ))}
         </div>
+
+        {(slice.primary.buttonname && slice.primary.buttonlink.url ) &&
+          <MyLink className="projects__button" to={slice.primary.buttonlink.url}>
+            {slice.primary.buttonname}
+          </MyLink>}
 
         {totalPages > 1 && (
           <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />

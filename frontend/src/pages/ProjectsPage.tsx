@@ -4,7 +4,7 @@ import { LanguageContext } from '../app/contexts/LanguageContext.tsx';
 import { LoadingContext } from '../app/contexts/LoadingContext.tsx';
 import { pageComponents } from '../app/constants/pageComponents.ts';
 
-const HomePage = () => {
+const ProjectsPage = () => {
   const languageContext = useContext(LanguageContext);
   const loadingContext = useContext(LoadingContext);
 
@@ -25,15 +25,17 @@ const HomePage = () => {
     return null;
   }
 
+  console.log('document', document);
+
   return (
-    <>
+    <div className="projectPage__container">
       <SliceZone
         slices={document.data.body}
         components={{ ...pageComponents }}
       />
       {/*<Projects slice={mockSlice} />*/}
-    </>
+    </div>
   );
 };
 
-export default HomePage;
+export default ProjectsPage;
