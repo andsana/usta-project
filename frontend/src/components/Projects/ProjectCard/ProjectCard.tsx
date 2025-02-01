@@ -23,7 +23,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         <div className="project-card__icon-wrapper">
           <HiOutlineArrowRight className="project-card__icon-arrow" />
         </div>
-        <h3 className="project-card__title">{project.title}</h3>
+        <h4 className="project-card__title">{project.title}</h4>
       </div>
       <div className="project-card__details">
         <span className="project-card__location">{project.location}</span>
