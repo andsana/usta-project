@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { IoChatbubblesOutline, IoClose, IoMenu } from 'react-icons/io5';
+import { IoClose, IoMenu } from 'react-icons/io5';
 import { useSinglePrismicDocument } from '@prismicio/react';
 import { PrismicDocument } from '@prismicio/client';
 import { LanguageContext } from '../../app/contexts/LanguageContext.tsx';
@@ -68,31 +68,27 @@ const Header = () => {
               {headerData.menu_items && headerData.menu_items.length > 0 ? (
                 headerData.menu_items.map((item: MenuItem, index: number) => (
                   <li key={index} className="header__nav-item">
-                    <MyLink className="header__nav-link " to={item.link.url}>
-                      {item.name}
-                    </MyLink>
+                    {item.name.trim().toLowerCase() === 'о нас' || item.name.trim().toLowerCase() === 'about us' ? (
+                      <a href="#whoAreWe" className="header__nav-link">
+                        {item.name}
+                      </a>
+                    ) : (
+                      <MyLink className="header__nav-link" to={item.link.url}>
+                        {item.name}
+                      </MyLink>
+                    )}
                   </li>
                 ))
               ) : null}
+              {headerData.buttonlink && headerData.buttonname && (
+                <a
+                  className="header__nav-link"
+                  href="#whoAreWe"
+                >
+                  {headerData.buttonname}
+                </a>
+              )}
             </ul>
-            {headerData.buttonlink && headerData.buttonname && (
-              <a
-                className="header__message"
-                href={headerData.buttonlink.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {headerData.buttonicon && (
-                  <img
-                    src={headerData.buttonicon.url}
-                    alt=""
-                    className="header__button-icon"
-                  />
-                )}
-                <IoChatbubblesOutline className="header__message-icon" />
-                {headerData.buttonname}
-              </a>
-            )}
           </nav>
 
           <div className="header__actions">

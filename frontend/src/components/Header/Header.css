@@ -52,7 +52,6 @@
     text-decoration: none;
     color: #000;
     font-weight: 400;
-    transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .header__nav-link:hover,
@@ -69,7 +68,6 @@
     width: 0;
     height: 2px;
     background-color: #87be73;
-    transition: width 0.3s ease;
 }
 
 .header__nav-list a:hover::after,

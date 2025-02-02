@@ -2,6 +2,7 @@
     max-width: 1264px;
     padding: 0 16px;
     margin: 96px auto 96px auto;
+    scroll-margin-top: 48px;
 }
 
 .who-are-we__col-wrapper {
