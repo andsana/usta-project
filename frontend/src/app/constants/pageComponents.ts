@@ -1,7 +1,7 @@
 import Banner from '../../components/Banner/Banner.tsx';
 import ForInvestors from '../../components/ForInvestors/ForInvestors.tsx';
 import Projects from '../../components/Projects/Projects.tsx';
-import WhoAreWe from '../../components/Whoarewe/WhoAreWe.tsx';
+import WhoAreWe from '../../components/WhoAreWe/WhoAreWe.tsx';
 import WhatWeDo from '../../components/WhatWeDo/WhatWeDo.tsx';
 
 export const pageComponents = {

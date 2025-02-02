@@ -1,7 +1,7 @@
 .projects__container {
     max-width: 1264px;
-    padding: 96px 16px;
-    margin: 0 auto;
+    padding: 0 16px;
+    margin: 96px auto 96px auto;
     text-align: left;
 }
 
@@ -192,8 +192,8 @@
 
 @media (max-width: 768px) {
     .projects__container {
-        padding-top: 64px;
-        padding-bottom: 64px;
+        margin-top: 64px;
+        margin-bottom: 64px;
     }
 
     .project__content {

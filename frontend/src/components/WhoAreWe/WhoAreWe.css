@@ -1,53 +1,53 @@
-.whoAreWe__container {
+.who-are-we__container {
     max-width: 1264px;
     padding: 0 16px;
     margin: 96px auto 96px auto;
 }
 
-.whoAreWe__col-wrapper {
+.who-are-we__col-wrapper {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 8px;
 }
 
-.whoAreWe__container .about-company__col-wrapper:last-child {
+.who-are-we__container .about-company__col-wrapper:last-child {
     margin-bottom: 0;
 }
 
-.whoAreWe__col {
+.who-are-we__col {
     flex: 0 0 calc(50% - 4px);
     text-align: left;
 }
 
-.whoAreWe__col-title {
+.who-are-we__col-title {
     margin: 0 0 16px 0;
 }
 
-.whoAreWe__col-content {
+.who-are-we__col-content {
     margin-left: 56px;
 }
 
-.whoAreWe__col-description {
+.who-are-we__col-description {
     margin: 0 0 24px 0;
 }
 
-.whoAreWe__col .whoAreWe__col-description:last-child {
+.who-are-we__col .who-are-we__col-description:last-child {
     margin-bottom: 0;
 }
 
 @media (max-width: 768px) {
-    .whoAreWe__container {
+    .who-are-we__container {
         margin-top: 64px;
         margin-bottom: 64px;
     }
 
-    .whoAreWe__col {
+    .who-are-we__col {
         flex: 0 0 100%;
         width: 100%;
     }
 
-    .whoAreWe__col-content {
+    .who-are-we__col-content {
         margin-left: 0;
     }
 }

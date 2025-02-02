@@ -86,7 +86,7 @@ const Projects: React.FC<ProjectsProps> = ({ slice }) => {
     <div className="Projects">
       <div className="projects__container">
         <div className="project__content">
-          <h1 className="projects__title">{slice.primary.title}</h1>
+          <h2 className="projects__title">{slice.primary.title}</h2>
           {slice.primary.description &&
             (<p className="project-description">{slice.primary.description}</p>)}
         </div>

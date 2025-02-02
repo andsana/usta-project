@@ -1,6 +1,7 @@
 #root {
   margin: 0 auto;
   text-align: center;
+  color: #000;
 }
 
 .logo {
@@ -35,18 +36,14 @@
   padding: 2em;
 }
 
-.read-the-docs {
-  color: #888;
-}
-
 .app {
   position: relative;
-  overflow: hidden; /* Не дает странице прокручиваться */
+  overflow: hidden;
   transition: transform 0.3s ease-in-out;
 }
 
 .menu-open .content {
-  transform: translateY(200px); /* Сдвиг контента вниз */
+  transform: translateY(200px);
   transition: transform 0.3s ease-in-out;
 }
 

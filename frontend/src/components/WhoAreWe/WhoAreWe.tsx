@@ -23,16 +23,16 @@ const WhoAreWe: React.FC<WhoAreWeProps> = ({ slice }) => {
   }
 
   return (
-    <div className="whoAreWe">
-      <div className="whoAreWe__container">
-        <div className="whoAreWe__col-wrapper">
-          <div className="whoAreWe__col">
-            <h2 className="whoAreWe__col-title">{slice.primary.title}</h2>
+    <div id="who-are-we" className="who-are-we">
+      <div className="who-are-we__container">
+        <div className="who-are-we__col-wrapper">
+          <div className="who-are-we__col">
+            <h2 className="who-are-we__col-title">{slice.primary.title}</h2>
           </div>
-          <div className="whoAreWe__col">
-            <div className="whoAreWe__col-content">
+          <div className="who-are-we__col">
+            <div className="who-are-we__col-content">
               {slice.items.map((item, index) => (
-                <p className="whoAreWe__col-description" key={index}>{item.paragraph}</p>
+                <p className="who-are-we__col-description" key={index}>{item.paragraph}</p>
               ))}
             </div>
           </div>
