@@ -1,75 +1,66 @@
-.whoAreWe__container {
+.whatWeDo__container {
     max-width: 1264px;
-    padding: 96px 16px;
-    margin: 0 auto;
+    padding: 0 16px;
+    margin: 96px auto 96px auto;
 }
 
-.whoAreWe__col-wrapper {
+.whatWeDo__col-wrapper {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 8px;
-    margin-bottom: 96px;
 }
 
-.whoAreWe__container .about-company__col-wrapper:last-child {
+.whatWeDo__container .whatWeDo__col-wrapper:last-child {
     margin-bottom: 0;
 }
 
-.whoAreWe__col {
+.whatWeDo__col {
     flex: 0 0 calc(50% - 4px);
     text-align: left;
 }
 
-.about-company__image {
+.whatWeDo__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.about-company__col-content {
+.whatWeDo__col-content {
+    background: #f1f1f1;
     padding: 48px;
 }
 
-.whoAreWe__col-title {
-    margin: 0 0 16px 0;
-}
-
-.whoAreWe__col-content {
-    margin-left: 56px;
-}
-
-.whoAreWe__col-title {
+.whatWeDo__col-title {
     margin: 0 0 24px 0;
 }
 
-.whoAreWe__col-description {
+.whatWeDo__col-description {
     margin: 0 0 24px 0;
 }
 
-.whoAreWe__col .whoAreWe__col-description:last-child {
+.whatWeDo__col .whatWeDo__col-description:last-child {
     margin-bottom: 0;
 }
 
-.about-company__col-list {
+.whatWeDo__col-list {
     list-style-type: none;
     padding-left: 0;
     margin: 0 0 16px 0;
 }
 
-.about-company__col-list li {
+.whatWeDo__col-list li {
     position: relative;
     font-size: 18px;
     line-height: 1.5;
-    padding-left: 32px;
+    padding: 8px 0 8px 32px;
 }
 
-.about-company__col-list li::before {
+.whatWeDo__col-list li::before {
     content: '';
     background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22%3E%3Cpath d=%22M10.293 14.293L6.707 10.707C6.316 10.316 5.684 10.316 5.293 10.707C4.902 11.098 4.902 11.732 5.293 12.121L9.293 16.121C9.684 16.512 10.316 16.512 10.707 16.121L19.707 7.121C20.098 6.73 20.098 6.098 19.707 5.707C19.316 5.316 18.684 5.316 18.293 5.707L10.293 14.293Z%22 fill=%22green%22/%3E%3C/svg%3E');
     position: absolute;
     left: 0;
-    top: 0;
     width: 24px;
     height: 24px;
     color: #80b86f;
@@ -78,23 +69,23 @@
 }
 
 @media (max-width: 768px) {
-    .whoAreWe__container {
-        padding-top: 64px;
-        padding-bottom: 64px;
+    .whatWeDo__container {
+        margin-top: 64px;
+        margin-bottom: 64px;
     }
 
-    .whoAreWe__col {
+    .whatWeDo__col {
         flex: 0 0 100%;
         width: 100%;
     }
 
-    .whoAreWe__col-content {
+    .whatWeDo__col-content-company {
         margin-left: 0;
     }
 }
 
 @media (max-width: 576px) {
-    .whoAreWe__col-content {
+    .whatWeDo__col-content {
         padding: 24px;
     }
 }

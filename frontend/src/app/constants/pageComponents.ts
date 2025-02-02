@@ -2,14 +2,16 @@ import Banner from '../../components/Banner/Banner.tsx';
 import AboutUs from '../../components/AboutUs/AboutUs.tsx';
 import ForInvestors from '../../components/ForInvestors/ForInvestors.tsx';
 import Projects from '../../components/Projects/Projects.tsx';
+import WhoAreWe from '../../components/Whoarewe/WhoAreWe.tsx';
+import WhatWeDo from '../../components/WhatWeDo/WhatWeDo.tsx';
 
 export const pageComponents = {
   banner: Banner,
   aboutus: AboutUs,
   forinvestors: ForInvestors,
-  // contentprojects: ProjectContent,
   projectcards: Projects,
-  // projectscontent: ProjectContent,
+  whoarewe: WhoAreWe,
+  whatwedo: WhatWeDo,
 };
 
 // export const EmptySlice: projectsSlice = {

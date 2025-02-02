@@ -30,7 +30,7 @@ const HomePage = () => {
     return null;
   }
 
-  console.log(document.data.body); // Логирование всех слайсов
+  console.log("страница home", document.data.body); // Логирование всех слайсов
 
 
   return (
