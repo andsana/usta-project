@@ -40,6 +40,11 @@
     margin: 0 0 24px 0;
 }
 
+.banner__content-subtitle-wrapper {
+    display: flex;
+    align-items: center;
+}
+
 .banner__content-subtitle {
     margin: 0;
 }
@@ -50,6 +55,23 @@
     background: #87be73;
     border: none;
     font-weight: 500;
+}
+
+.banner__scroll-top {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #80b86f;
+    margin: 0 16px;
+}
+
+.banner__arrow-top {
+    font-size: 1.5rem;
+    color: #fff;
 }
 
 @media (max-width: 960px) {
