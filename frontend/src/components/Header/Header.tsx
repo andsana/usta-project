@@ -57,7 +57,7 @@ const Header = () => {
   console.log('Меню из Prismic:', headerData.menu_items);
 
   return (
-    <header className="header">
+    <header id="headerScroll" className="header">
       <div className="header__container">
         <MyLink to={headerData.logolink.url}>
           <img src={headerData.logo.url} alt="Logo" />
