@@ -19,13 +19,12 @@
 }
 
 .banner-container {
-    max-width: 1264px;
-    /*padding: 0 16px;*/
-    margin: 0 auto;
+    width: 100%;
 }
 
 .banner__content {
     display: flex;
+    max-width: 1680px;
     margin: 0 auto;
 }
 
@@ -34,7 +33,15 @@
     text-align: left;
     margin-left: auto;
     background: #fff;
-    padding: 1.5rem;
+    padding: 2rem;
+}
+
+.banner__content-title {
+    margin: 0 0 24px 0;
+}
+
+.banner__content-subtitle {
+    margin: 0;
 }
 
 .banner__content-button {
@@ -48,7 +55,15 @@
 @media (max-width: 960px) {
     .banner__content-col {
         flex: 0 0 92%;
+        padding: 1.5rem;
     }
 }
+
+@media (max-width: 576px) {
+    .banner__content-subtitle {
+        font-size: 1.125rem;
+    }
+}
+
 
 

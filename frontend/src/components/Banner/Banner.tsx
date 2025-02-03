@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import './Banner.css';
 import { useScreenDetector } from '../../app/hooks/useScreenDetector.ts';
 
@@ -7,8 +7,9 @@ import { useScreenDetector } from '../../app/hooks/useScreenDetector.ts';
 interface BannerSliceProps {
   primary: {
     slogan: string;
-    buttonname: string;
-    buttonlink: string;
+    slogandescription: string;
+    // buttonname: string;
+    // buttonlink: string;
     image: { url: string };
     video: { url?: string };
   };
@@ -47,10 +48,11 @@ const Banner: React.FC<BannerProps> = ({ slice }) => {
           <div className="banner-container">
             <div className="banner__content">
               <div className="banner__content-col">
-                <h1>{slice.primary.slogan}</h1>
-                <Link to={slice.primary.buttonlink} className="banner__content-button">
-                  {slice.primary.buttonname}
-                </Link>
+                <h1 className="banner__content-title">{slice.primary.slogan}</h1>
+                <h4 className="banner__content-subtitle">{slice.primary.slogandescription}</h4>
+                {/*<Link to={slice.primary.buttonlink} className="banner__content-button">*/}
+                {/*  {slice.primary.buttonname}*/}
+                {/*</Link>*/}
               </div>
             </div>
           </div>
