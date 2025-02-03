@@ -23,6 +23,7 @@
 
 .project-card__title-wrapper {
     display: flex;
+    align-items: center;
     justify-content: flex-start;
     margin: 0 0 16px 0;
     transition: margin-left 0.5s ease-in-out;
