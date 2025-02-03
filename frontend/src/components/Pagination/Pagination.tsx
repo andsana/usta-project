@@ -1,5 +1,5 @@
 import React from 'react';
-import { HiOutlineArrowLeft, HiOutlineArrowRight } from 'react-icons/hi';
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
 import './Pagination.css';
 
 interface PaginationProps {
@@ -13,7 +13,7 @@ type PaginationElement = number | '...';
 const Pagination: React.FC<PaginationProps> = ({
                                                  currentPage,
                                                  totalPages,
-                                                 onPageChange
+                                                 onPageChange,
                                                }) => {
   const getPaginationRange = (): PaginationElement[] => {
     if (totalPages <= 1) return [];
@@ -47,14 +47,15 @@ const Pagination: React.FC<PaginationProps> = ({
 
   return (
     <div className="pagination" role="navigation" aria-label="Pagination">
-      <button
-        className={`pagination__icon ${currentPage === 1 ? 'pagination__icon--disabled' : ''}`}
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-        aria-label="Предыдущая страница"
-      >
-        <HiOutlineArrowLeft className="pagination__arrow" />
-      </button>
+      {currentPage > 1 && (
+        <button
+          className="pagination__icon"
+          onClick={() => onPageChange(currentPage - 1)}
+          aria-label="Предыдущая страница"
+        >
+          <MdKeyboardArrowLeft className="pagination__arrow" />
+        </button>
+      )}
 
       {getPaginationRange().map((element, index) =>
         typeof element === 'number' ? (
@@ -75,17 +76,19 @@ const Pagination: React.FC<PaginationProps> = ({
           >
             {element}
           </span>
-        )
+        ),
       )}
 
-      <button
-        className={`pagination__icon ${currentPage === totalPages ? 'pagination__icon--disabled' : ''}`}
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        aria-label="Следующая страница"
-      >
-        <HiOutlineArrowRight className="pagination__arrow" />
-      </button>
+      {currentPage < totalPages && (
+        <button
+          className="pagination__icon"
+          onClick={() => onPageChange(currentPage + 1)}
+          aria-label="Следующая страница"
+        >
+          <MdKeyboardArrowRight className="pagination__arrow" />
+        </button>
+      )}
+
     </div>
   );
 };
