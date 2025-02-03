@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage.tsx';
 import Loader from './components/Loader/Loader.tsx';
 import ProjectsPage from './pages/ProjectsPage.tsx';
 import './App.css';
+import Footer from './components/footer/Footer.tsx';
 
 const App = () => {
 
@@ -19,6 +20,7 @@ const App = () => {
           <Route path="/en/projects" element={<ProjectsPage />} />
         </Routes>
       </main>
+      <Footer />
     </>
   );
 };
