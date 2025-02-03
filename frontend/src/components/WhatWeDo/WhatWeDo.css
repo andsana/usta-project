@@ -72,6 +72,11 @@
     .what-we-do__container {
         margin-top: 64px;
         margin-bottom: 64px;
+        padding: 0;
+    }
+
+    .what-we-do__col-wrapper {
+        gap: 0;
     }
 
     .what-we-do__col {
@@ -86,7 +91,8 @@
 
 @media (max-width: 576px) {
     .what-we-do__col-content {
-        padding: 24px;
+        padding: 24px 16px;
+
     }
 }
 
