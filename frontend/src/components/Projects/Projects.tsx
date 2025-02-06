@@ -3,7 +3,7 @@ import Select from 'react-select';
 import { useScreenDetector } from '../../app/hooks/useScreenDetector.ts';
 import Pagination from '../Pagination/Pagination.tsx';
 import { LanguageContext } from '../../app/contexts/LanguageContext.tsx';
-import ProjectCard from './ProjectCard/ProjectCard.tsx';
+import ProjectCard, { Card } from './ProjectCard/ProjectCard.tsx';
 import MyLink from '../MyLink/MyLink.tsx';
 import './Projects.css';
 
@@ -17,13 +17,6 @@ const translations = {
     allProjects: 'See all',
   },
 };
-
-export interface Card {
-  title: string;
-  location: string;
-  category: string;
-  image: { url: string };
-}
 
 export interface ProjectsSliceProps {
   primary: {
@@ -124,7 +117,7 @@ const Projects: React.FC<ProjectsProps> = ({ slice }) => {
           ))}
         </div>
 
-        {(slice.primary.buttonname && slice.primary.buttonlink.url ) &&
+        {(slice.primary.buttonname && slice.primary.buttonlink.url) &&
           <MyLink className="projects__button" to={slice.primary.buttonlink.url}>
             {slice.primary.buttonname}
           </MyLink>}

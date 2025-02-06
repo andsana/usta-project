@@ -9,7 +9,11 @@ export interface Card {
   title: string;
   location: string;
   category: string;
-  image: { url: string };
+  image: {
+    url: string;
+    alt: string;
+  };
+  projectdetailuid?: string;
 }
 
 interface ProjectCardProps {
@@ -25,16 +29,18 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 
   const { language } = languageContext;
 
-  const slugTitle = language === 'ru' ? transliterate(project.title).replace(/\s|,/g, '-').toLowerCase() : project.title.replace(/\s|,/g, '-').toLowerCase();
-  const slugLocation = language === 'ru' ? transliterate(project.location).replace(/\s|,/g, '-').toLowerCase() : project.location.replace(/\s|,/g, '-').toLowerCase();
-  const slugCategory = language === 'ru' ? transliterate(project.category).replace(/\s|,/g, '-').toLowerCase() : project.category.replace(/\s|,/g, '-').toLowerCase();
+  // Функция для обработки slug
+  const createSlug = (input: string) => input.replace(/\s|,/g, '-').toLowerCase();
 
-  const slug = `${slugTitle}-${slugLocation}`;
+  const slugProjectdetailuid = project.projectdetailuid ? createSlug(project.projectdetailuid) : '';
+  const slugCategory = language === 'ru'
+    ? createSlug(transliterate(project.category))
+    : createSlug(project.category);
 
-  return (
-    <MyLink className="project-card" to={`/projects/${slugCategory}/${slug}`} key={slug}>
+  const projectCardContent = (
+    <>
       <div className="project-card__image-wrapper">
-        <img src={project.image.url} alt={project.title} className="project-card__image" />
+        <img src={project.image.url} alt={project.image.alt} className="project-card__image" />
       </div>
       <div className="project-card__title-wrapper">
         <div className="project-card__icon-wrapper">
@@ -47,8 +53,23 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         <span className="project-card__separator"></span>
         <span className="project-card__category">{project.category}</span>
       </div>
+    </>
+  );
+
+  return slugProjectdetailuid ? (
+    <MyLink
+      className="project-card"
+      to={`/projects/${slugCategory}/${slugProjectdetailuid}`}
+      state={{ projectData: project }}
+    >
+      {projectCardContent}
     </MyLink>
+  ) : (
+    <div className="project-card">
+      {projectCardContent}
+    </div>
   );
 };
 
 export default ProjectCard;
+
