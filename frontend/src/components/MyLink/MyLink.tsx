@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../../app/hooks/useLanguage.ts';
 import { ReactNode } from 'react';
-import { Card } from '../Projects/Projects.tsx';
+import { Card } from '../Projects/ProjectCard/ProjectCard.tsx';
 
 interface MyLinkProps {
   to: string;

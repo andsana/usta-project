@@ -1,8 +1,8 @@
-import React, { useContext, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Select from 'react-select';
+import { useLanguage } from '../../app/hooks/useLanguage.ts';
 import { useScreenDetector } from '../../app/hooks/useScreenDetector.ts';
 import Pagination from '../Pagination/Pagination.tsx';
-import { LanguageContext } from '../../app/contexts/LanguageContext.tsx';
 import ProjectCard, { Card } from './ProjectCard/ProjectCard.tsx';
 import MyLink from '../MyLink/MyLink.tsx';
 import './Projects.css';
@@ -35,7 +35,7 @@ export interface ProjectsProps {
 
 const Projects: React.FC<ProjectsProps> = ({ slice }) => {
 
-  const { language } = useContext(LanguageContext)!;
+  const { language } = useLanguage();
   const ALL_PROJECTS = translations[language].allProjects;
   const ITEMS_PER_PAGE = 9;
 

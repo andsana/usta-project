@@ -1,15 +1,9 @@
-import React, { useContext } from 'react';
-import { LoadingContext } from '../../app/contexts/LoadingContext.tsx';
+import React from 'react';
+import { useLoading } from '../../app/hooks/useLoading.ts';
 import './Loader.css';
 
 const Loader: React.FC = () => {
-  const loadingContext = useContext(LoadingContext);
-
-  if (!loadingContext) {
-    throw new Error('LoadingContext must be used within a LoadingProvider');
-  }
-
-  const { isLoading } = loadingContext;
+  const { isLoading } = useLoading();
 
   if (!isLoading) return null;
 

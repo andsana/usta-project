@@ -1,19 +1,12 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { SliceZone, usePrismicDocumentByUID } from '@prismicio/react';
-import { LanguageContext } from '../app/contexts/LanguageContext.tsx';
-import { LoadingContext } from '../app/contexts/LoadingContext.tsx';
+import { useLanguage } from '../app/hooks/useLanguage.ts';
+import { useLoading } from '../app/hooks/useLoading.ts';
 import { pageComponents } from '../app/constants/pageComponents.ts';
 
 const ProjectsPage = () => {
-  const languageContext = useContext(LanguageContext);
-  const loadingContext = useContext(LoadingContext);
-
-  if (!languageContext || !loadingContext) {
-    throw new Error('Contexts must be used within their respective Providers');
-  }
-
-  const { language } = languageContext;
-  const { setLoading } = loadingContext;
+  const { language } = useLanguage();
+  const { setLoading } = useLoading();
 
   const [document, { state }] = usePrismicDocumentByUID('page_new', 'projects', { lang: language });
 
@@ -24,8 +17,6 @@ const ProjectsPage = () => {
   if (!document || !document.data) {
     return null;
   }
-
-  console.log('document', document);
 
   return (
     <div className="projectPage__container">

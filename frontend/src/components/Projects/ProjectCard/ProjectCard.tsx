@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { MdKeyboardArrowRight } from 'react-icons/md';
+import { useLanguage } from '../../../app/hooks/useLanguage.ts';
 import MyLink from '../../MyLink/MyLink.tsx';
 import { transliterate } from '../../../app/utils/transliterate.ts';
 import './ProjectCard.css';
-import { LanguageContext } from '../../../app/contexts/LanguageContext.tsx';
 
 export interface Card {
   title: string;
@@ -21,17 +21,9 @@ interface ProjectCardProps {
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
-  const languageContext = useContext(LanguageContext);
+  const { language } = useLanguage();
 
-  if (!languageContext) {
-    throw new Error('LanguageContext must be used within a LanguageProvider');
-  }
-
-  const { language } = languageContext;
-
-  // Функция для обработки slug
   const createSlug = (input: string) => input.replace(/\s|,/g, '-').toLowerCase();
-
   const slugProjectdetailuid = project.projectdetailuid ? createSlug(project.projectdetailuid) : '';
   const slugCategory = language === 'ru'
     ? createSlug(transliterate(project.category))
