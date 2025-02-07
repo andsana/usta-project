@@ -11,11 +11,13 @@ const translations = {
   ru: {
     location: 'Расположение',
     client: 'Клиент',
+    services: 'Услуги',
     noProject: 'Проекты не найдены.',
   },
   'en-us': {
     location: 'Location',
     client: 'Client',
+    services: 'Services',
     noProject: 'No project found.',
   },
 };
@@ -83,17 +85,18 @@ const ProjectDetail = () => {
                 <h5>{translations[language].location}</h5>
                 <p>{project.location}</p>
               </div>
-              <div className="project-detail__col-item-right">
+              {projectDetailData.client && <div className="project-detail__col-item-right">
                 <h5>{translations[language].client}</h5>
                 <p>{projectDetailData.client}</p>
-              </div>
+              </div>}
             </div>
             <div className="project-detail__col">
-              <div className="project-detail__col-item-left">
+              {projectDetailData.client && <div className="project-detail__col-item-left">
                 <h5>{translations[language].client}</h5>
                 <p>{projectDetailData.client}</p>
-              </div>
+              </div>}
               {projectDetailData.services && <div className="project-detail__col-item">
+                <h5>{translations[language].services}</h5>
                 <p>{projectDetailData.services}</p>
               </div>}
             </div>
