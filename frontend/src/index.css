@@ -66,6 +66,11 @@ h4 {
     font-weight: 400;
 }
 
+h5 {
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
 p {
     font-size: 1rem;
     line-height: 1.5;
