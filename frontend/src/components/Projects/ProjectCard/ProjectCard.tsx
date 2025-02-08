@@ -13,10 +13,11 @@ export interface Card {
     url: string;
     alt: string;
   };
+  featured: boolean;
   projectdetailuid?: string;
 }
 
-interface ProjectCardProps {
+export interface ProjectCardProps {
   project: Card;
 }
 
@@ -25,9 +26,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 
   const createSlug = (input: string) => input.replace(/\s|,/g, '-').toLowerCase();
   const slugProjectdetailuid = project.projectdetailuid ? createSlug(project.projectdetailuid) : '';
+
   const slugCategory = language === 'ru'
-    ? createSlug(transliterate(project.category))
-    : createSlug(project.category);
+    ? createSlug(transliterate(project.category || ''))
+    : createSlug(project.category || '');
 
   const projectCardContent = (
     <>

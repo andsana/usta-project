@@ -8,7 +8,7 @@ const ProjectsPage = () => {
   const { language } = useLanguage();
   const { setLoading } = useLoading();
 
-  const [document, { state }] = usePrismicDocumentByUID('page_new', 'projects', { lang: language });
+  const [document, { state }] = usePrismicDocumentByUID('page_new', 'projectcardspage', { lang: language });
 
   useEffect(() => {
     setLoading(state === 'loading');
