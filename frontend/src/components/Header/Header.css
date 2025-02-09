@@ -109,6 +109,23 @@
     font-size: 24px;
 }
 
+
+@media (max-width: 1300px) {
+    .header__container {
+        min-height: 72px;
+    }
+
+    .header__logo {
+        width: 80px;
+    }
+}
+
+@media (max-width: 1050px) {
+    .header__container {
+        min-height: 64px;
+    }
+}
+
 @media (max-width: 960px) {
     .header__menu {
         display: flex;

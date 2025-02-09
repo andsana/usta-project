@@ -59,7 +59,7 @@ const Header = () => {
   return (
     <header id="headerScroll" className="header">
       <div className="header__container">
-        <MyLink to={headerData.logolink.url}>
+        <MyLink className="header__logo" to={headerData.logolink.url}>
           <img src={headerData.logo.url} alt="Logo" />
         </MyLink>
         <div className="header__inner">
