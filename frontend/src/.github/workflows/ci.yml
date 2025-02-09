@@ -3,11 +3,12 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - main  # или имя ветки, на которой ты работаешь
+      - main  # или твоя рабочая ветка
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -18,13 +19,13 @@ jobs:
           node-version: '16'  # Используемая версия Node.js
 
       - name: Install dependencies
-        run: npm install  # Устанавливает зависимости
+        run: npm install --prefix frontend  # Устанавливает зависимости в папке frontend
 
       - name: Build the project
-        run: npm run build  # Выполняет сборку проекта
+        run: npm run build --prefix frontend  # Выполняет сборку проекта в папке frontend
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: gh-pages  # Ветка, на которую будет развернут сайт
-          folder: build  # Папка, содержащая собранные файлы
+          branch: gh-pages  # Ветка для деплоя
+          folder: frontend/build  # Папка для деплоя
