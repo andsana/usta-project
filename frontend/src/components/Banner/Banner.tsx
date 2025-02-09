@@ -1,22 +1,25 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
-import './Banner.css';
 import { useScreenDetector } from '../../app/hooks/useScreenDetector.ts';
-import { MdKeyboardArrowDown } from 'react-icons/md';
+import MyLink from '../MyLink/MyLink.tsx';
+import './Banner.css';
 
-interface BannerSliceProps {
+interface Service {
+  servicename: string;
+  servicelink: { url: string };
+}
+
+interface BannerSlice {
   primary: {
     slogan: string;
     slogandescription: string;
-    // buttonname: string;
-    // buttonlink: string;
     image: { url: string };
     video: { url?: string };
   };
+  items: Service[];
 }
 
 interface BannerProps {
-  slice: BannerSliceProps;
+  slice: BannerSlice;
 }
 
 const Banner: React.FC<BannerProps> = ({ slice }) => {
@@ -45,21 +48,38 @@ const Banner: React.FC<BannerProps> = ({ slice }) => {
           muted
         />
       )}
-      <div className="banner-container">
+      <div className="banner__container">
         <div className="banner__content">
           <div className="banner__content-col">
             <h1 className="banner__content-title">{slice.primary.slogan}</h1>
             <div className="banner__content-subtitle-wrapper">
               <h4 className="banner__content-subtitle">{slice.primary.slogandescription}</h4>
-              <a className="banner__scroll-top" href="#whoAreWe">
-                <MdKeyboardArrowDown className="banner__arrow-top" />
-              </a>
             </div>
-            {/*<Link to={slice.primary.buttonlink} className="banner__content-button">*/}
-            {/*  {slice.primary.buttonname}*/}
-            {/*</Link>*/}
           </div>
         </div>
+      </div>
+
+      <div className="banner__services">
+        {slice.items.map((item, index) => (
+          <MyLink className="banner__service" key={index} to={item.servicelink.url}>
+            {(() => {
+              const words = item.servicename.split(' ');
+
+              if (words.length === 1) {
+                return <span className="last-word">{item.servicename}</span>;
+              }
+
+              const lastWord = words.pop();
+              const firstPart = words.join(' ');
+
+              return (
+                <span>
+                  {firstPart} {lastWord && <span className="last-word">{lastWord}</span>}
+                </span>
+              );
+            })()}
+          </MyLink>
+        ))}
       </div>
     </div>
   );
