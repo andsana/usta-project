@@ -102,11 +102,11 @@ const Projects: React.FC<ProjectHeader> = ({ slice }) => {
   return (
     <div className="Projects">
       <div className="projects__container">
-        <div className="projects__breadcrumbs">
+        {!isHomePage && <div className="projects__breadcrumbs">
           <MyLink className="projects__breadcrumbs-home" to="/">Home</MyLink>
           <span className="projects__separator">/</span>
           <span className="projects__breadcrumbs-current">Projects</span>
-        </div>
+        </div>}
 
         <div className="project__content">
           <h2 className="projects__title">{slice.primary.title}</h2>
