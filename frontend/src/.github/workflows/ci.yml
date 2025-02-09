@@ -1,0 +1,30 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main  # или имя ветки, на которой ты работаешь
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'  # Используемая версия Node.js
+
+      - name: Install dependencies
+        run: npm install  # Устанавливает зависимости
+
+      - name: Build the project
+        run: npm run build  # Выполняет сборку проекта
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages  # Ветка, на которую будет развернут сайт
+          folder: build  # Папка, содержащая собранные файлы
