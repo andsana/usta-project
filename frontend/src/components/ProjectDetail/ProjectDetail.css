@@ -9,9 +9,58 @@ h1, h2, p {
 
 .container {
     max-width: 1264px;
-    padding: 0 16px;
     margin: 0 auto;
 }
+
+.project-detail__breadcrumbs {
+    font-size: 14px;
+    text-align: left;
+    padding: 18px 16px;
+    margin: 20px auto;
+}
+
+.project-detail__breadcrumbs-link {
+    position: relative;
+}
+
+.project-detail__breadcrumbs-link:hover {
+    color: inherit;
+}
+
+.project-detail__breadcrumbs-link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #87be73;
+}
+
+.project-detail__breadcrumbs-link:hover::after {
+    width: 100%;
+}
+
+.project-detail__breadcrumbs-current {
+    font-weight: 600;
+}
+
+.project-detail__separator {
+    margin: 0 4px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .project-detail__title-wrapper {
     position: relative;

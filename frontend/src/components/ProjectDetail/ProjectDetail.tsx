@@ -4,6 +4,7 @@ import { usePrismicDocumentByUID } from '@prismicio/react';
 import { PrismicDocument } from '@prismicio/client';
 import { useLanguage } from '../../app/hooks/useLanguage.ts';
 import { useLoading } from '../../app/hooks/useLoading.ts';
+import MyLink from '../MyLink/MyLink.tsx';
 import { Card } from '../Projects/ProjectCard/ProjectCard.tsx';
 import './ProjectDetail.css';
 
@@ -12,7 +13,7 @@ const translations = {
     location: 'Расположение',
     client: 'Клиент',
     services: 'Услуги',
-    noProject: 'Проекты не найдены.',
+    noProject: 'Проект не найдены.',
   },
   'en-us': {
     location: 'Location',
@@ -64,61 +65,67 @@ const ProjectDetail = () => {
 
   return (
     <div className="project-detail">
-      <>
-        <div className="project-detail__bgimage-wrapper">
-          <div
-            className="project-detail__bgimage"
-            style={{ backgroundImage: `url(${project.image.url})` }}
-          >
-            <div className="project-detail__title-wrapper">
-              <div className="project-detail__title-row">
-                <div className="project-detail__title-col">
-                  <h1 className="project-detail__title">{project.title}</h1>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div className="project-detail__breadcrumbs container">
+        <MyLink className="project-detail__breadcrumbs-link" to="/">Home</MyLink>
+        <span className="project-detail__separator">/</span>
+        <MyLink className="project-detail__breadcrumbs-link" to="/projects">Projects</MyLink>
+        <span className="project-detail__separator">/</span>
+        <span className="project-detail__breadcrumbs-current">{project.title}</span>
+      </div>
 
-          <div className="project-detail__wrapper">
-            <div className="project-detail__col">
-              <div className="project-detail__col-item">
-                <h5>{translations[language].location}</h5>
-                <p>{project.location}</p>
+      <div className="project-detail__bgimage-wrapper">
+        <div
+          className="project-detail__bgimage"
+          style={{ backgroundImage: `url(${project.image.url})` }}
+        >
+          <div className="project-detail__title-wrapper">
+            <div className="project-detail__title-row">
+              <div className="project-detail__title-col">
+                <h1 className="project-detail__title">{project.title}</h1>
               </div>
-              {projectDetailData.client && <div className="project-detail__col-item-right">
-                <h5>{translations[language].client}</h5>
-                <p>{projectDetailData.client}</p>
-              </div>}
-            </div>
-            <div className="project-detail__col">
-              {projectDetailData.client && <div className="project-detail__col-item-left">
-                <h5>{translations[language].client}</h5>
-                <p>{projectDetailData.client}</p>
-              </div>}
-              {projectDetailData.services && <div className="project-detail__col-item">
-                <h5>{translations[language].services}</h5>
-                <p>{projectDetailData.services}</p>
-              </div>}
             </div>
           </div>
         </div>
-        <div className="project-detail__article container">
-          {projectDetailData.preview && <p>{projectDetailData.preview}</p>}
-          {projectDetailData.body.map((slice) => {
-            if (slice.slice_type === 'singletitleparagraps') {
-              return (
-                <div key={slice.id} className="project-detail__content">
-                  {slice.primary.title && <h2>{slice.primary.title}</h2>}
-                  {slice.items.map((item, index: number) => (
-                    <p key={index}>{item.paragraph}</p>
-                  ))}
-                </div>
-              );
-            }
-            return null;
-          })}
+
+        <div className="project-detail__wrapper">
+          <div className="project-detail__col">
+            <div className="project-detail__col-item">
+              <h5>{translations[language].location}</h5>
+              <p>{project.location}</p>
+            </div>
+            {projectDetailData.client && <div className="project-detail__col-item-right">
+              <h5>{translations[language].client}</h5>
+              <p>{projectDetailData.client}</p>
+            </div>}
+          </div>
+          <div className="project-detail__col">
+            {projectDetailData.client && <div className="project-detail__col-item-left">
+              <h5>{translations[language].client}</h5>
+              <p>{projectDetailData.client}</p>
+            </div>}
+            {projectDetailData.services && <div className="project-detail__col-item">
+              <h5>{translations[language].services}</h5>
+              <p>{projectDetailData.services}</p>
+            </div>}
+          </div>
         </div>
-      </>
+      </div>
+      <div className="project-detail__article container">
+        {projectDetailData.preview && <p>{projectDetailData.preview}</p>}
+        {projectDetailData.body.map((slice) => {
+          if (slice.slice_type === 'singletitleparagraps') {
+            return (
+              <div key={slice.id} className="project-detail__content">
+                {slice.primary.title && <h2>{slice.primary.title}</h2>}
+                {slice.items.map((item, index: number) => (
+                  <p key={index}>{item.paragraph}</p>
+                ))}
+              </div>
+            );
+          }
+          return null;
+        })}
+      </div>
     </div>
   );
 };
