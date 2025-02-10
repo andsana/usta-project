@@ -9,6 +9,7 @@ h1, h2, p {
 
 .container {
     max-width: 1264px;
+    padding: 0 16px;
     margin: 0 auto;
 }
 
@@ -42,25 +43,12 @@ h1, h2, p {
 }
 
 .project-detail__breadcrumbs-current {
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .project-detail__separator {
     margin: 0 4px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .project-detail__title-wrapper {
     position: relative;
@@ -74,12 +62,15 @@ h1, h2, p {
 }
 
 .project-detail__title-row {
+    display: flex;
+    justify-content: space-between;
     max-width: 91.6%;
     flex: 0 0 91.6%;
 }
 
 .project-detail__title-col {
-    flex: 0 0 55%;
+    max-width: 50%;
+    flex: 0 0 50%;
     text-align: left;
 }
 
@@ -97,7 +88,6 @@ h1, h2, p {
 .project-detail__bgimage {
     position: relative;
     width: 100%;
-    height: calc(100vh - 90px);
     min-height: 800px;
     background-size: cover;
     background-position: center;
@@ -115,7 +105,7 @@ h1, h2, p {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(317.7deg, transparent 37.28%, rgba(0, 0, 0, 0.2) 100.86%);
+    background: rgba(0, 0, 0, 0.2);
 }
 
 .project-detail__bgimage-title {
@@ -126,17 +116,20 @@ h1, h2, p {
 }
 
 .project-detail__wrapper {
-    /*position: relative;*/
+    display: flex;
+    flex-direction: column;
     position: absolute;
     right: 0;
     bottom: 0;
-    display: flex;
     width: 50%;
     background: #fff;
     padding: 60px 60px 100px 60px;
     margin-left: auto;
-    /*margin-top: -268px;*/
     z-index: 3;
+}
+
+.project-detail__row {
+    display: flex;
 }
 
 .project-detail__col {
@@ -151,10 +144,30 @@ h1, h2, p {
     padding: 7px 30px;
 }
 
-.project-detail__col-item-right {
+.project-detail__col-item-left {
     display: none;
 }
 
+.icons-list {
+    display: flex;
+    margin-top: 40px;
+    padding: 0 30px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+
+.icon-wrapper {
+    flex-shrink: 0;
+    width: calc(12.5% - 4px);
+    margin: 0 2px;
+}
+
+.icon {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
 
 .project-detail__col p,
 .project-detail__col h5 {
@@ -175,11 +188,11 @@ h1, h2, p {
 }
 
 @media (max-width: 1615px) {
-    .project-detail__col-item-right {
+    .project-detail__col-item-left {
         display: block;
     }
 
-    .project-detail__col-item-left {
+    .project-detail__col-item-right {
         display: none;
     }
 }
@@ -222,6 +235,10 @@ h1, h2, p {
     .project-detail__col-item-left,
     .project-detail__col-item-right {
         padding: 7px 0;
+    }
+
+    .project-detail__title {
+        font-size: 2.5rem;
     }
 }
 

@@ -10,13 +10,13 @@ import './ProjectDetail.css';
 
 const translations = {
   ru: {
-    location: 'Расположение',
+    location: 'Страна',
     client: 'Клиент',
     services: 'Услуги',
     noProject: 'Проект не найдены.',
   },
   'en-us': {
-    location: 'Location',
+    location: 'Country',
     client: 'Client',
     services: 'Services',
     noProject: 'No project found.',
@@ -32,10 +32,19 @@ interface Slice {
   items: { paragraph: string }[];
 }
 
+interface SdgItem {
+  sdgitem?: {
+    id: string;
+    url: string;
+    alt: string;
+  };
+}
+
 interface ProjectDetailData {
   preview?: string;
   client: string;
   services?: string;
+  sdg: SdgItem[];
   body: Slice[];
 }
 
@@ -51,14 +60,22 @@ const ProjectDetail = () => {
   const project: Card = location.state.projectData;
   const projectDetailUID = project.projectdetailuid;
 
-  const [document, { state }] = usePrismicDocumentByUID<ProjectDetailDocument>('projectcarddetail', projectDetailUID ?? '', { lang: language });
+  const [document, { state }] = usePrismicDocumentByUID<ProjectDetailDocument>(
+    'projectcarddetail',
+    projectDetailUID ?? '',
+    { lang: language },
+  );
 
   useEffect(() => {
     setLoading(state === 'loading');
   }, [state, setLoading]);
 
   if (!document || !document.data) {
-    return <div className="no-project-message">{translations[language].noProject}</div>;
+    return (
+      <div className="no-project-message">
+        {translations[language].noProject}
+      </div>
+    );
   }
 
   const projectDetailData: ProjectDetailData = document.data;
@@ -66,11 +83,17 @@ const ProjectDetail = () => {
   return (
     <div className="project-detail">
       <div className="project-detail__breadcrumbs container">
-        <MyLink className="project-detail__breadcrumbs-link" to="/">Home</MyLink>
+        <MyLink className="project-detail__breadcrumbs-link" to="/">
+          Home
+        </MyLink>
         <span className="project-detail__separator">/</span>
-        <MyLink className="project-detail__breadcrumbs-link" to="/projects">Projects</MyLink>
+        <MyLink className="project-detail__breadcrumbs-link" to="/projects">
+          Projects
+        </MyLink>
         <span className="project-detail__separator">/</span>
-        <span className="project-detail__breadcrumbs-current">{project.title}</span>
+        <span className="project-detail__breadcrumbs-current">
+          {project.title}
+        </span>
       </div>
 
       <div className="project-detail__bgimage-wrapper">
@@ -88,26 +111,47 @@ const ProjectDetail = () => {
         </div>
 
         <div className="project-detail__wrapper">
-          <div className="project-detail__col">
-            <div className="project-detail__col-item">
-              <h5>{translations[language].location}</h5>
-              <p>{project.location}</p>
+          <div className="project-detail__row">
+            <div className="project-detail__col">
+              {projectDetailData.client && (
+                <div className="project-detail__col-item-left">
+                  <h5>{translations[language].client}</h5>
+                  <p>{projectDetailData.client}</p>
+                </div>
+              )}
+              <div className="project-detail__col-item">
+                <h5>{translations[language].location}</h5>
+                <p>{project.location}</p>
+              </div>
             </div>
-            {projectDetailData.client && <div className="project-detail__col-item-right">
-              <h5>{translations[language].client}</h5>
-              <p>{projectDetailData.client}</p>
-            </div>}
+            <div className="project-detail__col">
+              {projectDetailData.client && (
+                <div className="project-detail__col-item-right">
+                  <h5>{translations[language].client}</h5>
+                  <p>{projectDetailData.client}</p>
+                </div>
+              )}
+              {projectDetailData.services && (
+                <div className="project-detail__col-item">
+                  <h5>{translations[language].services}</h5>
+                  <p>{projectDetailData.services}</p>
+                </div>
+              )}
+            </div>
           </div>
-          <div className="project-detail__col">
-            {projectDetailData.client && <div className="project-detail__col-item-left">
-              <h5>{translations[language].client}</h5>
-              <p>{projectDetailData.client}</p>
-            </div>}
-            {projectDetailData.services && <div className="project-detail__col-item">
-              <h5>{translations[language].services}</h5>
-              <p>{projectDetailData.services}</p>
-            </div>}
-          </div>
+
+          {projectDetailData.sdg.length > 0 && (
+            <div className="icons-list">
+              {projectDetailData.sdg.map((item) => {
+                const { sdgitem } = item;
+                return sdgitem ? (
+                  <div className="icon-wrapper" key={sdgitem.id}>
+                    <img className="icon" src={sdgitem.url} alt={sdgitem.alt} />
+                  </div>
+                ) : null;
+              })}
+            </div>
+          )}
         </div>
       </div>
       <div className="project-detail__article container">
