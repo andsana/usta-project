@@ -5,7 +5,9 @@ import './Banner.css';
 
 interface Service {
   servicename: string;
-  servicelink: { url: string };
+  serviceuid: {
+    uid: string;
+  };
 }
 
 interface BannerSlice {
@@ -31,14 +33,13 @@ const Banner: React.FC<BannerProps> = ({ slice }) => {
 
   console.log('slice', slice);
 
-  const bannerStyle = slice.primary.video.url && !isMobile
-    ? { backgroundImage: 'none' }
-    : { backgroundImage: `url(${slice.primary.image.url})` };
+  const bannerStyle =
+    slice.primary.video.url && !isMobile
+      ? { backgroundImage: 'none' }
+      : { backgroundImage: `url(${slice.primary.image.url})` };
 
   return (
-    <div className="banner"
-         style={bannerStyle}
-    >
+    <div className="banner" style={bannerStyle}>
       {slice.primary.video.url && !isMobile && (
         <video
           className="banner-video"
@@ -53,7 +54,9 @@ const Banner: React.FC<BannerProps> = ({ slice }) => {
           <div className="banner__content-col">
             <h1 className="banner__content-title">{slice.primary.slogan}</h1>
             <div className="banner__content-subtitle-wrapper">
-              <h4 className="banner__content-subtitle">{slice.primary.slogandescription}</h4>
+              <h4 className="banner__content-subtitle">
+                {slice.primary.slogandescription}
+              </h4>
             </div>
           </div>
         </div>
@@ -61,7 +64,11 @@ const Banner: React.FC<BannerProps> = ({ slice }) => {
 
       <div className="banner__services">
         {slice.items.map((item, index) => (
-          <MyLink className="banner__service" key={index} to={item.servicelink.url}>
+          <MyLink
+            className="banner__service"
+            key={index}
+            to={`/services/${item.serviceuid.uid}`}
+          >
             {(() => {
               const words = item.servicename.split(' ');
 
