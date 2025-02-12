@@ -1,0 +1,41 @@
+.container {
+    max-width: 1264px;
+    padding: 0 16px;
+}
+
+
+.breadcrumbs {
+    font-size: 14px;
+    padding: 18px 0;
+    margin: 20px 0;
+}
+
+.breadcrumbs__link {
+    position: relative;
+}
+
+.breadcrumbs__link:hover {
+    color: inherit;
+}
+
+.breadcrumbs__link::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #87be73;
+}
+
+.breadcrumbs__link:hover::after {
+    width: 100%;
+}
+
+.breadcrumbs__current {
+    font-weight: 500;
+}
+
+.breadcrumbs__separator {
+    margin: 0 4px;
+}
