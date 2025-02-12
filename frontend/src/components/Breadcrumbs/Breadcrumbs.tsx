@@ -14,24 +14,24 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   middleLink,
 }) => {
   return (
-    <div className="breadcrumbs container">
+    <div className="breadcrumbs__container">
       <MyLink className="breadcrumbs__link" to="/">
         Home
       </MyLink>
-      <span className="separator">/</span>
+      <span className="breadcrumbs__separator">/</span>
 
       {middleLink ? (
         <>
           <MyLink className="breadcrumbs__link" to={middleLink}>
             {middleText}
           </MyLink>
-          <span className="separator">/</span>
+          <span className="breadcrumbs__separator">/</span>
         </>
       ) : (
         <span className="breadcrumbs__span">{middleText}</span>
       )}
 
-      <span className="separator">/</span>
+      <span className="breadcrumbs__separator">/</span>
       <span className="breadcrumbs__current">{title}</span>
     </div>
   );
