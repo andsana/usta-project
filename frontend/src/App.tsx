@@ -7,6 +7,7 @@ import ProjectDetail from './components/ProjectDetail/ProjectDetail.tsx';
 import Footer from './components/footer/Footer.tsx';
 import { useLoading } from './app/hooks/useLoading.ts';
 import './App.css';
+import ServiceDetailPage from './pages/ServiceDetailPage.tsx';
 
 const App = () => {
   const { isLoading } = useLoading();
@@ -21,7 +22,12 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/en/projects" element={<ProjectsPage />} />
-          <Route path="en/projects/:category/:slug" element={<ProjectDetail />} />
+          <Route
+            path="en/projects/:category/:slug"
+            element={<ProjectDetail />}
+          />
+          <Route path="/services/:uid" element={<ServiceDetailPage />} />
+          <Route path="/en/services/:uid" element={<ServiceDetailPage />} />
         </Routes>
       </main>
       <Footer />

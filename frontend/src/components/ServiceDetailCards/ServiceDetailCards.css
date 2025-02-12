@@ -1,0 +1,121 @@
+.service-cards__title,
+.service-cards__paragraph {
+    margin: 0 0 24px 0;
+}
+
+.service-cards__container {
+    display: flex;
+    justify-content: center;
+    max-width: 1264px;
+    padding: 0 16px;
+    margin: 96px auto;
+}
+
+
+.service-cards__container:nth-child(odd) {
+    flex-direction: row;
+}
+
+.service-cards__container:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+.service-cards__col-image {
+    max-width: 50%;
+    flex: 0 0 50%;
+}
+
+.service-cards__col-image-wrapper {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    overflow: hidden;
+}
+
+.service-cards__col-image-wrapper img {
+    width: 100%;
+    height: 100%;
+}
+
+.service-cards__col-text {
+    max-width: 50%;
+    flex: 0 0 50%;
+    text-align: left;
+}
+
+.service-cards__container:nth-child(odd) .service-cards__col-text {
+    padding-left: 48px;
+}
+
+.service-cards__container:nth-child(even) .service-cards__col-text {
+    padding-right: 48px;
+}
+
+.service-cards__col p {
+    margin: 0 0 16px 0;
+}
+
+.service-cards__col-text-item ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.service-cards__col-text-item li {
+    position: relative;
+    font-size: 18px;
+    padding: 8px 0 8px 32px;
+}
+
+.service-cards__col-text-item li::before {
+    content: '';
+    background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22%3E%3Cpath d=%22M10.293 14.293L6.707 10.707C6.316 10.316 5.684 10.316 5.293 10.707C4.902 11.098 4.902 11.732 5.293 12.121L9.293 16.121C9.684 16.512 10.316 16.512 10.707 16.121L19.707 7.121C20.098 6.73 20.098 6.098 19.707 5.707C19.316 5.316 18.684 5.316 18.293 5.707L10.293 14.293Z%22 fill=%22green%22/%3E%3C/svg%3E');
+    position: absolute;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    color: #80b86f;
+    display: flex;
+    align-items: center;
+}
+
+.service-cards__col-text-item {
+    margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+    .service-cards__container {
+        flex-direction: column;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 40px;
+        margin-top: 64px;
+        margin-bottom: 64px;
+    }
+
+    .service-cards__col-image {
+        max-width: 100vw;
+        flex: 0 0 auto;
+    }
+
+    .service-cards__col-text {
+        max-width: 100%;
+        flex: 0 0 auto;
+        order: -1;
+    }
+
+    .service-cards__container:nth-child(odd) .service-cards__col-text {
+        padding-left: 0;
+    }
+
+    .service-cards__container:nth-child(even) .service-cards__col-text {
+        padding-right: 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .service-cards__container {
+        margin-top: 48px;
+        margin-bottom: 48px;
+    }
+
+}
