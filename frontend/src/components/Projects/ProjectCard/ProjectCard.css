@@ -102,6 +102,22 @@
     .project-card__title-wrapper {
         display: flex;
         justify-content: flex-start;
+
+    }
+
+    .project-card__image-wrapper {
+        overflow: visible;
+    }
+
+    .project-card__image {
+        width: 100vw;
+        margin-left: -16px;
+        margin-right: -16px;
+        transition: none;
+    }
+
+    .project-card:hover .project-card__image {
+        transform: scale(1);
     }
 
     .project-card__icon-wrapper {
@@ -112,6 +128,8 @@
     .project-card:hover .project-card__icon-wrapper {
         display: flex;
     }
+
+
 }
 
 
