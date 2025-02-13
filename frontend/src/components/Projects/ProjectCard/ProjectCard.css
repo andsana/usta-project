@@ -1,4 +1,8 @@
 .project-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+
     flex: 1 1 calc((100% - 32px) / 3);
     max-width: calc((100% - 32px) / 3);
     cursor: pointer;
@@ -7,13 +11,14 @@
 .project-card__image-wrapper {
     overflow: hidden;
     height: 300px;
-    margin-bottom: 16px;
+    margin-bottom: 96px;
 }
 
 .project-card__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     transition: transform 0.3s ease-in-out;
 }
 
@@ -49,11 +54,11 @@
 }
 
 .project-card:hover .project-card__icon-wrapper {
-    display: flex; /* Показываем стрелку при ховере */
+    display: flex;
 }
 
 .project-card__details {
-    margin-bottom: 32px;
+    margin-bottom: 16px;
 }
 
 .project-card__location {
@@ -99,6 +104,17 @@
         max-width: 100%;
     }
 
+    .project-card__image-wrapper {
+        overflow: visible;
+        margin-bottom: 64px;
+    }
+
+    .project-card__image {
+        width: 100vw;
+        margin-right: -16px;
+        margin-left: -16px;
+    }
+
     .project-card__title-wrapper {
         display: flex;
         justify-content: flex-start;
@@ -113,5 +129,12 @@
         display: flex;
     }
 }
+
+@media (max-width: 576px) {
+    .project-card__image-wrapper {
+        margin-bottom: 48px;
+    }
+}
+
 
 
