@@ -12,13 +12,15 @@ const translations = {
   ru: {
     location: 'Страна',
     client: 'Клиент',
-    services: 'Услуги',
+    ourrole: 'Наша роль',
+    area: 'Площадь',
     noProject: 'Проект не найдены.',
   },
   'en-us': {
     location: 'Country',
     client: 'Client',
-    services: 'Services',
+    ourrole: 'Our role',
+    area: 'Area',
     noProject: 'No project found.',
   },
 };
@@ -33,17 +35,19 @@ interface Slice {
 }
 
 interface SdgItem {
-  sdgitem?: {
-    id: string;
-    url: string;
-    alt: string;
+  sdgitem: {
+    id?: string;
+    url?: string;
+    alt?: string;
   };
 }
 
 interface ProjectDetailData {
   preview?: string;
-  client: string;
-  services?: string;
+  client?: string;
+  ourrole?: string;
+  location?: string;
+  area?: string;
   sdg: SdgItem[];
   body: Slice[];
 }
@@ -79,6 +83,10 @@ const ProjectDetail = () => {
   }
 
   const projectDetailData: ProjectDetailData = document.data;
+  const filteredSdg = projectDetailData.sdg.filter((item) => item.sdgitem?.url);
+
+  console.log('projectDetailData.sdg', projectDetailData.sdg);
+  console.log('projectDetailData.sdg.length = ', projectDetailData.sdg.length);
 
   return (
     <div className="project-detail">
@@ -113,16 +121,24 @@ const ProjectDetail = () => {
         <div className="project-detail__wrapper">
           <div className="project-detail__row">
             <div className="project-detail__col">
+              {projectDetailData.location && (
+                <div className="project-detail__col-item">
+                  <h5>{translations[language].location}</h5>
+                  <p>{project.location}</p>
+                </div>
+              )}
               {projectDetailData.client && (
                 <div className="project-detail__col-item-left">
                   <h5>{translations[language].client}</h5>
                   <p>{projectDetailData.client}</p>
                 </div>
               )}
-              <div className="project-detail__col-item">
-                <h5>{translations[language].location}</h5>
-                <p>{project.location}</p>
-              </div>
+              {projectDetailData.area && (
+                <div className="project-detail__col-item">
+                  <h5>{translations[language].area}</h5>
+                  <p>{projectDetailData.area}</p>
+                </div>
+              )}
             </div>
             <div className="project-detail__col">
               {projectDetailData.client && (
@@ -131,25 +147,22 @@ const ProjectDetail = () => {
                   <p>{projectDetailData.client}</p>
                 </div>
               )}
-              {projectDetailData.services && (
+              {projectDetailData.ourrole && (
                 <div className="project-detail__col-item">
-                  <h5>{translations[language].services}</h5>
-                  <p>{projectDetailData.services}</p>
+                  <h5>{translations[language].ourrole}</h5>
+                  <p>{projectDetailData.ourrole}</p>
                 </div>
               )}
             </div>
           </div>
 
-          {projectDetailData.sdg.length > 0 && (
+          {filteredSdg.length > 0 && (
             <div className="icons-list">
-              {projectDetailData.sdg.map((item) => {
-                const { sdgitem } = item;
-                return sdgitem ? (
-                  <div className="icon-wrapper" key={sdgitem.id}>
-                    <img className="icon" src={sdgitem.url} alt={sdgitem.alt} />
-                  </div>
-                ) : null;
-              })}
+              {filteredSdg.map((item) => (
+                <div className="icon-wrapper" key={item.sdgitem.id}>
+                  <img className="icon" src={item.sdgitem.url} alt={item.sdgitem.alt || ''} />
+                </div>
+              ))}
             </div>
           )}
         </div>

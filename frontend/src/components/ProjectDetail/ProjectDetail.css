@@ -247,6 +247,10 @@ h1, h2, p {
     .project-detail__article {
         margin-bottom: 48px;
     }
+
+    .project-detail__row {
+        display: block;
+    }
 }
 
 
