@@ -117,7 +117,7 @@
 
     .project-card__title-wrapper {
         display: flex;
-        justify-content: flex-start;
+        justify-content: space-between;
 
     }
 
@@ -139,12 +139,12 @@
     .project-card__icon-wrapper {
         display: flex;
         order: 2;
+        margin-right: 0;
     }
 
     .project-card:hover .project-card__icon-wrapper {
         display: flex;
     }
-
 
 }
 
