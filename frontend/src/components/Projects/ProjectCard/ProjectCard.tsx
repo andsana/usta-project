@@ -24,17 +24,25 @@ export interface ProjectCardProps {
 const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const { language } = useLanguage();
 
-  const createSlug = (input: string) => input.replace(/\s|,/g, '-').toLowerCase();
-  const slugProjectdetailuid = project.projectdetailuid ? createSlug(project.projectdetailuid) : '';
+  const createSlug = (input: string) =>
+    input.replace(/\s|,/g, '-').toLowerCase();
+  const slugProjectdetailuid = project.projectdetailuid
+    ? createSlug(project.projectdetailuid)
+    : '';
 
-  const slugCategory = language === 'ru'
-    ? createSlug(transliterate(project.category || ''))
-    : createSlug(project.category || '');
+  const slugCategory =
+    language === 'ru'
+      ? createSlug(transliterate(project.category || ''))
+      : createSlug(project.category || '');
 
   const projectCardContent = (
     <>
       <div className="project-card__image-wrapper">
-        <img src={project.image.url} alt={project.image.alt} className="project-card__image" />
+        <img
+          src={project.image.url}
+          alt={project.image.alt}
+          className="project-card__image"
+        />
       </div>
       <div className="project-card__title-wrapper">
         <div className="project-card__icon-wrapper">
@@ -42,11 +50,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
         </div>
         <h4 className="project-card__title">{project.title}</h4>
       </div>
-      <div className="project-card__details">
+      <p className="project-card__details">
         <span className="project-card__location">{project.location}</span>
         <span className="project-card__separator"></span>
-        <span className="project-card__category">{project.category}</span>
-      </div>
+        {project.category}
+      </p>
     </>
   );
 
@@ -59,11 +67,8 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       {projectCardContent}
     </MyLink>
   ) : (
-    <div className="project-card">
-      {projectCardContent}
-    </div>
+    <div className="project-card">{projectCardContent}</div>
   );
 };
 
 export default ProjectCard;
-
