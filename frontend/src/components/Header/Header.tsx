@@ -4,23 +4,35 @@ import { useSinglePrismicDocument } from '@prismicio/react';
 import { PrismicDocument } from '@prismicio/client';
 import { LanguageContext } from '../../app/contexts/LanguageContext.tsx';
 import { LoadingContext } from '../../app/contexts/LoadingContext.tsx';
+import { useOutsideClick } from '../../app/hooks/useOutsideClick.ts';
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher.tsx';
 import MyLink from '../MyLink/MyLink.tsx';
 import './Header.css';
-import { useOutsideClick } from '../../app/hooks/useOutsideClick.ts';
 
 interface MenuItem {
   name: string;
   link: { url: string };
 }
 
+interface SubMenuItem {
+  name: string;
+  submenuuid: { uid: string };
+}
+
+interface Slice {
+  id: string;
+  slice_type: string;
+  primary: MenuItem;
+  items: SubMenuItem[];
+}
+
 interface HeaderData {
   logo: { url: string };
   logolink: { url: string };
-  menu_items: MenuItem[];
   buttonname?: string;
   buttonlink?: { url: string };
   buttonicon?: { url: string };
+  body: Slice[];
 }
 
 interface HeaderPrismicDocument extends PrismicDocument {
@@ -46,13 +58,11 @@ const Header = () => {
     { lang: language },
   );
 
+  console.log('header document', document);
+
   useEffect(() => {
     setLoading(state === 'loading');
   }, [state, setLoading]);
-
-  useEffect(() => {
-    console.log('servicesOpen изменился:', servicesOpen);
-  }, [servicesOpen]);
 
   const toggleServices = (event: React.MouseEvent) => {
     event.preventDefault();
@@ -74,26 +84,26 @@ const Header = () => {
     setMenuOpen((prevState) => !prevState);
   };
 
-  // Функция для рендеринга пункта меню
-  const renderMenuItem = (item: MenuItem, index: number) => {
-    const itemName = item.name.trim().toLowerCase();
+  const renderMenuItem = (slice: Slice) => {
+    const { id, primary } = slice;
+    const itemName = primary.name.trim().toLowerCase();
 
     if (itemName === 'о нас' || itemName === 'about us') {
       return (
-        <li key={index} className="header__nav-item">
+        <li key={id} className="header__nav-item">
           <a href="#whoAreWe" className="header__nav-link">
-            {item.name}
+            {primary.name}
           </a>
         </li>
       );
     }
 
-    if (itemName === 'наши услуги' || itemName === 'our services') {
+    if (slice.items.length > 0) {
       return (
-        <li key={index} className="header__nav-item">
+        <li key={id} className="header__nav-item">
           <span ref={subNavRef}>
             <button className="header__nav-link" onClick={toggleServices}>
-              {item.name}
+              {primary.name}
             </button>
           </span>
         </li>
@@ -101,9 +111,9 @@ const Header = () => {
     }
 
     return (
-      <li key={index} className="header__nav-item">
-        <MyLink className="header__nav-link" to={item.link.url}>
-          {item.name}
+      <li key={id} className="header__nav-item">
+        <MyLink className="header__nav-link" to={primary.link?.url || '#'}>
+          {primary.name}
         </MyLink>
       </li>
     );
@@ -118,9 +128,7 @@ const Header = () => {
         <div className="header__inner">
           <nav className={`header__nav ${menuOpen ? 'open' : ''}`}>
             <ul className="header__nav-list">
-              {headerData.menu_items && headerData.menu_items.length > 0
-                ? headerData.menu_items.map(renderMenuItem)
-                : null}
+              {headerData.body.map(renderMenuItem)}
               {headerData.buttonlink && headerData.buttonname && (
                 <li className="header__nav-item">
                   <a className="header__nav-link" href="#whoAreWe">
@@ -145,26 +153,20 @@ const Header = () => {
       <nav className={`header__sub-nav ${servicesOpen ? 'open' : ''}`}>
         <div className="header__container">
           <ul className="header__nav-list">
-            <li className="header__nav-item">
-              <a className="header__nav-link" href="#">
-                Architecture & Construction
-              </a>
-            </li>
-            <li className="header__nav-item">
-              <a className="header__nav-link" href="#">
-                Architecture & Construction
-              </a>
-            </li>
-            <li className="header__nav-item">
-              <a className="header__nav-link" href="#">
-                Architecture & Construction
-              </a>
-            </li>
-            <li className="header__nav-item">
-              <a className="header__nav-link" href="#">
-                Architecture & Construction
-              </a>
-            </li>
+            {headerData.body
+              .filter((slice) => slice.items.length > 0)
+              .map((slice) =>
+                slice.items.map((item, index) => (
+                  <li key={index} className="header__nav-item">
+                    <MyLink
+                      className="header__nav-link"
+                      to={`/services/${item.submenuuid.uid}`}
+                    >
+                      {item.name}
+                    </MyLink>
+                  </li>
+                )),
+              )}
           </ul>
         </div>
       </nav>
