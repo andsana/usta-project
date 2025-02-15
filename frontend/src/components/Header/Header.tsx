@@ -102,8 +102,9 @@ const Header = () => {
       return (
         <li key={id} className="header__nav-item">
           <span ref={subNavRef}>
-            <button className="header__nav-link" onClick={toggleServices}>
+            <button className="header__nav-link items" onClick={toggleServices}>
               {primary.name}
+              <span className={`icon-sub ${servicesOpen ? 'open' : ''}`}></span>
             </button>
           </span>
         </li>

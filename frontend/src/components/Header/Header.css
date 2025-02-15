@@ -1,6 +1,5 @@
 .header__container {
     display: flex;
-    position: relative;
     justify-content: space-between;
     gap: 2rem;
     align-items: center;
@@ -42,10 +41,6 @@
     margin: 0;
 }
 
-/*.header__nav-item:not(:first-child) {*/
-/*    margin-left: 2rem;*/
-/*}*/
-
 .header__nav-link {
     position: relative;
     display: inline-block;
@@ -72,18 +67,40 @@
 }
 
 .header__nav-link:hover::after,
-    /*.header__message:hover::after,*/
 .header__nav-link:active::after,
 .header__nav-link:focus::after {
     width: 100%;
 }
 
-/*.header__nav-list a:hover::after,*/
-/*.header__message:hover::after,*/
-/*.header__nav-list a:active::after,*/
-/*.header__nav-list a:focus::after {*/
-/*    width: 100%;*/
-/*}*/
+.header__nav-link.items {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.icon-sub {
+    display: flex;
+    align-items: center;
+    padding-left: 32px;
+}
+
+.icon-sub::before {
+    content: "";
+    position: absolute;
+    display: block;
+    bottom: 0;
+    right: 0;
+    width: 24px;
+    height: 24px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111111'%3E%3Cpath d='M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.icon-sub.open::before {
+    transform: rotate(180deg);
+}
 
 .header__actions {
     display: flex;
@@ -118,10 +135,15 @@
 }
 
 .header__sub-nav {
+    /*position: absolute;*/
+    position: relative;
+    left: 0;
     height: 0;
     overflow: hidden;
     background: #555454;
+    width: 100%;
     transition: height 0.3s ease-out;
+    z-index: 3;
 }
 
 .header__sub-nav.open {
