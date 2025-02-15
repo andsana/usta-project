@@ -41,13 +41,16 @@ const Banner: React.FC<BannerProps> = ({ slice }) => {
   return (
     <div className="banner" style={bannerStyle}>
       {slice.primary.video.url && !isMobile && (
-        <video
-          className="banner-video"
-          src={slice.primary.video.url}
-          autoPlay
-          loop
-          muted
-        />
+        <>
+          <video
+            className="banner-video"
+            src={slice.primary.video.url}
+            autoPlay
+            loop
+            muted
+          />
+          <div className="banner__video-overlay" />
+        </>
       )}
       <div className="banner__container">
         <div className="banner__content">
@@ -81,7 +84,8 @@ const Banner: React.FC<BannerProps> = ({ slice }) => {
 
               return (
                 <span>
-                  {firstPart} {lastWord && <span className="last-word">{lastWord}</span>}
+                  {firstPart}{' '}
+                  {lastWord && <span className="last-word">{lastWord}</span>}
                 </span>
               );
             })()}
