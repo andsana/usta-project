@@ -86,7 +86,7 @@ button {
     font-size: 1.125rem;
     font-weight: 500;
     font-family: inherit;
-    background: #87be73;
+    background: inherit;
     cursor: pointer;
     transition: border-color 0.25s;
 }
