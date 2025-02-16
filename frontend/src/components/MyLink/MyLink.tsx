@@ -10,17 +10,16 @@ interface MyLinkProps {
   state?: {
     projectData: Card;
   };
-  onClick?: () => void;
 }
 
-const MyLink = ({ to, children, className, state, onClick }: MyLinkProps) => {
+const MyLink = ({ to, children, className, state }: MyLinkProps) => {
   const { language } = useLanguage();
 
   const prefixedTo =
     language === 'en-us' ? (to === '/' ? '/en' : `/en${to}`) : to;
 
   return (
-    <Link to={prefixedTo} className={className} state={state} onClick={onClick}>
+    <Link to={prefixedTo} className={className} state={state}>
       {children}
     </Link>
   );
