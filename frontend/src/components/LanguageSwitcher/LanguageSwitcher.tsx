@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react';
 import { MdKeyboardArrowDown, MdLanguage } from 'react-icons/md';
-import './LanguageSwitcher.css';
 import { useOutsideClick } from '../../app/hooks/useOutsideClick.ts';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useLanguage } from '../../app/hooks/useLanguage.ts';
+import './LanguageSwitcher.css';
 
 const LanguageSwitcher = () => {
   const { language, setLanguage } = useLanguage();
@@ -12,7 +12,7 @@ const LanguageSwitcher = () => {
   const location = useLocation();
 
   const closeDropdown = () => setIsDropdownOpen(false);
-  const ref = useOutsideClick(closeDropdown);
+  const ref = useOutsideClick<HTMLDivElement>(closeDropdown);
 
   const toggleLanguage = useCallback((lang: 'en-us' | 'ru') => {
     setLanguage(lang);
