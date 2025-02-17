@@ -1,0 +1,25 @@
+.social-links {
+    display: flex;
+    gap: 12px;
+    list-style-type: none;
+    margin: 32px 0;
+    padding: 0;
+}
+
+.social-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    background: #87be73;;
+    color: #111;
+
+}
+
+.social-link:hover {
+    color: inherit;
+}

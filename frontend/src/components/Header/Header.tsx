@@ -9,6 +9,7 @@ import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher.tsx';
 import MyLink from '../MyLink/MyLink.tsx';
 import './Header.css';
 import { useLocation } from 'react-router-dom';
+import SocialLinks from '../ SocialLinks/ SocialLinks.tsx';
 
 interface MenuItem {
   name: string;
@@ -33,6 +34,7 @@ interface HeaderData {
   buttonname?: string;
   buttonlink?: { url: string };
   buttonicon?: { url: string };
+  // socialuid: { uid: string };
   body: Slice[];
 }
 
@@ -178,6 +180,7 @@ const Header = () => {
                 </li>
               )}
             </ul>
+            {menuOpen && <SocialLinks />}
           </nav>
           <div className="header__actions">
             <LanguageSwitcher />
