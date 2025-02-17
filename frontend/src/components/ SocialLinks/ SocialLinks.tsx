@@ -1,11 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useSinglePrismicDocument } from '@prismicio/react';
-import {
-  FaInstagram,
-  FaTelegramPlane,
-  FaWhatsapp,
-  FaYoutube,
-} from 'react-icons/fa';
 import { PrismicDocument } from '@prismicio/client';
 import { useLanguage } from '../../app/hooks/useLanguage.ts';
 import './SocialLinks.css';
@@ -13,6 +7,7 @@ import './SocialLinks.css';
 interface SocialLink {
   name: string;
   link: { url: string };
+  icon: { url: string };
 }
 
 interface SocialData {
@@ -38,31 +33,16 @@ const SocialLinks = () => {
     }
   }, [document]);
 
-  console.log('social document', document);
-
-  const getIcon = (name: string) => {
-    switch (name) {
-      case 'telegram':
-        return <FaTelegramPlane />;
-      case 'whatsapp':
-        return <FaWhatsapp />;
-      case 'instagram':
-        return <FaInstagram />;
-      case 'youtube':
-        return <FaYoutube />;
-      default:
-        return null;
-    }
-  };
-
   if (!socialData || !socialData.sociallist) {
     return null; // Возвращаем null, если данных нет
   }
 
+  console.log('socialData', socialData);
+
   return (
     <ul className="social-links">
       {socialData.sociallist.map((social) => {
-        const { name, link } = social;
+        const { name, link, icon } = social;
         if (link.url) {
           return (
             <li key={name}>
@@ -71,9 +51,8 @@ const SocialLinks = () => {
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-              >
-                {getIcon(name)}
-              </a>
+                style={{ backgroundImage: `url(${icon.url})` }}
+              />
             </li>
           );
         }
