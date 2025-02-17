@@ -179,7 +179,11 @@ const Header = () => {
                 </li>
               )}
             </ul>
-            {menuOpen && <SocialLinks />}
+            {menuOpen && (
+              <div className="social-links">
+                <SocialLinks />
+              </div>
+            )}
           </nav>
           <div className="header__actions">
             <LanguageSwitcher />
