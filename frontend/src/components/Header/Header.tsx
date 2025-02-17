@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react';
-import { IoClose, IoMenu } from 'react-icons/io5';
 import { useSinglePrismicDocument } from '@prismicio/react';
 import { PrismicDocument } from '@prismicio/client';
 import { LanguageContext } from '../../app/contexts/LanguageContext.tsx';
@@ -185,11 +184,7 @@ const Header = () => {
           <div className="header__actions">
             <LanguageSwitcher />
             <button className="header__menu" onClick={toggleMenu}>
-              {menuOpen ? (
-                <IoClose className="header__menu-icon" />
-              ) : (
-                <IoMenu className="header__menu-icon" />
-              )}
+              <span className={`icon ${menuOpen ? 'open' : ''}`}></span>
             </button>
           </div>
         </div>

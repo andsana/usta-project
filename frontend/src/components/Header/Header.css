@@ -156,20 +156,62 @@
     margin: 16px 0 16px 24px;
 }
 
+
+/*Бургер-кнопка*/
 .header__menu {
     display: flex;
     align-items: center;
     background: inherit;
     border: none;
-    padding: 8px;
+    color: #111;
+    padding: 0 8px;
     z-index: 5;
+    cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
-.header__menu-icon {
-    background: inherit;
-    border: none;
-    font-size: 24px;
+.header__menu .icon {
+    position: relative;
+    width: 18px;
+    height: 2px;
+    background-color: #111;
+    display: block;
+    transition: all 0.3s ease;
 }
+
+.header__menu .icon::before,
+.header__menu .icon::after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 2px;
+    background-color: #111;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.header__menu .icon::before {
+    top: -6px;
+}
+
+.header__menu .icon::after {
+    top: 6px;
+}
+
+.header__menu .icon.open {
+    background-color: transparent;
+}
+
+.header__menu .icon.open::before {
+    transform: rotate(45deg);
+    top: 0;
+}
+
+.header__menu .icon.open::after {
+    transform: rotate(-45deg);
+    top: 0;
+}
+
 
 /* Оверлей */
 .overlay {
