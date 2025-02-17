@@ -180,7 +180,7 @@ const Header = () => {
               )}
             </ul>
             {menuOpen && (
-              <div className="social-links">
+              <div className="header__social-links">
                 <SocialLinks />
               </div>
             )}

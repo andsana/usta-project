@@ -25,6 +25,10 @@
     max-height: 100%;
 }
 
+.header__social-links {
+    margin: 32px 0;
+}
+
 .header__inner {
     display: flex;
     align-items: center;
@@ -252,10 +256,6 @@
     .header__nav {
         padding: 4rem;
         top: 72px;
-    }
-
-    .social-links {
-        margin: 32px 0;
     }
 
     .overlay {

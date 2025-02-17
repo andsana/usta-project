@@ -8,8 +8,8 @@
 
 .social-link {
     display: inline-block;
-    width: 40px;
-    height: 40px;
+    width: 28px;
+    height: 28px;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -17,4 +17,11 @@
 
 .social-link:hover {
     color: inherit;
+}
+
+@media (min-width: 961px) {
+    .social-link {
+        width: 40px;
+        height: 40px;
+    }
 }
