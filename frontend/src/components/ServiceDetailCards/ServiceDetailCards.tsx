@@ -3,6 +3,7 @@ import './ServiceDetailCards.css';
 
 export interface ListItem {
   text: string;
+  spans?: Array<{ start: number; end: number; type: string }>;
 }
 
 export interface ServiceCardsItem {
@@ -21,6 +22,36 @@ export interface ServiceCardsProps {
 }
 
 const ServiceDetailCards: React.FC<ServiceCardsProps> = ({ slice }) => {
+  const renderText = (
+    text: string,
+    spans?: Array<{ start: number; end: number; type: string }>,
+  ) => {
+    if (!spans || spans.length === 0) {
+      return text;
+    }
+
+    const formattedText = [];
+    let lastIndex = 0;
+
+    spans.forEach((span, index) => {
+      const beforeText = text.slice(lastIndex, span.start);
+      const boldText = text.slice(span.start, span.end);
+
+      if (beforeText) {
+        formattedText.push(beforeText);
+      }
+
+      formattedText.push(<strong key={index}>{boldText}</strong>);
+      lastIndex = span.end;
+    });
+
+    if (lastIndex < text.length) {
+      formattedText.push(text.slice(lastIndex));
+    }
+
+    return formattedText;
+  };
+
   return (
     <div className="service-cards__container">
       <div className="service-cards__col-image">
@@ -41,7 +72,9 @@ const ServiceDetailCards: React.FC<ServiceCardsProps> = ({ slice }) => {
             {
               <ul>
                 {item.list.map((listItem, index) => (
-                  <li key={index}>{listItem.text}</li>
+                  <li key={index}>
+                    {renderText(listItem.text, listItem.spans)}
+                  </li>
                 ))}
               </ul>
             }
