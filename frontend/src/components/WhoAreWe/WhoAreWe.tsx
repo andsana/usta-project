@@ -23,7 +23,7 @@ const WhoAreWe: React.FC<WhoAreWeProps> = ({ slice }) => {
   }
 
   return (
-    <div id="whoAreWe" className="who-are-we__container">
+    <div id="#about-us" className="who-are-we__container">
       <div className="who-are-we__col-wrapper">
         <div className="who-are-we__col">
           <h2 className="who-are-we__col-title">{slice.primary.title}</h2>
