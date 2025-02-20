@@ -13,8 +13,8 @@ import './Header.css';
 
 interface MenuItem {
   name: string;
-  link: { url?: string };
-  uid: { uid?: string };
+  link: { url: string } | null;
+  linkuid: { uid: string } | null;
 }
 
 interface SubMenuItem {
@@ -32,9 +32,6 @@ interface Slice {
 interface HeaderData {
   logo: { url: string };
   logolink: { url: string };
-  buttonname?: string;
-  buttonlink?: { url: string };
-  buttonicon?: { url: string };
   body: Slice[];
 }
 
@@ -122,17 +119,17 @@ const Header = () => {
 
     return (
       <li key={id}>
-        {primary.uid.uid ? (
-          <MyLink className="header__nav-link" to={primary.uid.uid}>
+        {primary.linkuid && primary.linkuid.uid ? (
+          <MyLink className="header__nav-link" to={`/${primary.linkuid.uid}`}>
             {primary.name}
           </MyLink>
-        ) : (
+        ) : primary.link && primary.link.url ? (
           <MyButton
             className="header__nav-link"
             linkName={primary.name}
             linkUrl={primary.link.url}
           />
-        )}
+        ) : null}
       </li>
     );
   };
