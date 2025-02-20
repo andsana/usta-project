@@ -163,12 +163,15 @@
 
 /*Бургер-кнопка*/
 .header__menu {
+    position: relative;
     display: flex;
     align-items: center;
     background: inherit;
     border: none;
     color: #111;
-    padding: 0 8px;
+    width: 24px;
+    height: 24px;
+    padding: 0;
     z-index: 5;
     cursor: pointer;
     transition: transform 0.3s ease;
@@ -187,6 +190,7 @@
 .header__menu .icon::after {
     content: '';
     position: absolute;
+    left: 0;
     width: 18px;
     height: 2px;
     background-color: #111;
@@ -305,8 +309,7 @@
         margin: 0;
     }
 
-    .header__nav-link::after,
-    .header__message::after {
+    .header__nav-link::after {
         content: '';
         position: absolute;
         bottom: -4px;
