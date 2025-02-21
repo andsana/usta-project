@@ -22,34 +22,32 @@ export interface ServiceCardsProps {
 }
 
 const ServiceDetailCards: React.FC<ServiceCardsProps> = ({ slice }) => {
+  if (!slice || !slice.primary || !slice.items) return null;
+
   const renderText = (
     text: string,
     spans?: Array<{ start: number; end: number; type: string }>,
   ) => {
-    if (!spans || spans.length === 0) {
-      return text;
-    }
+    if (!spans || spans.length === 0) return text;
 
-    const formattedText = [];
-    let lastIndex = 0;
+    return spans
+      .reduce<{ elements: React.ReactNode[]; lastIndex: number }>(
+        (acc, span, index) => {
+          const beforeText = text.slice(acc.lastIndex, span.start);
+          const boldText = text.slice(span.start, span.end);
 
-    spans.forEach((span, index) => {
-      const beforeText = text.slice(lastIndex, span.start);
-      const boldText = text.slice(span.start, span.end);
-
-      if (beforeText) {
-        formattedText.push(beforeText);
-      }
-
-      formattedText.push(<strong key={index}>{boldText}</strong>);
-      lastIndex = span.end;
-    });
-
-    if (lastIndex < text.length) {
-      formattedText.push(text.slice(lastIndex));
-    }
-
-    return formattedText;
+          return {
+            elements: [
+              ...acc.elements,
+              beforeText && <span key={`before-${index}`}>{beforeText}</span>,
+              <strong key={`bold-${index}`}>{boldText}</strong>,
+            ],
+            lastIndex: span.end,
+          };
+        },
+        { elements: [], lastIndex: 0 },
+      )
+      .elements.concat(text.slice(spans[spans.length - 1].end));
   };
 
   return (
@@ -59,6 +57,7 @@ const ServiceDetailCards: React.FC<ServiceCardsProps> = ({ slice }) => {
           <img
             src={slice.primary.imagecard.url}
             alt={slice.primary.imagecard.alt || slice.primary.titlecard}
+            loading="lazy"
           />
         </div>
       </div>
@@ -69,15 +68,11 @@ const ServiceDetailCards: React.FC<ServiceCardsProps> = ({ slice }) => {
             {item.subtitle && (
               <p className="service-cards__paragraph">{item.subtitle}</p>
             )}
-            {
-              <ul>
-                {item.list.map((listItem, index) => (
-                  <li key={index}>
-                    {renderText(listItem.text, listItem.spans)}
-                  </li>
-                ))}
-              </ul>
-            }
+            <ul>
+              {item.list.map((listItem, index) => (
+                <li key={index}>{renderText(listItem.text, listItem.spans)}</li>
+              ))}
+            </ul>
           </div>
         ))}
       </div>
