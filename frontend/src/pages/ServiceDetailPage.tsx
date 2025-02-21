@@ -1,41 +1,103 @@
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { SliceZone, usePrismicDocumentByUID } from '@prismicio/react';
-import { useEffect } from 'react';
 import { useLanguage } from '../app/hooks/useLanguage.ts';
-import { useLoading } from '../app/hooks/useLoading.ts';
 import { pageComponents } from '../app/constants/pageComponents.ts';
 import ServiceDetailHeader from '../components/ServiceDetailHeader/ServiceDetailHeader.tsx';
+import NoPageMessage from '../components/NoPageMessage/NoPageMessage.tsx';
+import { useEffect, useState } from 'react';
+
+const translations = {
+  ru: {
+    noPage: 'Страница не найдена.',
+  },
+  'en-us': {
+    noPage: 'No page found.',
+  },
+};
 
 const ServiceDetailPage = () => {
   const { uid } = useParams();
   const { language } = useLanguage();
-  const { setLoading } = useLoading();
+  const location = useLocation();
 
-  const [document, { state }] = usePrismicDocumentByUID('servicedetail', uid || '', { language });
-  console.log('servicedetail', document);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [page, { state }] = usePrismicDocumentByUID(
+    'servicedetail',
+    uid || '',
+    { lang: language },
+  );
+
+  // Устанавливаем фавикон в спиннер при смене страницы
+  useEffect(() => {
+    const favicon = document.querySelector('link[rel="icon"]');
+    if (favicon) {
+      favicon.setAttribute('href', '/spinner.svg');
+    }
+    setIsLoading(true);
+  }, [location.pathname]);
 
   useEffect(() => {
-    setLoading(state === 'loading');
-  }, [state, setLoading]);
+    if (page) {
+      document.title = page.data.title;
 
-  if (!document) return <p>Страница не найдена</p>;
+      const images = Array.from(document.querySelectorAll('img'));
+      const imagePromises = images.map(
+        (img) =>
+          new Promise((resolve) => {
+            if (img.complete) {
+              resolve(null);
+            } else {
+              const onLoadOrError = () => {
+                resolve(null);
+                img.onload = null;
+                img.onerror = null;
+              };
+              img.onload = onLoadOrError;
+              img.onerror = onLoadOrError;
+            }
+          }),
+      );
+
+      Promise.all(imagePromises).then(() => {
+        setIsLoading(false);
+      });
+    }
+  }, [page]);
+
+  useEffect(() => {
+    const favicon = document.querySelector('link[rel="icon"]');
+    if (favicon) {
+      favicon.setAttribute('href', isLoading ? '/spinner.svg' : '/favicon.png');
+    }
+  }, [isLoading]);
+
+  if (state === 'loading' || isLoading) {
+    return null;
+  }
+
+  if (state === 'failed') {
+    return <NoPageMessage message={translations[language].noPage} />;
+  }
 
   return (
-    <div className="service-detail-container">
-      {/* Верхний блок с заголовком и картинкой */}
-      <ServiceDetailHeader
-        title={document.data.title}
-        preview={document.data.preview}
-        image={document.data.image}
-      />
+    <div>
+      {page && (
+        <div className="service-detail-container">
+          <ServiceDetailHeader
+            title={page.data.title}
+            preview={page.data.preview}
+            image={page.data.image}
+          />
 
-      {/* Блок слайсов (контент) */}
-      <div className="service-detail-content">
-        <SliceZone
-          slices={document.data.body}
-          components={{ ...pageComponents }}
-        />
-      </div>
+          <div className="service-detail-content">
+            <SliceZone
+              slices={page.data.body}
+              components={{ ...pageComponents }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
