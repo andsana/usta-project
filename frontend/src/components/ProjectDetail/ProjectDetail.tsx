@@ -85,9 +85,6 @@ const ProjectDetail = () => {
   const projectDetailData: ProjectDetailData = document.data;
   const filteredSdg = projectDetailData.sdg.filter((item) => item.sdgitem?.url);
 
-  console.log('projectDetailData.sdg', projectDetailData.sdg);
-  console.log('projectDetailData.sdg.length = ', projectDetailData.sdg.length);
-
   return (
     <div className="project-detail">
       <div className="project-detail__breadcrumbs container">
