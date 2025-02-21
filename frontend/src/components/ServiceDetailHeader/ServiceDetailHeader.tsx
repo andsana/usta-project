@@ -13,7 +13,6 @@ const ServiceDetailHeader: React.FC<ServiceDetailHeaderProps> = ({
   preview,
   image,
 }) => {
-  console.log('ServiceDetailHeader image', image);
 
   return (
       <div className="serviceDetailHeader">
