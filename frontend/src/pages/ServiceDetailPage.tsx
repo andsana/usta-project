@@ -1,19 +1,11 @@
+import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { SliceZone, usePrismicDocumentByUID } from '@prismicio/react';
 import { useLanguage } from '../app/hooks/useLanguage.ts';
 import { pageComponents } from '../app/constants/pageComponents.ts';
+import { translations } from '../app/constants/translations.ts';
 import ServiceDetailHeader from '../components/ServiceDetailHeader/ServiceDetailHeader.tsx';
 import NoPageMessage from '../components/NoPageMessage/NoPageMessage.tsx';
-import { useEffect, useState } from 'react';
-
-const translations = {
-  ru: {
-    noPage: 'Страница не найдена.',
-  },
-  'en-us': {
-    noPage: 'No page found.',
-  },
-};
 
 const ServiceDetailPage = () => {
   const { uid } = useParams();
@@ -81,7 +73,7 @@ const ServiceDetailPage = () => {
   }
 
   return (
-    <div>
+    <>
       {page && (
         <div className="service-detail-container">
           <ServiceDetailHeader
@@ -98,7 +90,7 @@ const ServiceDetailPage = () => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
