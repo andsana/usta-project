@@ -1,0 +1,15 @@
+.no-message-wrapper {
+    max-width: 1264px;
+    padding: 0 16px;
+    margin: 0 auto;
+}
+
+.no-message {
+    display: flex;
+    justify-content: flex-start;
+    font-size: 20px;
+    color: #777;
+    font-weight: normal;
+    text-align: center;
+    padding: 24px 0;
+}
