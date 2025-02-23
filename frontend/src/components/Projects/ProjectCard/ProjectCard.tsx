@@ -1,8 +1,8 @@
 import React from 'react';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { useLanguage } from '../../../app/hooks/useLanguage.ts';
-import MyLink from '../../MyLink/MyLink.tsx';
 import { transliterate } from '../../../app/utils/transliterate.ts';
+import MyLink from '../../MyLink/MyLink.tsx';
 import './ProjectCard.css';
 
 export interface Card {
@@ -56,6 +56,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           className="project-card__image"
           src={project.image.url}
           alt={project.image.alt}
+          loading="lazy"
         />
       </div>
     </>
