@@ -1,21 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { SliceZone, usePrismicDocumentByUID } from '@prismicio/react';
-
 import { useLanguage } from '../app/hooks/useLanguage.ts';
-
 import { pageComponents } from '../app/constants/pageComponents.ts';
 import { translations } from '../app/constants/translations.ts';
-
 import ServiceDetailHeader from '../components/ServiceDetailHeader/ServiceDetailHeader.tsx';
-import NoPageMessage from '../components/NoPageMessage/NoPageMessage.tsx';
+import NoContentMessage from '../components/NoContentMessage/NoContentMessage.tsx';
 
 const ServiceDetailPage = () => {
   const { uid } = useParams();
   const { language } = useLanguage();
   const location = useLocation();
-
-  const [isLoading, setIsLoading] = useState(true);
 
   const [page, { state }] = usePrismicDocumentByUID(
     'servicedetail',
@@ -27,12 +22,11 @@ const ServiceDetailPage = () => {
   const updateFavicon = (isLoading: boolean) => {
     const favicon = document.querySelector('link[rel="icon"]');
     if (favicon) {
-      favicon.setAttribute('href', isLoading ? '/spinner.svg' : '/favicon.png');
+      favicon.setAttribute('href', isLoading ? '/spinner.gif' : '/favicon.svg');
     }
   };
 
-  // Ожидание загрузки изображений
-  const waitForImagesToLoad = () => {
+  const waitForImagesToLoad = useCallback(() => {
     const images = Array.from(document.querySelectorAll('img'));
     const imagePromises = images.map(
       (img) =>
@@ -45,32 +39,31 @@ const ServiceDetailPage = () => {
         }),
     );
 
-    Promise.all(imagePromises).then(() => setIsLoading(false));
-  };
+    Promise.all(imagePromises).then(() => updateFavicon(false));
+  }, []);
 
   // Устанавливаем фавикон в спиннер при смене страницы
   useEffect(() => {
-    updateFavicon(true);
-    setIsLoading(true);
+    updateFavicon(true); // Показываем спиннер
   }, [location.pathname]);
 
   useEffect(() => {
-    if (page) {
+    if (state === 'loading') {
+      updateFavicon(true);
+    } else if (state === 'failed') {
+      updateFavicon(false);
+    } else if (page) {
       document.title = page.data.title;
       waitForImagesToLoad();
     }
-  }, [page]);
-
-  useEffect(() => {
-    updateFavicon(isLoading);
-  }, [isLoading]);
+  }, [state, page, waitForImagesToLoad]);
 
   if (state === 'loading') {
     return null;
   }
 
   if (state === 'failed') {
-    return <NoPageMessage message={translations[language].noPage} />;
+    return <NoContentMessage message={translations[language].noPage} />;
   }
 
   return (
