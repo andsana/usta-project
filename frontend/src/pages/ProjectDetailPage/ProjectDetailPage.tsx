@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { usePrismicDocumentByUID } from '@prismicio/react';
 import { PrismicDocument } from '@prismicio/client';
@@ -66,7 +67,6 @@ const ProjectDetailPage = () => {
   const { uid } = useParams();
   const location = useLocation();
 
-  // Состояние для карточек проекта
   const [projectCardsDocument, { state: projectCardsState }] =
     usePrismicDocumentByUID<ProjectCardsDocument>(
       'projectcard',
@@ -77,15 +77,12 @@ const ProjectDetailPage = () => {
     );
 
   const projectStateData: ProjectCard = location.state?.projectData;
-
   const projectData = projectCardsDocument?.data.body
     .find((slice) => slice.items.some((item) => item.projectdetailuid === uid))
     ?.items.find((item) => item.projectdetailuid === uid);
 
-  // Выбор данных для проекта из состояния или документа
   const project = projectStateData || projectData;
 
-  // Получаем детали проекта, если проект уже загружен
   const [projectDetailPageDocument, { state: projectDetailPageState }] =
     usePrismicDocumentByUID<ProjectDetailPageDocument>(
       'projectcarddetail',
@@ -94,11 +91,51 @@ const ProjectDetailPage = () => {
     );
 
   const projectDetailPageData = projectDetailPageDocument?.data;
-
-  // Фильтрация элементов SDG
   const filteredSdgItems = projectDetailPageData?.sdg.filter(
     (item) => item.sdgitem?.url,
   );
+
+  const updateFavicon = (isLoading: boolean) => {
+    const favicon = document.querySelector('link[rel="icon"]');
+    if (favicon) {
+      favicon.setAttribute('href', isLoading ? '/spinner.gif' : '/favicon.svg');
+    }
+  };
+
+  // Объединение логики для обновления состояния загрузки и фавикона
+  useEffect(() => {
+    const isLoadingState =
+      projectCardsState === 'loading' || projectDetailPageState === 'loading';
+
+    // Обновляем фавикон в зависимости от состояния загрузки
+    updateFavicon(isLoadingState);
+
+    if (projectCardsState === 'failed' || projectDetailPageState === 'failed') {
+      updateFavicon(false);
+    }
+
+    if (projectCardsState === 'loaded' && projectDetailPageState === 'loaded') {
+      updateFavicon(false);
+    }
+  }, [projectCardsState, projectDetailPageState]);
+
+  useEffect(() => {
+    if (project) {
+      document.title = project.title;
+      const images = Array.from(document.querySelectorAll('img'));
+      const imagePromises = images.map(
+        (img) =>
+          new Promise((resolve) => {
+            if (img.complete) resolve(null);
+            else img.onload = img.onerror = () => resolve(null);
+          }),
+      );
+
+      Promise.all(imagePromises).then(() => {
+        updateFavicon(false);
+      });
+    }
+  }, [project]);
 
   const renderDetailItem = (title: string, content: string) => (
     <div className="project-detail__col-item">
@@ -107,17 +144,12 @@ const ProjectDetailPage = () => {
     </div>
   );
 
-  // Показать сообщение при загрузке или ошибке
-  if (projectCardsState === 'loading' || projectDetailPageState === 'loading') {
-    return null;
-  }
-
-  if (projectCardsState === 'failed' || projectDetailPageState === 'failed') {
-    return <NoContentMessage message={translations[language].noProject} />;
-  }
-
-  // Показать сообщение, если проект или данные не найдены
-  if (!project || !projectDetailPageData) {
+  if (
+    !project ||
+    !projectDetailPageData ||
+    projectCardsState === 'failed' ||
+    projectDetailPageState === 'failed'
+  ) {
     return <NoContentMessage message={translations[language].noProject} />;
   }
 
@@ -191,7 +223,7 @@ const ProjectDetailPage = () => {
           {filteredSdgItems && filteredSdgItems.length > 0 && (
             <div className="icons-list">
               {filteredSdgItems.map((item, index: number) => (
-                <div className="icon-wrapper"  key={index}>
+                <div className="icon-wrapper" key={index}>
                   <img
                     className="icon"
                     src={item.sdgitem.url}
