@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/png" href="/favicon.png" id="favicon" />
+  <link rel="icon" type="image/gif" href="/favicon.svg" id="favicon" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>USTA INTERNATIONAL</title>
 </head>
@@ -15,7 +15,7 @@
   function setLoadingFavicon() {
     const favicon = document.getElementById('favicon');
     if (favicon) {
-      favicon.href = '/spinner.svg';
+      favicon.href = '/spinner.gif';
     }
   }
 
@@ -23,7 +23,7 @@
   function resetFavicon() {
     const favicon = document.getElementById('favicon');
     if (favicon) {
-      favicon.href = '/favicon.png';
+      favicon.href = '/favicon.svg';
     }
   }
 
@@ -33,6 +33,5 @@
   // Настроим обработку загрузки страницы
   window.addEventListener('load', resetFavicon);
 </script>
-
 </body>
 </html>
