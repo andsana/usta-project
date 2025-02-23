@@ -34,10 +34,8 @@ const SocialLinks = () => {
   }, [document]);
 
   if (!socialData || !socialData.sociallist) {
-    return null; // Возвращаем null, если данных нет
+    return null;
   }
-
-  console.log('socialData', socialData);
 
   return (
     <ul className="social-links">
