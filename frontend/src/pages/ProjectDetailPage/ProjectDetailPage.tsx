@@ -2,10 +2,10 @@ import { useLocation, useParams } from 'react-router-dom';
 import { usePrismicDocumentByUID } from '@prismicio/react';
 import { PrismicDocument } from '@prismicio/client';
 import { useLanguage } from '../../app/hooks/useLanguage.ts';
-import MyLink from '../MyLink/MyLink.tsx';
-import './ProjectDetailPage.css';
 import { translations } from '../../app/constants/translations.ts';
-import NoPageMessage from '../NoPageMessage/NoPageMessage.tsx';
+import NoContentMessage from '../../components/NoContentMessage/NoContentMessage.tsx';
+import MyLink from '../../components/MyLink/MyLink.tsx';
+import './ProjectDetailPage.css';
 
 interface ProjectCard {
   title: string;
@@ -19,6 +19,7 @@ interface ProjectCard {
 }
 
 interface ProjectCardSlice {
+  id: string;
   slice_type: string;
   items: ProjectCard[];
 }
@@ -42,7 +43,6 @@ interface Slice {
 
 interface SdgItem {
   sdgitem: {
-    id?: string;
     url?: string;
     alt?: string;
   };
@@ -78,10 +78,9 @@ const ProjectDetailPage = () => {
 
   const projectStateData: ProjectCard = location.state?.projectData;
 
-  // Данные для проекта из документа
   const projectData = projectCardsDocument?.data.body
-    .flatMap((slice) => slice.items)
-    .find((item) => item.projectdetailuid === uid);
+    .find((slice) => slice.items.some((item) => item.projectdetailuid === uid))
+    ?.items.find((item) => item.projectdetailuid === uid);
 
   // Выбор данных для проекта из состояния или документа
   const project = projectStateData || projectData;
@@ -114,12 +113,12 @@ const ProjectDetailPage = () => {
   }
 
   if (projectCardsState === 'failed' || projectDetailPageState === 'failed') {
-    return <NoPageMessage message={translations[language].noPage} />;
+    return <NoContentMessage message={translations[language].noProject} />;
   }
 
   // Показать сообщение, если проект или данные не найдены
   if (!project || !projectDetailPageData) {
-    return <NoPageMessage message={translations[language].noPage} />;
+    return <NoContentMessage message={translations[language].noProject} />;
   }
 
   return (
@@ -132,6 +131,15 @@ const ProjectDetailPage = () => {
         <MyLink className="project-detail__breadcrumbs-link" to="/projects">
           Projects
         </MyLink>
+        <span className="project-detail__separator">/</span>
+        {project.category && (
+          <MyLink
+            className="projects__breadcrumbs-link"
+            to={`/projects/${project.category}`}
+          >
+            {project.category}
+          </MyLink>
+        )}
         <span className="project-detail__separator">/</span>
         <span className="project-detail__breadcrumbs-current">
           {project.title}
@@ -182,8 +190,8 @@ const ProjectDetailPage = () => {
 
           {filteredSdgItems && filteredSdgItems.length > 0 && (
             <div className="icons-list">
-              {filteredSdgItems.map((item) => (
-                <div className="icon-wrapper" key={item.sdgitem.id}>
+              {filteredSdgItems.map((item, index: number) => (
+                <div className="icon-wrapper"  key={index}>
                   <img
                     className="icon"
                     src={item.sdgitem.url}
