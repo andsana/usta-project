@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SliceZone, usePrismicDocumentByUID } from '@prismicio/react';
-
 import { useLanguage } from '../app/hooks/useLanguage.ts';
 import { pageComponents } from '../app/constants/pageComponents.ts';
 import { translations } from '../app/constants/translations.ts';
-
-import NoPageMessage from '../components/NoPageMessage/NoPageMessage.tsx';
+import NoContentMessage from '../components/NoContentMessage/NoContentMessage.tsx';
 
 interface Slice {
   slice_type: string;
@@ -24,10 +22,11 @@ const ProjectsPage = () => {
     lang: language,
   });
 
+  // Обновление фавикона
   const updateFavicon = (isLoading: boolean) => {
     const favicon = document.querySelector('link[rel="icon"]');
     if (favicon) {
-      favicon.setAttribute('href', isLoading ? '/spinner.svg' : '/favicon.png');
+      favicon.setAttribute('href', isLoading ? '/spinner.gif' : '/favicon.svg');
     }
   };
 
@@ -73,7 +72,7 @@ const ProjectsPage = () => {
   }
 
   if (state === 'failed') {
-    return <NoPageMessage message={translations[language].noPage} />;
+    return <NoContentMessage message={translations[language].noProjects} />;
   }
 
   return (
