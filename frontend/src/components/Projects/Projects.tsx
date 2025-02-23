@@ -1,26 +1,16 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
+import Select from 'react-select';
 import { usePrismicDocumentByUID } from '@prismicio/react';
 import { PrismicDocument } from '@prismicio/client';
-import { useLoading } from '../../app/hooks/useLoading.ts';
-import Select from 'react-select';
 import { useLanguage } from '../../app/hooks/useLanguage.ts';
 import { useScreenDetector } from '../../app/hooks/useScreenDetector.ts';
+import { translations } from '../../app/constants/translations.ts';
 import MyLink from '../MyLink/MyLink.tsx';
 import Pagination from '../Pagination/Pagination.tsx';
 import ProjectCard, { Card } from '../Projects/ProjectCard/ProjectCard.tsx';
+import NoContentMessage from '../NoContentMessage/NoContentMessage.tsx';
 import './Projects.css';
-
-const translations = {
-  ru: {
-    noProjects: 'Проекты не найдены.',
-    allProjects: 'Смотреть все',
-  },
-  'en-us': {
-    noProjects: 'No projects found.',
-    allProjects: 'See all',
-  },
-};
 
 interface ProjectCardSlice {
   items: Card[];
@@ -53,8 +43,8 @@ export interface ProjectHeader {
 const Projects: React.FC<ProjectHeader> = ({ slice }) => {
   const { isMobile } = useScreenDetector();
   const { language } = useLanguage();
-  const { setLoading } = useLoading();
   const location = useLocation();
+  const { category } = useParams();
 
   const ALL_PROJECTS = translations[language].allProjects;
   const ITEMS_PER_PAGE = 9;
@@ -77,29 +67,49 @@ const Projects: React.FC<ProjectHeader> = ({ slice }) => {
   );
 
   const uniqueCategories = useMemo(() => {
-    const categories = document?.data?.body[0]?.items
-      ? [
-          { value: ALL_PROJECTS, label: ALL_PROJECTS },
-          ...Array.from(
-            new Set(
-              document.data.body[0].items.map((item) => item.category) || [],
-            ),
-          ),
-        ]
-      : [{ value: ALL_PROJECTS, label: ALL_PROJECTS }];
-    return categories.map((category) =>
-      typeof category === 'string'
-        ? { value: category, label: category }
-        : category,
-    );
+    if (!document?.data?.body[0]?.items?.length) {
+      return [{ value: ALL_PROJECTS, label: ALL_PROJECTS }];
+    }
+
+    const categories = [
+      ...new Set(
+        document.data.body[0].items
+          .map((item) => item.category)
+          .filter(Boolean),
+      ),
+    ].map((category) => ({ value: category, label: category }));
+
+    return [{ value: ALL_PROJECTS, label: ALL_PROJECTS }, ...categories];
   }, [document, ALL_PROJECTS]);
 
   useEffect(() => {
-    setLoading(state === 'loading');
-  }, [state, setLoading]);
+    if (category) {
+      setActiveCategory({ value: category, label: category });
+    } else {
+      setActiveCategory({ value: ALL_PROJECTS, label: ALL_PROJECTS });
+    }
+  }, [category, ALL_PROJECTS]);
+
+  const filteredProjects = useMemo(() => {
+    if (!document?.data?.body[0]?.items) return [];
+
+    return document.data.body[0].items.filter((item) => {
+      if (isHomePage) {
+        return item.featured;
+      }
+      return (
+        activeCategory.value === ALL_PROJECTS ||
+        item.category === activeCategory.value
+      );
+    });
+  }, [document, isHomePage, activeCategory, ALL_PROJECTS]);
 
   if (state === 'loading') {
-    return <div>Loading...</div>;
+    return null;
+  }
+
+  if (state === 'failed') {
+    return <NoContentMessage message={translations[language].noProjects} />;
   }
 
   if (!document?.data?.body[0]?.items?.length) {
@@ -109,18 +119,6 @@ const Projects: React.FC<ProjectHeader> = ({ slice }) => {
       </div>
     );
   }
-
-  const filteredProjects: Card[] = document.data.body[0].items.filter(
-    (item) => {
-      if (isHomePage) {
-        return item.featured;
-      }
-      return (
-        activeCategory.value === ALL_PROJECTS ||
-        item.category === activeCategory.value
-      );
-    },
-  );
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const paginatedProjects = filteredProjects.slice(
@@ -194,7 +192,7 @@ const Projects: React.FC<ProjectHeader> = ({ slice }) => {
         ))}
       </div>
 
-      {slice.primary.buttonname && slice.primary.buttonlink?.url?.trim() && (
+      {slice.primary.buttonname && slice.primary.buttonlink.url && (
         <MyLink className="projects__button" to={slice.primary.buttonlink.url}>
           {slice.primary.buttonname}
         </MyLink>
