@@ -4,34 +4,15 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/gif" href="/favicon.svg" id="favicon" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>USTA INTERNATIONAL</title>
+  <title id="dynamic-title">Usta International</title>
+  <script>
+    const title = new URLSearchParams(window.location.search).get('title');
+    if (title) document.title = title;
+  </script>
 </head>
 <body>
 <div id="root"></div>
 <script type="module" src="/src/main.tsx"></script>
 
-<script>
-  // Функция для смены фавикона на спиннер при загрузке страницы
-  function setLoadingFavicon() {
-    const favicon = document.getElementById('favicon');
-    if (favicon) {
-      favicon.href = '/spinner.gif';
-    }
-  }
-
-  // Функция для возвращения оригинальной иконки после загрузки
-  function resetFavicon() {
-    const favicon = document.getElementById('favicon');
-    if (favicon) {
-      favicon.href = '/favicon.svg';
-    }
-  }
-
-  // Используем DOMContentLoaded, чтобы сменить фавикон при загрузке DOM
-  document.addEventListener('DOMContentLoaded', setLoadingFavicon);
-
-  // Настроим обработку загрузки страницы
-  window.addEventListener('load', resetFavicon);
-</script>
 </body>
 </html>
