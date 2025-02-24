@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { SliceZone, usePrismicDocumentByUID } from '@prismicio/react';
 import { useLanguage } from '../app/hooks/useLanguage.ts';
 import { pageComponents } from '../app/constants/pageComponents.ts';
@@ -16,21 +17,30 @@ interface Slice {
 const ProjectsPage = () => {
   const { language } = useLanguage();
   const location = useLocation();
-  const [isLoading, setIsLoading] = useState(true);
+  const [favicon, setFavicon] = useState('/spinner.gif');
 
   const [page, { state }] = usePrismicDocumentByUID('page_new', 'projects', {
     lang: language,
   });
 
+  // Вычисляем заголовок страницы
+  const pageTitle: string = page
+    ? page.data.body.find(
+        (slice: Slice) => slice.slice_type === 'projectcardsheader',
+      ).primary.title
+    : 'Usta International';
+
   // Обновление фавикона
   const updateFavicon = (isLoading: boolean) => {
-    const favicon = document.querySelector('link[rel="icon"]');
-    if (favicon) {
-      favicon.setAttribute('href', isLoading ? '/spinner.gif' : '/favicon.svg');
+    const newFavicon = isLoading ? '/spinner.gif' : '/favicon.svg';
+    setFavicon(newFavicon); // Обновляем состояние favicon
+    const faviconElement = document.querySelector('link[rel="icon"]');
+    if (faviconElement) {
+      faviconElement.setAttribute('href', newFavicon);
     }
   };
 
-  const waitForImagesToLoad = () => {
+  const waitForImagesToLoad = useCallback(() => {
     const images = Array.from(document.querySelectorAll('img'));
     const imagePromises = images.map(
       (img) =>
@@ -43,40 +53,38 @@ const ProjectsPage = () => {
         }),
     );
 
-    Promise.all(imagePromises).then(() => setIsLoading(false));
-  };
+    Promise.all(imagePromises).then(() => updateFavicon(false));
+  }, []);
 
+  // Устанавливаем фавикон в спиннер при смене страницы
   useEffect(() => {
-    setIsLoading(true);
-    updateFavicon(true);
+    updateFavicon(true); // Показываем спиннер
   }, [location.pathname]);
 
   useEffect(() => {
-    if (page) {
-      const titleSlice = page.data.body.find(
-        (slice: Slice) => slice.slice_type === 'projectcardsheader',
-      );
-
-      document.title =
-        titleSlice?.primary.title || translations[language].projectsPageTitle;
+    if (state === 'loading') {
+      updateFavicon(true);
+    } else if (state === 'failed') {
+      updateFavicon(false);
+    } else if (page) {
       waitForImagesToLoad();
     }
-  }, [page, language]);
-
-  useEffect(() => {
-    updateFavicon(isLoading);
-  }, [isLoading]);
+  }, [state, page, waitForImagesToLoad, pageTitle]);
 
   if (state === 'loading') {
     return null;
   }
 
   if (state === 'failed') {
-    return <NoContentMessage message={translations[language].noProjects} />;
+    return <NoContentMessage message={translations[language].noPage} />;
   }
 
   return (
     <>
+      <Helmet>
+        <title>{pageTitle}</title>
+        <link rel="icon" href={favicon} />
+      </Helmet>
       {page && (
         <div className="projectPage__container">
           <SliceZone
@@ -88,4 +96,5 @@ const ProjectsPage = () => {
     </>
   );
 };
+
 export default ProjectsPage;
