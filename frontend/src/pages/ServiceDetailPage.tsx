@@ -1,6 +1,7 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { SliceZone, usePrismicDocumentByUID } from '@prismicio/react';
+import { Helmet } from 'react-helmet-async'; // Импортируем Helmet
 import { useLanguage } from '../app/hooks/useLanguage.ts';
 import { pageComponents } from '../app/constants/pageComponents.ts';
 import { translations } from '../app/constants/translations.ts';
@@ -12,6 +13,8 @@ const ServiceDetailPage = () => {
   const { language } = useLanguage();
   const location = useLocation();
 
+  const [favicon, setFavicon] = useState('/spinner.gif');
+
   const [page, { state }] = usePrismicDocumentByUID(
     'servicedetail',
     uid || '',
@@ -20,13 +23,15 @@ const ServiceDetailPage = () => {
 
   // Обновление фавикона
   const updateFavicon = (isLoading: boolean) => {
-    const favicon = document.querySelector('link[rel="icon"]');
-    if (favicon) {
-      favicon.setAttribute('href', isLoading ? '/spinner.gif' : '/favicon.svg');
+    const newFavicon = isLoading ? '/spinner.gif' : '/favicon.svg';
+    setFavicon(newFavicon); // Обновляем состояние favicon
+    const faviconElement = document.querySelector('link[rel="icon"]');
+    if (faviconElement) {
+      faviconElement.setAttribute('href', newFavicon);
     }
   };
 
-  const checkImagesLoaded = useCallback(() => {
+  const waitForImagesToLoad = useCallback(() => {
     const images = Array.from(document.querySelectorAll('img'));
     const imagePromises = images.map(
       (img) =>
@@ -34,40 +39,28 @@ const ServiceDetailPage = () => {
           if (img.complete) {
             resolve(null);
           } else {
-            const onLoadOrError = () => {
-              resolve(null);
-              img.onload = null;
-              img.onerror = null;
-            };
-            img.onload = onLoadOrError;
-            img.onerror = onLoadOrError;
+            img.onload = img.onerror = () => resolve(null);
           }
         }),
     );
 
-    // После загрузки всех изображений убираем спиннер
-    Promise.all(imagePromises).then(() => {
-      updateFavicon(false); // Спиннер исчезает во вкладке
-    });
+    Promise.all(imagePromises).then(() => updateFavicon(false));
   }, []);
 
+  // Устанавливаем фавикон в спиннер при смене страницы
   useEffect(() => {
-    updateFavicon(true); // Показываем спиннер на вкладке при загрузке страницы
+    updateFavicon(true); // Показываем спиннер
   }, [location.pathname]);
 
   useEffect(() => {
     if (state === 'loading') {
-      updateFavicon(true); // Показываем спиннер, когда состояние загрузки
+      updateFavicon(true);
     } else if (state === 'failed') {
-      updateFavicon(false); // В случае ошибки показываем обычный фавикон
+      updateFavicon(false);
     } else if (page) {
-      document.title = page.data.title; // Обновление заголовка страницы
-      const url = new URL(window.location.href);
-      url.searchParams.set('title', page.data.title);
-      window.history.replaceState({}, '', url.toString());
-      checkImagesLoaded(); // Проверка картинок после загрузки контента
+      waitForImagesToLoad();
     }
-  }, [state, page, checkImagesLoaded]);
+  }, [state, page, waitForImagesToLoad]);
 
   if (state === 'loading') {
     return null;
@@ -79,6 +72,10 @@ const ServiceDetailPage = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{page ? page.data.title : 'Usta International'}</title>
+        <link rel="icon" href={favicon} />
+      </Helmet>
       {page && (
         <div className="service-detail-container">
           <ServiceDetailHeader
@@ -100,4 +97,3 @@ const ServiceDetailPage = () => {
 };
 
 export default ServiceDetailPage;
-
