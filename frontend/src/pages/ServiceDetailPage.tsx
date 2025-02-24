@@ -26,7 +26,7 @@ const ServiceDetailPage = () => {
     }
   };
 
-  const waitForImagesToLoad = useCallback(() => {
+  const checkImagesLoaded = useCallback(() => {
     const images = Array.from(document.querySelectorAll('img'));
     const imagePromises = images.map(
       (img) =>
@@ -34,29 +34,40 @@ const ServiceDetailPage = () => {
           if (img.complete) {
             resolve(null);
           } else {
-            img.onload = img.onerror = () => resolve(null);
+            const onLoadOrError = () => {
+              resolve(null);
+              img.onload = null;
+              img.onerror = null;
+            };
+            img.onload = onLoadOrError;
+            img.onerror = onLoadOrError;
           }
         }),
     );
 
-    Promise.all(imagePromises).then(() => updateFavicon(false));
+    // После загрузки всех изображений убираем спиннер
+    Promise.all(imagePromises).then(() => {
+      updateFavicon(false); // Спиннер исчезает во вкладке
+    });
   }, []);
 
-  // Устанавливаем фавикон в спиннер при смене страницы
   useEffect(() => {
-    updateFavicon(true); // Показываем спиннер
+    updateFavicon(true); // Показываем спиннер на вкладке при загрузке страницы
   }, [location.pathname]);
 
   useEffect(() => {
     if (state === 'loading') {
-      updateFavicon(true);
+      updateFavicon(true); // Показываем спиннер, когда состояние загрузки
     } else if (state === 'failed') {
-      updateFavicon(false);
+      updateFavicon(false); // В случае ошибки показываем обычный фавикон
     } else if (page) {
-      document.title = page.data.title;
-      waitForImagesToLoad();
+      document.title = page.data.title; // Обновление заголовка страницы
+      const url = new URL(window.location.href);
+      url.searchParams.set('title', page.data.title);
+      window.history.replaceState({}, '', url.toString());
+      checkImagesLoaded(); // Проверка картинок после загрузки контента
     }
-  }, [state, page, waitForImagesToLoad]);
+  }, [state, page, checkImagesLoaded]);
 
   if (state === 'loading') {
     return null;
@@ -89,3 +100,4 @@ const ServiceDetailPage = () => {
 };
 
 export default ServiceDetailPage;
+
