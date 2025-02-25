@@ -1,25 +1,37 @@
 import React from 'react';
+import { useLanguage } from '../../app/hooks/useLanguage.ts';
+import { translations } from '../../app/constants/translations.ts';
 import MyLink from '../MyLink/MyLink.tsx';
 import './Breadcrumbs.css';
 
 interface Breadcrumb {
   text: string;
-  to: string;
+  to?: string;
 }
 
 interface BreadcrumbsProps {
-  items: Breadcrumb[]; // Массив хлебных крошек
-  currentText?: string; // Текущий текст, который не будет ссылкой
+  items?: Breadcrumb[]; // items теперь необязательны
+  currentText?: string;
 }
 
-const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, currentText }) => {
+const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items = [], currentText }) => { // Указываем пустой массив по умолчанию
+  const { language } = useLanguage();
+
   return (
     <div className="breadcrumbs__container">
-      {items.map((item, index) => (
+      <MyLink className="breadcrumbs__link" to="/">
+        {translations[language].home}
+      </MyLink>
+      <span className="breadcrumbs__separator">/</span>
+      {items.length > 0 && items.map((item, index) => (
         <React.Fragment key={index}>
-          <MyLink className="breadcrumbs__link" to={item.to}>
-            {item.text}
-          </MyLink>
+          {item.to ? (
+            <MyLink className="breadcrumbs__link" to={item.to}>
+              {item.text}
+            </MyLink>
+          ) : (
+            <span>{item.text}</span>
+          )}
           {index < items.length - 1 && (
             <span className="breadcrumbs__separator">/</span>
           )}
