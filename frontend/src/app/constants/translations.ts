@@ -2,7 +2,7 @@ export const translations = {
   ru: {
     noPage: 'Страница не найдена.',
     noProject: 'Информация о проекте недоступна.',
-    noProjects: 'Проекты не найдены.',
+    noProjects: 'Нет доступных проектов.',
     projectsPageTitle: 'Проекты',
     location: 'Страна',
     client: 'Клиент',
@@ -13,7 +13,7 @@ export const translations = {
   'en-us': {
     noPage: 'No page found.',
     noProject: 'Project information is not available.',
-    noProjects: 'No projects found.',
+    noProjects: 'No projects available.',
     projectsPageTitle: 'Projects',
     location: 'Country',
     client: 'Client',

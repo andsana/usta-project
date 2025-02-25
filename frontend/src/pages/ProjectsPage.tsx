@@ -6,6 +6,7 @@ import { useLanguage } from '../app/hooks/useLanguage.ts';
 import { pageComponents } from '../app/constants/pageComponents.ts';
 import { translations } from '../app/constants/translations.ts';
 import NoContentMessage from '../components/NoContentMessage/NoContentMessage.tsx';
+import Breadcrumbs from '../components/Breadcrumbs/Breadcrumbs.tsx';
 
 interface Slice {
   slice_type: string;
@@ -24,20 +25,26 @@ const ProjectsPage = () => {
   });
 
   // Вычисляем заголовок страницы
-  const pageTitle: string = page
-    ? page.data.body.find(
-        (slice: Slice) => slice.slice_type === 'projectcardsheader',
-      ).primary.title
-    : 'Usta International';
+  let pageTitle: string = translations[language].projectsPageTitle;
+
+  if (page) {
+    const headerSlice = page.data.body.find(
+      (slice: Slice) => slice.slice_type === 'projectcardsheader',
+    );
+
+    if (headerSlice?.primary?.title) {
+      pageTitle = headerSlice.primary.title;
+    }
+  }
+
+  const breadcrumbs = (
+    <Breadcrumbs items={[{ text: 'Home', to: '/' }]} currentText={pageTitle} />
+  );
 
   // Обновление фавикона
   const updateFavicon = (isLoading: boolean) => {
     const newFavicon = isLoading ? '/spinner.gif' : '/favicon.svg';
     setFavicon(newFavicon); // Обновляем состояние favicon
-    const faviconElement = document.querySelector('link[rel="icon"]');
-    if (faviconElement) {
-      faviconElement.setAttribute('href', newFavicon);
-    }
   };
 
   const waitForImagesToLoad = useCallback(() => {
@@ -76,7 +83,12 @@ const ProjectsPage = () => {
   }
 
   if (state === 'failed') {
-    return <NoContentMessage message={translations[language].noPage} />;
+    return (
+      <>
+        {breadcrumbs}
+        <NoContentMessage message={translations[language].noProjects} />
+      </>
+    );
   }
 
   return (
@@ -85,6 +97,8 @@ const ProjectsPage = () => {
         <title>{pageTitle}</title>
         <link rel="icon" href={favicon} />
       </Helmet>
+      {breadcrumbs}
+
       {page && (
         <div className="projectPage__container">
           <SliceZone
