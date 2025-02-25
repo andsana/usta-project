@@ -1,10 +1,15 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { usePrismicDocumentByUID } from '@prismicio/react';
 import { PrismicDocument } from '@prismicio/client';
 import { Helmet } from 'react-helmet-async';
 import { useLanguage } from '../../app/hooks/useLanguage.ts';
 import { translations } from '../../app/constants/translations.ts';
+import {
+  createAnimatedFavicon,
+  stopAnimatedFavicon,
+} from '../../app/utils/animatedFavicon.ts';
+import { waitForImagesToLoad } from '../../app/utils/waitForImagesToLoad.ts';
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs.tsx';
 import NoContentMessage from '../../components/NoContentMessage/NoContentMessage.tsx';
 import './ProjectDetailPage.css';
@@ -59,7 +64,6 @@ const ProjectDetailPage = () => {
   const { language } = useLanguage();
   const { uid } = useParams();
   const location = useLocation();
-  const [favicon, setFavicon] = useState('/spinner.gif');
 
   const projectStateData = location.state?.projectData as ProjectCard | null;
 
@@ -83,10 +87,13 @@ const ProjectDetailPage = () => {
       { lang: language },
     );
 
+  const pageTitle: string = project
+    ? project?.title
+    : translations[language].projectDetailPageTitle;
+
   const breadcrumbs = (
     <Breadcrumbs
       items={[
-        { text: 'Home', to: '/' },
         { text: 'Projects', to: '/projects' },
         { text: project?.category || '', to: `/projects/${project?.category}` },
       ]}
@@ -94,36 +101,29 @@ const ProjectDetailPage = () => {
     />
   );
 
-  const updateFavicon = (isLoading: boolean) => {
-    const newFavicon = isLoading ? '/spinner.gif' : '/favicon.svg';
-    setFavicon(newFavicon);
-    document
-      .querySelector('link[rel="icon"]')
-      ?.setAttribute('href', newFavicon);
-  };
-
-  const waitForImagesToLoad = useCallback(() => {
-    const images = Array.from(document.querySelectorAll('img'));
-    Promise.all(
-      images.map((img) =>
-        img.complete
-          ? Promise.resolve()
-          : new Promise((resolve) => (img.onload = img.onerror = resolve)),
-      ),
-    ).then(() => updateFavicon(false));
-  }, []);
-
   useEffect(() => {
-    updateFavicon(true);
+    createAnimatedFavicon();
   }, [location.pathname]);
+
   useEffect(() => {
-    if (projectDetailPageState === 'loading') updateFavicon(true);
-    else if (projectDetailPageState !== 'failed') waitForImagesToLoad();
-  }, [projectDetailPageState, projectDetailPageDocument, waitForImagesToLoad]);
+    if (projectCardsState === 'loading') {
+      createAnimatedFavicon();
+    } else if (projectCardsState !== 'failed') {
+      stopAnimatedFavicon();
+    } else if (projectCardsDocument) {
+      waitForImagesToLoad();
+    }
+  }, [projectCardsState, projectCardsDocument]);
+
   useEffect(() => {
-    if (projectCardsState === 'loading') updateFavicon(true);
-    else if (projectCardsState !== 'failed') waitForImagesToLoad();
-  }, [projectCardsState, projectCardsDocument, waitForImagesToLoad]);
+    if (projectDetailPageState === 'loading') {
+      createAnimatedFavicon();
+    } else if (projectDetailPageState !== 'failed') {
+      stopAnimatedFavicon();
+    } else if (projectDetailPageDocument) {
+      waitForImagesToLoad();
+    }
+  }, [projectDetailPageState, projectDetailPageDocument]);
 
   if (projectCardsState === 'loading' || projectDetailPageState === 'loading')
     return null;
@@ -149,8 +149,7 @@ const ProjectDetailPage = () => {
   return (
     <div className="project-detail">
       <Helmet>
-        <title>{project?.title || 'Usta International'}</title>
-        <link rel="icon" href={favicon} />
+        <title>{pageTitle}</title>
       </Helmet>
       {breadcrumbs}
 
