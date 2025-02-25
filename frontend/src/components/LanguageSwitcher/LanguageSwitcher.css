@@ -51,7 +51,7 @@
 @media (min-width: 961px) {
     .language-switcher__dropdown {
         left: auto;
-        right: 12px;
+        right: 22px;
         transform: translateX(50%);
     }
 
