@@ -1,12 +1,18 @@
 import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { PrismicDocument } from '@prismicio/client';
 import { useSinglePrismicDocument } from '@prismicio/react';
 import { useLanguage } from '../../app/hooks/useLanguage.ts';
-import { useLoading } from '../../app/hooks/useLoading.ts';
-import SocialLinks from '../ SocialLinks/ SocialLinks.tsx';
+import { translations } from '../../app/constants/translations.ts';
+import {
+  createAnimatedFavicon,
+  stopAnimatedFavicon,
+} from '../../app/utils/animatedFavicon.ts';
 import MyLink from '../MyLink/MyLink.tsx';
-import './Footer.css';
 import MyButton from '../MyButton/MyButton.tsx';
+import SocialLinks from '../ SocialLinks/ SocialLinks.tsx';
+import NoContentMessage from '../NoContentMessage/NoContentMessage.tsx';
+import './Footer.css';
 
 interface Item {
   linkname: string;
@@ -38,85 +44,88 @@ interface FooterPrismicDocument extends PrismicDocument {
 
 const Footer = () => {
   const { language } = useLanguage();
-  const { setLoading } = useLoading();
+  const location = useLocation();
 
   const [document, { state }] = useSinglePrismicDocument<FooterPrismicDocument>(
     'footer',
     { lang: language },
   );
+  useEffect(() => {
+    createAnimatedFavicon();
+  }, [location.pathname]);
 
   useEffect(() => {
-    setLoading(state === 'loading');
-  }, [state, setLoading]);
+    if (state === 'loading') createAnimatedFavicon();
+    else stopAnimatedFavicon();
+  }, [state, document]);
 
-  if (!document || !document.data) {
+  if (state === 'loading') {
     return null;
   }
 
-  const {
-    logo,
-    logolink,
-    copyright,
-    iconstitle,
-    mailtitle,
-    emailaddress,
-    body,
-  } = document.data;
+  if (state === 'failed') {
+    return <NoContentMessage message={translations[language].noHeader} />;
+  }
 
   return (
-    <footer id="#footer" className="footer">
-      <div className="footer__container">
-        <div className="footer__content">
-          <MyLink className="footer__logo" to={logolink.url}>
-            <img src={logo.url} alt="Logo" />
-          </MyLink>
-          <div className="footer__content-inner">
-            {body.map((slice) => (
-              <div key={slice.id} className="footer__menu-section">
-                <h6>{slice.primary.title}</h6>
-                <ul>
-                  {slice.items.map((item) => (
-                    <li key={item.linkname}>
-                      {item.linkuid && item.linkuid.uid ? (
-                        <MyLink
-                          className="footer-link"
-                          to={
-                            item.linkuid.uid === 'projects'
-                              ? `/${item.linkuid.uid}`
-                              : `/services/${item.linkuid.uid}`
-                          }
-                        >
-                          {item.linkname}
-                        </MyLink>
-                      ) : item.link && item.link.url ? (
-                        <MyButton
-                          className={'footer-link'}
-                          linkName={item.linkname}
-                          linkUrl={item.link.url}
-                        />
-                      ) : null}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-            <div className="footer__contact">
-              <div className="footer__contact-social">
-                <h6>{iconstitle}</h6>
-                <SocialLinks />
-              </div>
-              <div className="footer__contact-mail">
-                <strong>{mailtitle}: </strong>
-                <a className="footer-link" href={`mailto:${emailaddress}`}>
-                  {emailaddress}
-                </a>
+    document && (
+      <footer id="#footer" className="footer">
+        <div className="footer__container">
+          <div className="footer__content">
+            <MyLink className="footer__logo" to={document.data.logolink.url}>
+              <img src={document.data.logo.url} alt="Logo" />
+            </MyLink>
+            <div className="footer__content-inner">
+              {document.data.body.map((slice) => (
+                <div key={slice.id} className="footer__menu-section">
+                  <h6>{slice.primary.title}</h6>
+                  <ul>
+                    {slice.items.map((item) => (
+                      <li key={item.linkname}>
+                        {item.linkuid && item.linkuid.uid ? (
+                          <MyLink
+                            className="footer-link"
+                            to={
+                              item.linkuid.uid === 'projects'
+                                ? `/${item.linkuid.uid}`
+                                : `/services/${item.linkuid.uid}`
+                            }
+                          >
+                            {item.linkname}
+                          </MyLink>
+                        ) : item.link && item.link.url ? (
+                          <MyButton
+                            className={'footer-link'}
+                            linkName={item.linkname}
+                            linkUrl={item.link.url}
+                          />
+                        ) : null}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+              <div className="footer__contact">
+                <div className="footer__contact-social">
+                  <h6>{document.data.iconstitle}</h6>
+                  <SocialLinks />
+                </div>
+                <div className="footer__contact-mail">
+                  <strong>{document.data.mailtitle}: </strong>
+                  <a
+                    className="footer-link"
+                    href={`mailto:${document.data.emailaddress}`}
+                  >
+                    {document.data.emailaddress}
+                  </a>
+                </div>
               </div>
             </div>
           </div>
+          <span className="footer__copyright">{document.data.copyright}</span>
         </div>
-        <span className="footer__copyright">{copyright}</span>
-      </div>
-    </footer>
+      </footer>
+    )
   );
 };
 
