@@ -1,17 +1,19 @@
 import React from 'react';
-import { useLanguage } from '../../app/hooks/useLanguage.ts';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useLanguage } from '../../app/hooks/useLanguage.ts';
 
 interface MyButtonProps {
   linkUrl?: string;
   linkName: string;
   className?: string;
+  closeMenu?: () => void;
 }
 
 const MyButton: React.FC<MyButtonProps> = ({
   linkUrl,
   linkName,
   className,
+  closeMenu,
 }) => {
   const { language } = useLanguage();
   const location = useLocation();
@@ -33,6 +35,10 @@ const MyButton: React.FC<MyButtonProps> = ({
       navigate(homePath, {
         state: { scrollTo: linkUrl },
       });
+    }
+    // Закрыть меню после клика
+    if (closeMenu) {
+      closeMenu();
     }
   };
 
