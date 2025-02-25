@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Select from 'react-select';
 import { usePrismicDocumentByUID } from '@prismicio/react';
 import { PrismicDocument } from '@prismicio/client';
@@ -43,7 +43,6 @@ export interface ProjectHeader {
 const Projects: React.FC<ProjectHeader> = ({ slice }) => {
   const { isMobile } = useScreenDetector();
   const { language } = useLanguage();
-  const location = useLocation();
   const { category } = useParams();
 
   const ALL_PROJECTS = translations[language].allProjects;
@@ -138,16 +137,6 @@ const Projects: React.FC<ProjectHeader> = ({ slice }) => {
 
   return (
     <div className="projects__container">
-      {!isHomePage && (
-        <div className="projects__breadcrumbs">
-          <MyLink className="projects__breadcrumbs-home" to="/">
-            Home
-          </MyLink>
-          <span className="projects__separator">/</span>
-          <span className="projects__breadcrumbs-current">Projects</span>
-        </div>
-      )}
-
       <div className="project__content">
         <h2 className="projects__title">{slice.primary.title}</h2>
         {slice.primary.description && (
