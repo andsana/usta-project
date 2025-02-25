@@ -2,37 +2,35 @@ import React from 'react';
 import MyLink from '../MyLink/MyLink.tsx';
 import './Breadcrumbs.css';
 
-interface BreadcrumbsProps {
-  title: string;
-  middleText: string;
-  middleLink?: string;
+interface Breadcrumb {
+  text: string;
+  to: string;
 }
 
-const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
-  title,
-  middleText,
-  middleLink,
-}) => {
+interface BreadcrumbsProps {
+  items: Breadcrumb[]; // Массив хлебных крошек
+  currentText?: string; // Текущий текст, который не будет ссылкой
+}
+
+const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, currentText }) => {
   return (
     <div className="breadcrumbs__container">
-      <MyLink className="breadcrumbs__link" to="/">
-        Home
-      </MyLink>
-      <span className="breadcrumbs__separator">/</span>
-
-      {middleLink ? (
-        <>
-          <MyLink className="breadcrumbs__link" to={middleLink}>
-            {middleText}
+      {items.map((item, index) => (
+        <React.Fragment key={index}>
+          <MyLink className="breadcrumbs__link" to={item.to}>
+            {item.text}
           </MyLink>
+          {index < items.length - 1 && (
+            <span className="breadcrumbs__separator">/</span>
+          )}
+        </React.Fragment>
+      ))}
+      {currentText && (
+        <>
           <span className="breadcrumbs__separator">/</span>
+          <span className="breadcrumbs__current">{currentText}</span>
         </>
-      ) : (
-        <span className="breadcrumbs__span">{middleText}</span>
       )}
-
-      <span className="breadcrumbs__separator">/</span>
-      <span className="breadcrumbs__current">{title}</span>
     </div>
   );
 };
