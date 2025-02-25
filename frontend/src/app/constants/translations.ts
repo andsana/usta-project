@@ -1,9 +1,13 @@
 export const translations = {
   ru: {
+    home: 'Главная',
+    services: 'Услуги',
     noPage: 'Страница не найдена.',
     noProject: 'Информация о проекте недоступна.',
     noProjects: 'Нет доступных проектов.',
+    noServiceDetails: 'Детали услуги недоступны.',
     projectsPageTitle: 'Проекты',
+    serviceDetailPageTitle: 'Детали услуги',
     location: 'Страна',
     client: 'Клиент',
     ourrole: 'Наша роль',
@@ -11,10 +15,14 @@ export const translations = {
     allProjects: 'Смотреть все',
   },
   'en-us': {
+    home: 'Home',
+    services: 'Services',
     noPage: 'No page found.',
     noProject: 'Project information is not available.',
     noProjects: 'No projects available.',
+    noServiceDetails: 'Service details are not available.',
     projectsPageTitle: 'Projects',
+    serviceDetailPageTitle: 'Service details',
     location: 'Country',
     client: 'Client',
     ourrole: 'Our role',
