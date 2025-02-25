@@ -1,44 +1,55 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { SliceZone, usePrismicDocumentByUID } from '@prismicio/react';
+import { useLocation } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { pageComponents } from '../app/constants/pageComponents.ts';
-import { LanguageContext } from '../app/contexts/LanguageContext.tsx';
-import { LoadingContext } from '../app/contexts/LoadingContext.tsx';
+import { useLanguage } from '../app/hooks/useLanguage.ts';
+import NoContentMessage from '../components/NoContentMessage/NoContentMessage.tsx';
+import { translations } from '../app/constants/translations.ts';
+import {
+  createAnimatedFavicon,
+  stopAnimatedFavicon,
+} from '../app/utils/animatedFavicon.ts';
+import { waitForImagesToLoad } from '../app/utils/waitForImagesToLoad.ts';
 
 const HomePage = () => {
-  const languageContext = useContext(LanguageContext);
-  const loadingContext = useContext(LoadingContext);
+  const { language } = useLanguage();
+  const location = useLocation();
 
-  if (!languageContext || !loadingContext) {
-    throw new Error('Contexts must be used within their respective Providers');
-  }
-
-  const { language } = languageContext;
-  const { setLoading } = loadingContext;
-
-  const [document, { state }] = usePrismicDocumentByUID('page_new', 'home', { lang: language });
+  const [page, { state }] = usePrismicDocumentByUID('page_new', 'home', {
+    lang: language,
+  });
 
   useEffect(() => {
-    setLoading(state === 'loading'); // Преобразуем состояние в булевое значение
-  }, [state, setLoading]);
+    createAnimatedFavicon();
+  }, [location.pathname]);
 
-  if (!document || !document.data) {
+  useEffect(() => {
+    if (state === 'loading') {
+      createAnimatedFavicon();
+    } else if (state === 'failed') {
+      stopAnimatedFavicon();
+    } else if (page) {
+      waitForImagesToLoad();
+    }
+  }, [state, page]);
+
+  if (state === 'loading') {
     return null;
   }
 
-  if (!document || !document.data) {
-    console.log("No document data"); // Логирование данных документа
-    return null;
+  if (state === 'failed') {
+    return <NoContentMessage message={translations[language].noPage} />;
   }
-
-  console.log("страница home", document.data.body); // Логирование всех слайсов
-
 
   return (
     <>
-      <SliceZone
-        slices={document.data.body}
-        components={{ ...pageComponents }}
-      />
+      <Helmet>
+        <title>Usta International</title>
+      </Helmet>
+      {page && (
+        <SliceZone slices={page.data.body} components={{ ...pageComponents }} />
+      )}
     </>
   );
 };
