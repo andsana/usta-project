@@ -3,7 +3,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import Header from './components/Header/Header.tsx';
 import HomePage from './pages/HomePage.tsx';
 import ProjectsPage from './pages/ProjectsPage.tsx';
-import ProjectDetailPage from './components/ProjectDetailPage/ProjectDetailPage.tsx';
+import ProjectDetailPage from './pages/ProjectDetailPage/ProjectDetailPage.tsx';
 import ServiceDetailPage from './pages/ServiceDetailPage.tsx';
 import Footer from './components/Footer/Footer.tsx';
 import './App.css';
@@ -31,14 +31,14 @@ const App = () => {
           <Route path="/en" element={<HomePage />} />
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/en/projects" element={<ProjectsPage />} />
-          <Route path="/en/projects/:category" element={<ProjectsPage />} />
           <Route path="/projects/:category" element={<ProjectsPage />} />
+          <Route path="/en/projects/:category" element={<ProjectsPage />} />
           <Route
-            path="/en/projects/:category/:uid"
+            path="/projects/:category/:uid"
             element={<ProjectDetailPage />}
           />
           <Route
-            path="/projects/:category/:uid"
+            path="/en/projects/:category/:uid"
             element={<ProjectDetailPage />}
           />
           <Route path="/services/:uid" element={<ServiceDetailPage />} />
