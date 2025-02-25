@@ -279,7 +279,7 @@
     }
 }
 
-/* Стили для десктопов */
+/* Стили для маленьких десктопов */
 @media (min-width: 961px) {
     .header__container {
         min-height: 90px;
@@ -289,123 +289,9 @@
     .header__logo {
         width: 120px;
     }
-
-    /*.header__nav {*/
-    /*    display: flex;*/
-    /*    position: static;*/
-    /*    top: auto;*/
-    /*    right: auto;*/
-    /*    width: auto;*/
-    /*    background: transparent;*/
-    /*    opacity: 1;*/
-    /*    visibility: visible;*/
-    /*    padding: 0;*/
-    /*    transition: none;*/
-    /*    clip-path: none;*/
-    /*}*/
-
-    /*.header__nav-list {*/
-    /*    flex-direction: row;*/
-    /*    gap: 2rem;*/
-    /*    font-size: 18px;*/
-    /*}*/
-
-    /*.header__nav-item {*/
-    /*    position: static;*/
-    /*    border: none;*/
-    /*}*/
-
-    /*.header__nav-link,*/
-    /*.header__nav-link-sub-items {*/
-    /*    font-size: 1.125rem;*/
-    /*    margin: 0;*/
-    /*}*/
-
-    /*.header__nav-link::after,*/
-    /*.header__nav-link-sub-items::after {*/
-    /*    content: '';*/
-    /*    position: absolute;*/
-    /*    bottom: -4px;*/
-    /*    left: 0;*/
-    /*    width: 0;*/
-    /*    height: 2px;*/
-    /*    background-color: #87be73;*/
-    /*}*/
-
-    /*.header__nav-link:hover::after,*/
-    /*.header__nav-link:active::after,*/
-    /*.header__nav-link:focus::after,*/
-    /*.header__nav-link-sub-items:hover::after {*/
-    /*    width: 100%;*/
-    /*}*/
-
-    /*.header__nav-link.scroll-link:focus::after,*/
-    /*.header__nav-link.scroll-link:active::after {*/
-    /*    width: 0;*/
-    /*}*/
-
-    /*.header__menu {*/
-    /*    display: none;*/
-    /*}*/
-
-    /*.header__social-links {*/
-    /*    display: none;*/
-    /*}*/
-
-    /*.overlay {*/
-    /*    display: none;*/
-    /*}*/
-
-    /*!* Подменю (submenu) *!*/
-    /*.header__nav.sub {*/
-    /*    position: absolute;*/
-    /*    display: flex;*/
-    /*    align-items: center;*/
-    /*    top: 100%;*/
-    /*    left: 0;*/
-    /*    min-height: 90px;*/
-    /*    width: 100%;*/
-    /*    opacity: 0;*/
-    /*    padding: 0;*/
-    /*    background: #585757;*/
-    /*    visibility: hidden;*/
-    /*    clip-path: inset(0 0 100% 0);*/
-    /*    transition: clip-path 0.3s ease-out, opacity 0.3s ease-out, visibility 0.3s ease-out;*/
-    /*    z-index: 4;*/
-    /*}*/
-
-    /*.header__nav.sub.open {*/
-    /*    opacity: 1;*/
-    /*    visibility: visible;*/
-    /*    clip-path: inset(0 0 0 0);*/
-    /*}*/
-
-    /*.header__nav-link.sub {*/
-    /*    margin: 0;*/
-    /*    color: #fff;*/
-    /*}*/
-
-    /*.header__nav-list.sub {*/
-    /*    width: 100%;*/
-    /*    max-width: 1264px;*/
-    /*    padding: 0 16px;*/
-    /*    margin: 0 auto;*/
-    /*    display: flex;*/
-    /*}*/
-
-    /*.header__nav-item {*/
-    /*    border: none;*/
-    /*}*/
-
-    /*.header__nav-item:last-child {*/
-    /*    border-bottom: none;*/
-    /*}*/
-
-    /*.header__nav-item.sub:first-child {*/
-    /*    border-top: none;*/
-    /*}*/
 }
 
+/* Стили для десктопов */
 @media (min-width: 1025px) {
     .header__nav {
         display: flex;
@@ -521,5 +407,4 @@
     .header__nav-item.sub:first-child {
         border-top: none;
     }
-
 }
