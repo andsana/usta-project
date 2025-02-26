@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSinglePrismicDocument } from '@prismicio/react';
@@ -6,6 +5,7 @@ import { PrismicDocument } from '@prismicio/client';
 import { useLanguage } from '../../app/hooks/useLanguage.ts';
 import { useOutsideClick } from '../../app/hooks/useOutsideClick.ts';
 import { translations } from '../../app/constants/translations.ts';
+import { useScreenDetector } from '../../app/hooks/useScreenDetector.ts';
 import {
   createAnimatedFavicon,
   stopAnimatedFavicon,
@@ -16,7 +16,6 @@ import MyLink from '../MyLink/MyLink.tsx';
 import SocialLinks from '../ SocialLinks/ SocialLinks.tsx';
 import MyButton from '../MyButton/MyButton.tsx';
 import './Header.css';
-import { useScreenDetector } from '../../app/hooks/useScreenDetector.ts';
 
 interface MenuItem {
   name: string;
@@ -42,7 +41,7 @@ interface HeaderData {
   body: Slice[];
 }
 
-interface HeaderPrismicDocument extends PrismicDocument {
+interface PrismicHeaderDocument extends PrismicDocument {
   data: HeaderData;
 }
 
@@ -50,10 +49,10 @@ const Header = () => {
   const location = useLocation();
   const { language } = useLanguage();
   const { isSmallDesktop } = useScreenDetector();
-  const [document, { state }] = useSinglePrismicDocument<HeaderPrismicDocument>(
-    'header',
-    { lang: language },
-  );
+  const [headerDocument, { state }] =
+    useSinglePrismicDocument<PrismicHeaderDocument>('header', {
+      lang: language,
+    });
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [subMenuOpen, setSubMenuOpen] = useState(false);
@@ -86,7 +85,7 @@ const Header = () => {
   useEffect(() => {
     if (state === 'loading') createAnimatedFavicon();
     else stopAnimatedFavicon();
-  }, [state, document]);
+  }, [state, headerDocument]);
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
   const toggleSubMenu = () => setSubMenuOpen((prev) => !prev);
@@ -150,17 +149,20 @@ const Header = () => {
   }
 
   return (
-    document && (
+    headerDocument && (
       <header id="headerScroll" className="header">
         <div className="header__container">
-          <MyLink className="header__logo" to={document.data.logolink.url}>
-            <img src={document.data.logo.url} alt="Logo" />
+          <MyLink
+            className="header__logo"
+            to={headerDocument.data.logolink.url}
+          >
+            <img src={headerDocument.data.logo.url} alt="Logo" />
           </MyLink>
 
           <div className="header__inner">
             <nav className={`header__nav ${menuOpen ? 'open' : ''}`}>
               <ul className="header__nav-list">
-                {document.data.body.map(renderMenuItem)}
+                {headerDocument.data.body.map(renderMenuItem)}
               </ul>
               {menuOpen && (
                 <div className="header__social-links">

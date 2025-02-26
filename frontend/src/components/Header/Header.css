@@ -54,6 +54,7 @@
     opacity: 1;
     visibility: visible;
     clip-path: inset(0 0 0 0);
+    overflow: hidden;
 }
 
 .header__nav-list {
@@ -89,7 +90,8 @@
     margin: 12px 0;
 }
 
-.header__nav-link:hover {
+.header__nav-link:hover,
+.header__nav-link-sub-items:hover {
     color: inherit;
 }
 
