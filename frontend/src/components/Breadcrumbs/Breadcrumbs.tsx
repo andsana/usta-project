@@ -27,6 +27,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
       </MyLink>
       {items.length > 0 && (
         <>
+          <span className="breadcrumbs__separator">/</span>
           {items.map((item, index) => (
             <React.Fragment key={index}>
               {item.to ? (
