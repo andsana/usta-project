@@ -4,8 +4,8 @@ export const createAnimatedFavicon = () => {
   if (isAnimating) return; // Если уже анимируется, выходим
   isAnimating = true;
 
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
+  const canvas: HTMLCanvasElement = document.createElement('canvas');
+  const ctx: CanvasRenderingContext2D | null = canvas.getContext('2d');
   const size = 32; // Размер иконки
   canvas.width = size;
   canvas.height = size;
@@ -14,7 +14,7 @@ export const createAnimatedFavicon = () => {
   let showIcon = false; // Флаг для отображения иконки
 
   // Загружаем favicon.svg
-  const faviconImage = new Image();
+  const faviconImage: HTMLImageElement = new Image();
   faviconImage.src = '/favicon.svg'; // Укажи путь к твоей иконке
 
   const draw = () => {
@@ -50,7 +50,7 @@ export const createAnimatedFavicon = () => {
 };
 
 export const updateFavicon = (href: string) => {
-  let favicon = document.querySelector("link[rel='icon']");
+  let favicon = document.querySelector("link[rel='icon']") as HTMLLinkElement;
   if (!favicon) {
     favicon = document.createElement('link');
     favicon.setAttribute('rel', 'icon');
