@@ -55,9 +55,9 @@
 .footer-link {
     position: relative;
     font-size: 16px;
+    color: inherit;
     margin: 0;
     padding: 0;
-
 }
 
 .footer-link::after {
