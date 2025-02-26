@@ -71,10 +71,24 @@ const Header = () => {
     setSubMenuOpen(false);
   }, [location]);
 
+  // useEffect(() => {
+  //   window.document.body.style.overflow = menuOpen ? 'hidden' : 'auto';
+  //   return () => {
+  //     window.document.body.style.overflow = 'auto';
+  //   };
+  // }, [menuOpen]);
+
+  // Блокировка прокрутки при открытом меню
+
   useEffect(() => {
-    window.document.body.style.overflow = menuOpen ? 'hidden' : 'auto';
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
     return () => {
-      window.document.body.style.overflow = 'auto';
+      document.body.style.overflow = 'auto';
     };
   }, [menuOpen]);
 
