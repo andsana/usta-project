@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSinglePrismicDocument } from '@prismicio/react';
 import { PrismicDocument } from '@prismicio/client';
@@ -48,7 +48,7 @@ interface PrismicHeaderDocument extends PrismicDocument {
 const Header = () => {
   const location = useLocation();
   const { language } = useLanguage();
-  const { isSmallDesktop } = useScreenDetector();
+  const { isDesktop } = useScreenDetector();
   const [headerDocument, { state }] =
     useSinglePrismicDocument<PrismicHeaderDocument>('header', {
       lang: language,
@@ -59,18 +59,33 @@ const Header = () => {
 
   const subNavRef = useOutsideClick<HTMLLIElement>(() => setSubMenuOpen(false));
 
+  const scrollYRef = useRef(0);
+
   useEffect(() => {
-    if (!isSmallDesktop) {
+    if (menuOpen) {
+      scrollYRef.current = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${window.scrollY}px`;
+      document.body.style.width = '100%';
+    } else {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      window.scrollTo(0, scrollYRef.current); // Восстанавливаем позицию прокрутки
+    }
+  }, [menuOpen]); // Теперь ESLint не будет ругаться
+
+  useEffect(() => {
+    if (isDesktop) {
       setMenuOpen(false);
       setSubMenuOpen(false);
     }
-  }, [isSmallDesktop]);
+  }, [isDesktop]);
 
   useEffect(() => {
     setMenuOpen(false);
     setSubMenuOpen(false);
   }, [location]);
-
 
   useEffect(() => {
     if (menuOpen) {
@@ -84,7 +99,6 @@ const Header = () => {
     };
   }, [menuOpen]);
 
-
   useEffect(() => {
     createAnimatedFavicon();
   }, [location.pathname]);
@@ -95,7 +109,6 @@ const Header = () => {
   }, [state, headerDocument]);
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
-
 
   const toggleSubMenu = () => setSubMenuOpen((prev) => !prev);
 
@@ -142,7 +155,7 @@ const Header = () => {
             className="header__nav-link scroll-link"
             linkName={primary.name}
             linkUrl={primary.link.url}
-            closeMenu={!isSmallDesktop ? toggleMenu : undefined}
+            closeMenu={!isDesktop ? toggleMenu : undefined}
           />
         ) : null}
       </li>

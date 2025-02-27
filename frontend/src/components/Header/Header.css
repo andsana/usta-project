@@ -72,8 +72,7 @@
 }
 
 .header__nav.open {
-    /*height: calc(100vh - 64px);*/
-    height: auto;
+    height: calc(100vh - 64px);
     opacity: 1;
     visibility: visible;
     clip-path: inset(0 0 0 0);
@@ -270,7 +269,7 @@
 /* Стили для планшетов */
 @media (min-width: 768px) {
     .header__nav.open {
-        height: auto;
+        height: calc(100vh - 72px);
     }
 
     .header__container {
