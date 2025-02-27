@@ -95,17 +95,28 @@ const Header = () => {
   // const toggleMenu = () => setMenuOpen((prev) => !prev);
 
   const toggleMenu = () => {
-    setMenuOpen((prev) => {
-      const newMenuState = !prev; // Получаем новое состояние меню
-      // Блокируем прокрутку, когда меню открыто
-      if (newMenuState) {
-        document.body.classList.add('no-scroll');
-      } else {
-        document.body.classList.remove('no-scroll');
-      }
-      return newMenuState; // Возвращаем новое состояние
-    });
+    // Сразу блокируем прокрутку перед изменением состояния меню
+    if (!menuOpen) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+
+    setMenuOpen((prev) => !prev); // Меняем состояние меню
   };
+
+  // const toggleMenu = () => {
+  //   setMenuOpen((prev) => {
+  //     const newMenuState = !prev; // Получаем новое состояние меню
+  //     // Блокируем прокрутку, когда меню открыто
+  //     if (newMenuState) {
+  //       document.body.classList.add('no-scroll');
+  //     } else {
+  //       document.body.classList.remove('no-scroll');
+  //     }
+  //     return newMenuState; // Возвращаем новое состояние
+  //   });
+  // };
 
   const toggleSubMenu = () => setSubMenuOpen((prev) => !prev);
 
