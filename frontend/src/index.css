@@ -35,14 +35,7 @@ body {
 
 body.no-scroll {
     overflow: hidden;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
 }
-
 
 main {
     flex-grow: 1;
@@ -58,12 +51,16 @@ h1 {
     font-size: 3.5rem;
     line-height: 1.2;
     font-weight: 400;
+}
 
-    @media (max-width: 960px) {
+@media (max-width: 960px) {
+    h1 {
         font-size: 2.5rem;
     }
+}
 
-    @media (max-width: 768px) {
+@media (max-width: 768px) {
+    h1 {
         font-size: 2rem;
     }
 }
@@ -72,8 +69,10 @@ h2 {
     font-size: 2.5rem;
     line-height: 1.2;
     font-weight: 400;
+}
 
-    @media (max-width: 768px) {
+@media (max-width: 768px) {
+    h2 {
         font-size: 2rem;
     }
 }

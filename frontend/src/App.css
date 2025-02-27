@@ -40,9 +40,3 @@
   overflow: hidden;
   transition: transform 0.3s ease-in-out;
 }
-
-.menu-open .content {
-  transform: translateY(200px);
-  transition: transform 0.3s ease-in-out;
-}
-

@@ -72,7 +72,8 @@
 }
 
 .header__nav.open {
-    height: calc(100vh - 64px);
+    /*height: calc(100vh - 64px);*/
+    height: auto;
     opacity: 1;
     visibility: visible;
     clip-path: inset(0 0 0 0);
