@@ -33,9 +33,9 @@ body {
     min-height: 100vh;
 }
 
-/*body.no-scroll {*/
-/*    overflow: hidden;*/
-/*}*/
+body.no-scroll {
+    overflow: hidden;
+}
 
 main {
     flex-grow: 1;

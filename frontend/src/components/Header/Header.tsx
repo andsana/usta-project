@@ -71,15 +71,6 @@ const Header = () => {
     setSubMenuOpen(false);
   }, [location]);
 
-  // useEffect(() => {
-  //   window.document.body.style.overflow = menuOpen ? 'hidden' : 'auto';
-  //   return () => {
-  //     window.document.body.style.overflow = 'auto';
-  //   };
-  // }, [menuOpen]);
-
-  // Блокировка прокрутки при открытом меню
-
   useEffect(() => {
     if (menuOpen) {
       document.body.style.overflow = 'hidden';
@@ -101,7 +92,21 @@ const Header = () => {
     else stopAnimatedFavicon();
   }, [state, headerDocument]);
 
-  const toggleMenu = () => setMenuOpen((prev) => !prev);
+  // const toggleMenu = () => setMenuOpen((prev) => !prev);
+
+  const toggleMenu = () => {
+    setMenuOpen((prev) => {
+      const newMenuState = !prev; // Получаем новое состояние меню
+      // Блокируем прокрутку, когда меню открыто
+      if (newMenuState) {
+        document.body.classList.add('no-scroll');
+      } else {
+        document.body.classList.remove('no-scroll');
+      }
+      return newMenuState; // Возвращаем новое состояние
+    });
+  };
+
   const toggleSubMenu = () => setSubMenuOpen((prev) => !prev);
 
   const renderMenuItem = (slice: Slice) => {
@@ -166,13 +171,6 @@ const Header = () => {
     headerDocument && (
       <header id="headerScroll" className="header">
         <div className="header__container">
-          {/*<MyLink*/}
-          {/*  className="header__logo"*/}
-          {/*  to={headerDocument.data.logolink.url}*/}
-          {/*>*/}
-          {/*  <img src={headerDocument.data.logo.url} alt="Logo" />*/}
-          {/*</MyLink>*/}
-
           <MyLink
             className="header__logo"
             to={headerDocument.data.logolink.url}
