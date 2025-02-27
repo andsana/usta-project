@@ -13,16 +13,38 @@
 }
 
 .header__logo {
-    position: relative;
-    width: 80px;
-    height: auto;
-    text-decoration: none;
+    font-family: "Audiowide", serif;
+    font-weight: 400;
+    font-style: normal;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     z-index: 5;
 }
 
-.header__logo img {
-    max-width: 100%;
-    max-height: 100%;
+.header__logo-usta {
+    position: relative;
+    font-size: 29px;
+    line-height: 1;
+    flex: 0 0 auto;
+}
+
+.header__logo-usta::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #000;
+}
+
+.header__logo-international {
+    font-size: 10px;
+    flex: 0 0 auto;
 }
 
 .header__social-links {
@@ -37,11 +59,11 @@
 
 .header__nav {
     position: absolute;
-    top: 0;
+    top: 100%;
     right: 0;
     width: 100%;
-    padding: 6rem 2rem 2rem 2rem;
-    background: #fafafc;
+    padding: 0 16px;
+    background: #fff;
     opacity: 0;
     visibility: hidden;
     clip-path: inset(0 0 100% 0);
@@ -50,12 +72,11 @@
 }
 
 .header__nav.open {
-    height: 100vh;
+    height: calc(100vh - 64px);
     opacity: 1;
     visibility: visible;
     clip-path: inset(0 0 0 0);
     overflow: hidden;
-    top: 0;
     left: 0;
     right: 0;
 }
@@ -70,7 +91,7 @@
 
 .header__nav-item {
     position: relative;
-    border-top: 1px solid #00000029;
+    border-top: 1px solid rgba(4, 18, 27, .08)
 }
 
 .header__nav-item:first-child {
@@ -78,14 +99,15 @@
 }
 
 .header__nav-item:last-child {
-    border-bottom: 1px solid #00000029;
+    border-bottom: 1px solid rgba(4, 18, 27, .08)
 }
 
 .header__nav-link {
     position: relative;
     display: inline-block;
     text-decoration: none;
-    font-size: 1.5rem;
+    white-space: nowrap;
+    font-size: 1.25rem;
     color: #111;
     border: none;
     font-weight: 400;
@@ -100,13 +122,16 @@
 
 .header__nav-link-sub-items {
     position: relative;
-    font-size: 1.5rem;
+    white-space: nowrap;
+    font-size: 1.25rem;
     color: #111;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     padding: 0;
     border: none;
     margin: 12px 0;
+    width: 100%;
 }
 
 .icon-sub {
@@ -154,7 +179,7 @@
 /* Подменю (submenu) */
 .header__nav.sub {
     position: static;
-    background: #fafafc;
+    background: #fff;
     padding: 0;
     opacity: 0;
     max-height: 0;
@@ -169,18 +194,16 @@
     max-height: 300px;
 }
 
-.header__nav-item.sub:first-child {
-    border-top: 1px solid #00000029;
-}
-
 .header__nav-item.sub:last-child {
     border-bottom: none;
 }
 
 .header__nav-link.sub {
-    font-size: 1.125rem;
-    color: #111;
-    margin: 16px 0 16px 24px;
+    /*font-size: 1.125rem;*/
+    /*color: #111;*/
+    font-size: 1rem;
+    color: #04121b7a;
+    margin: 16px 0;
 }
 
 /*Бургер-кнопка*/
@@ -260,28 +283,11 @@
 /* Стили для планшетов */
 @media (min-width: 768px) {
     .header__nav.open {
-        height: auto;
-        opacity: 1;
-        visibility: visible;
-        clip-path: inset(0 0 0 0);
-    }
-
-    .overlay.open {
-        opacity: 1;
-        visibility: visible;
+        height: calc(100vh - 72px);
     }
 
     .header__container {
         min-height: 72px;
-    }
-
-    .header__logo {
-        width: 100px;
-    }
-
-    .header__nav {
-        padding: 6rem 4rem 4rem 4rem;
-        top: 0;
     }
 
     .overlay {
@@ -296,8 +302,12 @@
         max-width: 1264px;
     }
 
-    .header__logo {
-        width: 120px;
+    .header__nav.open {
+        height: calc(100vh - 90px);
+    }
+
+    .overlay {
+        top: 90px;
     }
 }
 
@@ -412,9 +422,5 @@
 
     .header__nav-item:last-child {
         border-bottom: none;
-    }
-
-    .header__nav-item.sub:first-child {
-        border-top: none;
     }
 }

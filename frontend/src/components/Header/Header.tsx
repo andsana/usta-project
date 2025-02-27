@@ -111,7 +111,7 @@ const Header = () => {
       return (
         <li key={id} className="header__nav-item" ref={subNavRef}>
           <button
-            className="header__nav-link-sub-items items"
+            className="header__nav-link-sub-items"
             onClick={toggleSubMenu}
           >
             {primary.name}
@@ -166,11 +166,19 @@ const Header = () => {
     headerDocument && (
       <header id="headerScroll" className="header">
         <div className="header__container">
+          {/*<MyLink*/}
+          {/*  className="header__logo"*/}
+          {/*  to={headerDocument.data.logolink.url}*/}
+          {/*>*/}
+          {/*  <img src={headerDocument.data.logo.url} alt="Logo" />*/}
+          {/*</MyLink>*/}
+
           <MyLink
             className="header__logo"
             to={headerDocument.data.logolink.url}
           >
-            <img src={headerDocument.data.logo.url} alt="Logo" />
+            <span className="header__logo-usta">usta</span>
+            <span className="header__logo-international">international</span>
           </MyLink>
 
           <div className="header__inner">
