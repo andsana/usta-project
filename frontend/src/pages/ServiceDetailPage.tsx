@@ -72,20 +72,17 @@ const ServiceDetailPage = () => {
       {breadcrumbs}
 
       {page && (
-        <div className="service-detail-container">
+        <>
           <ServiceDetailHeader
             title={page.data.title}
             preview={page.data.preview}
             image={page.data.image}
           />
-
-          <div className="service-detail-content">
-            <SliceZone
-              slices={page.data.body}
-              components={{ ...pageComponents }}
-            />
-          </div>
-        </div>
+          <SliceZone
+            slices={page.data.body}
+            components={{ ...pageComponents }}
+          />
+        </>
       )}
     </>
   );
