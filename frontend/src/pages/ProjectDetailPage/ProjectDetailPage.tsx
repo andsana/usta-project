@@ -214,7 +214,7 @@ const ProjectDetailPage = () => {
       )}
 
       {projectDetailPageDocument && (
-        <div className="project-detail__article container">
+        <div className="project-detail__article block container">
           {projectDetailPageDocument.data.preview && (
             <p>{projectDetailPageDocument.data.preview}</p>
           )}
