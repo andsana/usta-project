@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export const useScreenDetector = () => {
   const [width, setWidth] = useState(window.innerWidth);
@@ -8,17 +8,17 @@ export const useScreenDetector = () => {
   };
 
   useEffect(() => {
-    window.addEventListener("resize", handleWindowSizeChange);
+    window.addEventListener('resize', handleWindowSizeChange);
 
     return () => {
-      window.removeEventListener("resize", handleWindowSizeChange);
+      window.removeEventListener('resize', handleWindowSizeChange);
     };
   }, []);
 
   const isMobile = width < 768;
-  const isTablet = width >= 768 && width < 961;
-  const isSmallDesktop = width >= 961 && width < 1025;
-  const isDesktop = width >= 1025;
+  const isTablet = width >= 768 && width < 1024;
+  const isSmallDesktop = width >= 1024;
+  // const isDesktop = width >= 1280; // Десктопы
 
-  return { isMobile, isTablet, isSmallDesktop, isDesktop };
+  return { isMobile, isTablet, isSmallDesktop };
 };
