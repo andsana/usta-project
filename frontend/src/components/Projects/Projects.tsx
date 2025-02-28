@@ -136,14 +136,8 @@ const Projects: React.FC<ProjectHeader> = ({ slice }) => {
   };
 
   return (
-    <div className="projects__container">
-      <div className="project__content">
-        <h2 className="projects__title">{slice.primary.title}</h2>
-        {slice.primary.description && (
-          <p className="project-description">{slice.primary.description}</p>
-        )}
-      </div>
-
+    <div className="projects container">
+      <h2 className="projects__title">{slice.primary.title}</h2>
       {slice.primary.filtershow && uniqueCategories.length > 2 && (
         <div className="projects-filter__list">
           {isMobile ? (
