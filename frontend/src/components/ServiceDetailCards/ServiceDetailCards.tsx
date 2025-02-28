@@ -51,16 +51,7 @@ const ServiceDetailCards: React.FC<ServiceCardsProps> = ({ slice }) => {
   };
 
   return (
-    <div className="service-cards__container">
-      <div className="service-cards__col-image">
-        <div className="service-cards__col-image-wrapper">
-          <img
-            src={slice.primary.imagecard.url}
-            alt={slice.primary.imagecard.alt || slice.primary.titlecard}
-            loading="lazy"
-          />
-        </div>
-      </div>
+    <div className="service-cards container block">
       <div className="service-cards__col-text">
         <h3 className="service-cards__title">{slice.primary.titlecard}</h3>
         {slice.items.map((item, index) => (
@@ -75,6 +66,15 @@ const ServiceDetailCards: React.FC<ServiceCardsProps> = ({ slice }) => {
             </ul>
           </div>
         ))}
+      </div>
+      <div className="service-cards__col-image">
+        <div className="service-cards__col-image-wrapper">
+          <img
+            src={slice.primary.imagecard.url}
+            alt={slice.primary.imagecard.alt || slice.primary.titlecard}
+            loading="lazy"
+          />
+        </div>
       </div>
     </div>
   );
