@@ -10,7 +10,6 @@
     background: transparent;
     font-size: 1.125rem;
     border: none;
-    padding: 0 12px 0 8px;
     cursor: pointer;
 }
 
@@ -48,13 +47,12 @@
     color: #111;
 }
 
-@media (min-width: 961px) {
+@media (min-width: 768px) {
     .language-switcher__dropdown {
         left: auto;
-        right: 22px;
+        right: 12px;
         transform: translateX(50%);
     }
-
 }
 
 

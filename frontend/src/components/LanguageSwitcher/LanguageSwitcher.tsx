@@ -51,7 +51,7 @@ const LanguageSwitcher = () => {
       <div onClick={toggleDropdown} className="language-switcher__button">
         <MdLanguage className="language-switcher__icon" />
         <span className="language-switcher__text">
-          {language === 'en-us' ? 'En' : 'Ru'}
+          {language === 'en-us' ? 'EN' : 'RU'}
         </span>
         {!isMobile && (
           <MdKeyboardArrowDown className="language-switcher__arrow" />
@@ -64,13 +64,13 @@ const LanguageSwitcher = () => {
             className="language-switcher__option"
             onClick={() => toggleLanguage('ru')}
           >
-            Ru
+            RU
           </button>
           <button
             className="language-switcher__option"
             onClick={() => toggleLanguage('en-us')}
           >
-            En
+            EN
           </button>
         </div>
       )}
