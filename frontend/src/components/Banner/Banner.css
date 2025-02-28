@@ -168,10 +168,6 @@
     }
 }
 
-@media (max-width: 960px) {
-
-}
-
 @media (max-width: 768px) {
     .banner__container {
         margin-bottom: 48px;
