@@ -74,12 +74,7 @@ const ProjectsPage = () => {
       </Helmet>
       {breadcrumbs}
       {page && (
-        <div className="projectPage__container">
-          <SliceZone
-            slices={page.data.body}
-            components={{ ...pageComponents }}
-          />
-        </div>
+        <SliceZone slices={page.data.body} components={{ ...pageComponents }} />
       )}
     </>
   );
