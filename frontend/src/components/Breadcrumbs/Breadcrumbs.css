@@ -1,9 +1,9 @@
-.breadcrumbs__container {
-    max-width: 1264px;
+.breadcrumbs {
     font-size: 14px;
-    text-align: left;
-    padding: 17px 16px;
-    margin: 20px auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-top: 18px;
+    padding-bottom: 18px;
 }
 
 .breadcrumbs__link {
@@ -35,3 +35,5 @@
 .breadcrumbs__separator {
     margin: 0 4px;
 }
+
+

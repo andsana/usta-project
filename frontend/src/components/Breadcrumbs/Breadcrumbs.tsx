@@ -21,7 +21,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   const { language } = useLanguage();
 
   return (
-    <div className="breadcrumbs__container">
+    <div className="breadcrumbs container">
       <MyLink className="breadcrumbs__link" to="/">
         {translations[language].home}
       </MyLink>
