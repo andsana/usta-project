@@ -4,24 +4,21 @@
 
 .footer__container {
     max-width: 1264px;
-    padding: 40px 16px 0 16px;
+    padding: 50px 16px 20px 16px;
     margin: 0 auto;
 }
 
 .footer__content {
     display: flex;
-    gap: 32px;
+    flex-wrap: wrap;
     align-items: flex-start;
     justify-content: space-between;
     text-align: left;
 }
 
-.footer__content-inner {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 32px;
-    width: 80%;
+.footer__column {
+    max-width: 25%;
+    margin-bottom: 20px;
 }
 
 .footer__logo {
@@ -44,12 +41,12 @@
 
 .footer__menu-section li {
     list-style-type: none;
-    margin: 0 0 16px 0;
+    margin: 8px 0;
     padding: 0;
 }
 
 .footer__menu-section h6 {
-    margin: 0 0 16px 0;
+    margin: 8px 0;
 }
 
 .footer-link {
@@ -76,17 +73,16 @@
     width: 100%;
 }
 
-.footer__contact-social {
-    margin-bottom: 16px;
+.footer__contact h6 {
+    margin: 0;
 }
 
-.footer__contact-social h6 {
-    margin: 0 0 16px 0;
+.footer__social-links {
+    margin: 20px 0;
 }
 
 .footer__contact-mail {
     color: #111;
-    margin-bottom: 16px;
 }
 
 
@@ -95,26 +91,39 @@
     text-align: left;
     font-size: 12px;
     color: #666;
-    margin: 16px 0;
 }
 
 @media (max-width: 961px) {
-    .footer__content {
-        flex-direction: column;
+    .footer__content > :first-child {
+        order: 2; /* Это ставит первого ребенка на вторую позицию */
     }
 
-    .footer__content-inner {
-        width: 100%;
+    .footer__content > :last-child {
+        order: 3; /* Это ставит последнего ребенка на последнюю позицию */
+    }
+
+    .footer__column {
+        width: 50%;
+        max-width: 50%;
     }
 }
 
-@media (max-width: 768px) {
-    .footer__content-inner {
-        width: 80%;
+@media (max-width: 633px) {
+    .footer__content {
+        justify-content: flex-start;
     }
 
-    .footer__contact {
+    .footer__content > :first-child {
+        order: 2;
         width: 100%;
+        max-width: 100%;
+        align-self: flex-start;
+    }
+
+    .footer__content > :last-child {
+        order: 3;
+        width: 100%;
+        max-width: 100%;
     }
 }
 
