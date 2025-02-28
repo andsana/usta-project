@@ -1,11 +1,6 @@
-.serviceDetailHeader__col p {
-    margin: 0;
-}
-
-.serviceDetailHeader__bgimage-wrapper {
+.serviceDetailHeader {
     position: relative;
     width: 100%;
-    margin-bottom: 96px;
 }
 
 .serviceDetailHeader__bgimage {
@@ -37,6 +32,10 @@
     margin-top: -12rem;
     margin-left: auto;
     z-index: 3;
+}
+
+.serviceDetailHeader__col p {
+    margin: 0;
 }
 
 .serviceDetailHeader__col-inner {
