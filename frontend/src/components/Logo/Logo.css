@@ -1,0 +1,52 @@
+.logo {
+    font-family: "Audiowide", serif;
+    font-weight: 400;
+    font-style: normal;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    z-index: 5;
+    padding: 0;
+    width: max-content;
+}
+
+.logo__usta {
+    position: relative;
+    font-size: 23px;
+    line-height: 1;
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+
+.logo__usta:hover {
+    background: inherit;
+    text-decoration: none;
+}
+
+.logo__usta::after {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #000;
+}
+
+.logo__international {
+    font-size: 8px;
+    flex: 0 0 auto;
+}
+
+/* Стили для планшетов */
+@media (min-width: 768px) {
+    .logo__usta {
+        font-size: 29px;
+    }
+
+    .logo__international {
+        font-size: 10px;
+    }
+}
