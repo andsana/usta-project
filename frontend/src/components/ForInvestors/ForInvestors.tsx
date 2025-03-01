@@ -22,8 +22,8 @@ interface ForInvestorsProps {
 const ForInvestors: React.FC<ForInvestorsProps> = ({ slice }) => {
   return (
     <div className="ForInvestors">
-      <div className="ForInvestors__container">
-        <p className="for-investors__title">{slice.primary.title}</p>
+      <div className="container">
+        <h2 className="for-investors__title">{slice.primary.title}</h2>
         <div className="ForInvestors__cards">
           {slice.items.map((item: Card, index: number) => (
             <CardComponent key={index} item={item} index={index} />
@@ -34,7 +34,10 @@ const ForInvestors: React.FC<ForInvestorsProps> = ({ slice }) => {
   );
 };
 
-const CardComponent: React.FC<{ item: Card; index: number }> = ({ item, index }) => {
+const CardComponent: React.FC<{ item: Card; index: number }> = ({
+  item,
+  index,
+}) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const numericValue = parseInt(item.value.replace(/\D/g, '')) || 0;
@@ -49,7 +52,10 @@ const CardComponent: React.FC<{ item: Card; index: number }> = ({ item, index })
       className={`ForInvestors__card ${inViewport ? 'visible' : ''}`}
       style={{ transitionDelay: `${index * 100}ms` }}
     >
-      <span className="ForInvestors__card-value">{count}{symbol}</span>
+      <span className="ForInvestors__card-value">
+        {count}
+        {symbol}
+      </span>
       <span className="ForInvestors__card-label">{item.label}</span>
     </div>
   );
