@@ -1,5 +1,10 @@
 .header {
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    background: #fff;
 }
 
 .header__container {
@@ -10,41 +15,6 @@
     padding: 0 16px;
     margin: 0 auto;
     min-height: 64px;
-}
-
-.header__logo {
-    font-family: "Audiowide", serif;
-    font-weight: 400;
-    font-style: normal;
-    text-transform: uppercase;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 5;
-}
-
-.header__logo-usta {
-    position: relative;
-    font-size: 29px;
-    line-height: 1;
-    flex: 0 0 auto;
-}
-
-.header__logo-usta::after {
-    content: '';
-    display: inline-block;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 1px;
-    background-color: #000;
-}
-
-.header__logo-international {
-    font-size: 10px;
-    flex: 0 0 auto;
 }
 
 .header__social-links {
@@ -62,8 +32,8 @@
     top: 100%;
     right: 0;
     width: 100%;
-    padding: 0 16px;
     background: #fff;
+    padding: 16px;
     opacity: 0;
     visibility: hidden;
     clip-path: inset(0 0 100% 0);
@@ -199,10 +169,8 @@
 }
 
 .header__nav-link.sub {
-    /*font-size: 1.125rem;*/
-    /*color: #111;*/
     font-size: 1rem;
-    color: #04121b7a;
+    color: #555;
     margin: 16px 0;
 }
 
@@ -221,6 +189,10 @@
     z-index: 5;
     cursor: pointer;
     transition: transform 0.3s ease;
+}
+
+.header__menu:focus {
+    background-color: #fff;
 }
 
 .header__menu .icon {
@@ -268,12 +240,12 @@
 
 /* Стили для планшетов */
 @media (min-width: 768px) {
-    .header__nav.open {
-        height: calc(100vh - 72px);
-    }
-
     .header__container {
         min-height: 72px;
+    }
+
+    .header__nav.open {
+        height: calc(100vh - 72px);
     }
 
     /* Оверлей */
@@ -296,20 +268,14 @@
     }
 }
 
-/* Стили для маленьких десктопов */
-@media (min-width: 961px) {
+
+/* Стили для десктопов */
+@media (min-width: 1024px) {
     .header__container {
-        min-height: 90px;
+        min-height: 96px;
         max-width: 1264px;
     }
 
-    .overlay {
-        top: 90px;
-    }
-}
-
-/* Стили для десктопов */
-@media (min-width: 1025px) {
     .header__nav {
         display: flex;
         position: static;
@@ -322,6 +288,10 @@
         padding: 0;
         transition: none;
         clip-path: none;
+    }
+
+    .header__nav.open {
+        height: calc(100vh - 96px);
     }
 
     .header__nav-list {
@@ -383,7 +353,7 @@
         align-items: center;
         top: 100%;
         left: 0;
-        min-height: 90px;
+        min-height: 96px;
         width: 100%;
         opacity: 0;
         padding: 0;

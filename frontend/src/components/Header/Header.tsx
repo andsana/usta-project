@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSinglePrismicDocument } from '@prismicio/react';
 import { PrismicDocument } from '@prismicio/client';
@@ -10,6 +10,7 @@ import {
   createAnimatedFavicon,
   stopAnimatedFavicon,
 } from '../../app/utils/animatedFavicon.ts';
+import Logo from '../Logo/Logo.tsx';
 import NoContentMessage from '../NoContentMessage/NoContentMessage.tsx';
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher.tsx';
 import MyLink from '../MyLink/MyLink.tsx';
@@ -48,7 +49,7 @@ interface PrismicHeaderDocument extends PrismicDocument {
 const Header = () => {
   const location = useLocation();
   const { language } = useLanguage();
-  const { isDesktop } = useScreenDetector();
+  const { isSmallDesktop } = useScreenDetector();
   const [headerDocument, { state }] =
     useSinglePrismicDocument<PrismicHeaderDocument>('header', {
       lang: language,
@@ -59,45 +60,35 @@ const Header = () => {
 
   const subNavRef = useOutsideClick<HTMLLIElement>(() => setSubMenuOpen(false));
 
-  const scrollYRef = useRef(0);
-
   useEffect(() => {
     if (menuOpen) {
-      scrollYRef.current = window.scrollY;
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${window.scrollY}px`;
-      document.body.style.width = '100%';
+      // Блокируем прокрутку
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden'; // Добавляем блокировку на html
     } else {
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      window.scrollTo(0, scrollYRef.current); // Восстанавливаем позицию прокрутки
+      // Разрешаем прокрутку
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = ''; // Снимаем блокировку с html
     }
-  }, [menuOpen]); // Теперь ESLint не будет ругаться
+
+    // Очистка при размонтировании компонента
+    return () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = ''; // Очистка при размонтировании
+    };
+  }, [menuOpen]);
 
   useEffect(() => {
-    if (isDesktop) {
+    if (isSmallDesktop) {
       setMenuOpen(false);
       setSubMenuOpen(false);
     }
-  }, [isDesktop]);
+  }, [isSmallDesktop]);
 
   useEffect(() => {
     setMenuOpen(false);
     setSubMenuOpen(false);
   }, [location]);
-
-  useEffect(() => {
-    if (menuOpen) {
-      document.body.classList.add('no-scroll');
-    } else {
-      document.body.classList.remove('no-scroll');
-    }
-
-    return () => {
-      document.body.classList.remove('no-scroll');
-    };
-  }, [menuOpen]);
 
   useEffect(() => {
     createAnimatedFavicon();
@@ -155,7 +146,7 @@ const Header = () => {
             className="header__nav-link scroll-link"
             linkName={primary.name}
             linkUrl={primary.link.url}
-            closeMenu={!isDesktop ? toggleMenu : undefined}
+            closeMenu={!isSmallDesktop ? toggleMenu : undefined}
           />
         ) : null}
       </li>
@@ -174,13 +165,7 @@ const Header = () => {
     headerDocument && (
       <header id="headerScroll" className="header">
         <div className="header__container">
-          <MyLink
-            className="header__logo"
-            to={headerDocument.data.logolink.url}
-          >
-            <span className="header__logo-usta">usta</span>
-            <span className="header__logo-international">international</span>
-          </MyLink>
+          <Logo url={headerDocument.data.logolink.url} />
 
           <div className="header__inner">
             <nav className={`header__nav ${menuOpen ? 'open' : ''}`}>
