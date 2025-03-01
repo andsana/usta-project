@@ -53,14 +53,12 @@ const Banner: React.FC<BannerProps> = ({ slice }) => {
         </>
       )}
       <div className="banner__container">
-        <div className="banner__content">
-          <div className="banner__content-col">
-            <h1 className="banner__content-title">{slice.primary.slogan}</h1>
-            <div className="banner__content-subtitle-wrapper">
-              <h4 className="banner__content-subtitle">
-                {slice.primary.slogandescription}
-              </h4>
-            </div>
+        <div className="banner__content-col">
+          <h1 className="banner__content-title">{slice.primary.slogan}</h1>
+          <div className="banner__content-subtitle-wrapper">
+            <h4 className="banner__content-subtitle">
+              {slice.primary.slogandescription}
+            </h4>
           </div>
         </div>
       </div>
