@@ -10,15 +10,9 @@
     margin-left: 0;
 }
 
-.who-are-we__col-title {
-    margin: 0 0 24px 0;
-}
-
-
 @media (min-width: 768px) {
     .who-are-we {
         scroll-margin-top: 108px;
-
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
@@ -27,10 +21,6 @@
 
     .who-are-we__container .about-company__col-wrapper:last-child {
         margin-bottom: 0;
-    }
-
-    .who-are-we__col-title {
-        margin: 0 0 32px 0;
     }
 
     .who-are-we__col-description {
