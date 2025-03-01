@@ -25,7 +25,7 @@ const App = () => {
   return (
     <div className="page-wrapper">
       <Header />
-      <main>
+      <main className="main">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/en" element={<HomePage />} />
