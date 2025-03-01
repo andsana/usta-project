@@ -34,10 +34,6 @@
     margin: 0 4px;
 }
 
-.projects__title {
-    margin: 0 0 24px 0;
-}
-
 .project-description {
     margin: 0;
 }
@@ -112,14 +108,11 @@
     gap: 16px;
 }
 
-.project-card {
-    flex: 1 1 100%;
-}
-
 .projects__button {
     display: inline-block;
     background: #80b86f;
     padding: 16px 24px;
+    margin-bottom: 24px;
 }
 
 .projects__button:hover {
@@ -128,12 +121,8 @@
 }
 
 @media (min-width: 768px) {
-    .projects__title {
-        margin: 0 0 32px 0;
-    }
-
-    .project-card {
-        flex: 1 1 calc((100% - 16px) / 2);
+    .projects__button {
+        margin-bottom: 32px;
     }
 }
 
@@ -144,8 +133,8 @@
         margin-bottom: 60px;
     }
 
-    .project-card {
-        flex: 1 1 calc((100% - 32px) / 3);
+    .projects__button {
+        margin-bottom: 64px;
     }
 }
 
