@@ -39,7 +39,7 @@
 }
 
 .projects-filter__list {
-    margin-bottom: 32px;
+    margin-bottom: 24px;
 }
 
 .css-b62m3t-container {
@@ -54,6 +54,7 @@
     white-space: nowrap;
     margin-right: 65px;
     margin-bottom: 8px;
+    width: auto;
 }
 
 .project-filter:last-child {
@@ -94,6 +95,12 @@
     display: none;
 }
 
+.projects-filter__list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
 .custom-select {
     width: 100% !important;
 }
@@ -121,16 +128,19 @@
 }
 
 @media (min-width: 768px) {
+    .projects-filter__list {
+        margin-bottom: 32px;
+    }
+
     .projects__button {
         margin-bottom: 32px;
     }
 }
 
+
 @media (min-width: 1024px) {
     .projects-filter__list {
-        display: flex;
-        flex-wrap: wrap;
-        margin-bottom: 60px;
+        margin-bottom: 64px;
     }
 
     .projects__button {
