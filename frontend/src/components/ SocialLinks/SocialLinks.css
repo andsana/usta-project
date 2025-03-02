@@ -16,7 +16,7 @@
     overflow: hidden;
 }
 
-@media (min-width: 961px) {
+@media (min-width: 1024px) {
     .social-links {
         gap: 32px;
     }

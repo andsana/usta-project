@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSinglePrismicDocument } from '@prismicio/react';
 import { PrismicDocument } from '@prismicio/client';
 import { useLanguage } from '../../app/hooks/useLanguage.ts';
 import './SocialLinks.css';
 
 interface SocialLink {
-  name: string;
   link: { url: string };
   icon: { url: string };
 }
@@ -18,7 +17,11 @@ interface SocialPrismicDocument extends PrismicDocument {
   data: SocialData;
 }
 
-const SocialLinks = () => {
+interface SocialLinksProps {
+  className?: string;
+}
+
+const SocialLinks: React.FC<SocialLinksProps> = ({ className = '' }) => {
   const { language } = useLanguage();
   const [socialData, setSocialData] = useState<SocialData | null>(null);
 
@@ -38,12 +41,12 @@ const SocialLinks = () => {
   }
 
   return (
-    <ul className="social-links">
-      {socialData.sociallist.map((social) => {
-        const { name, link, icon } = social;
+    <ul className={`social-links ${className}`.trim()}>
+      {socialData.sociallist.map((social, index) => {
+        const { link, icon } = social;
         if (link.url) {
           return (
-            <li key={name}>
+            <li key={index}>
               <a
                 className="social-link"
                 href={link.url}
