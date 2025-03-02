@@ -6,6 +6,7 @@ import ProjectsPage from './pages/ProjectsPage.tsx';
 import ProjectDetailPage from './pages/ProjectDetailPage/ProjectDetailPage.tsx';
 import ServiceDetailPage from './pages/ServiceDetailPage.tsx';
 import Footer from './components/Footer/Footer.tsx';
+import MessageIcon from './components/MessageIcon/MessageIcon.tsx';
 import './App.css';
 
 const App = () => {
@@ -46,6 +47,7 @@ const App = () => {
         </Routes>
       </main>
       <Footer />
+      <MessageIcon />
     </div>
   );
 };
