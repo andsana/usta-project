@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { PrismicDocument } from '@prismicio/client';
 import { useSinglePrismicDocument } from '@prismicio/react';
 import { useLanguage } from '../../app/hooks/useLanguage.ts';
@@ -11,8 +11,8 @@ import Logo from '../Logo/Logo.tsx';
 import MyLink from '../MyLink/MyLink.tsx';
 import MyButton from '../MyButton/MyButton.tsx';
 import SocialLinks from '../ SocialLinks/ SocialLinks.tsx';
-import './Footer.css';
 import ErrorPage from '../ErrorPage/ErrorPage.tsx';
+import './Footer.css';
 
 interface Item {
   linkname: string;
@@ -43,8 +43,9 @@ interface FooterPrismicDocument extends PrismicDocument {
 }
 
 const Footer = () => {
-  const { language } = useLanguage();
   const location = useLocation();
+  const navigate = useNavigate();
+  const { language } = useLanguage();
 
   const [document, { state }] = useSinglePrismicDocument<FooterPrismicDocument>(
     'footer',
@@ -64,6 +65,8 @@ const Footer = () => {
   }
 
   if (state === 'failed') {
+    const errorPageUrl = language.startsWith('en') ? '/en/404' : '/404';
+    navigate(errorPageUrl);
     return <ErrorPage />;
   }
 
