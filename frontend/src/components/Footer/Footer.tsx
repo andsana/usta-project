@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import { PrismicDocument } from '@prismicio/client';
 import { useSinglePrismicDocument } from '@prismicio/react';
 import { useLanguage } from '../../app/hooks/useLanguage.ts';
-import { translations } from '../../app/constants/translations.ts';
 import {
   createAnimatedFavicon,
   stopAnimatedFavicon,
@@ -12,8 +11,8 @@ import Logo from '../Logo/Logo.tsx';
 import MyLink from '../MyLink/MyLink.tsx';
 import MyButton from '../MyButton/MyButton.tsx';
 import SocialLinks from '../ SocialLinks/ SocialLinks.tsx';
-import NoContentMessage from '../NoContentMessage/NoContentMessage.tsx';
 import './Footer.css';
+import ErrorPage from '../ErrorPage/ErrorPage.tsx';
 
 interface Item {
   linkname: string;
@@ -65,7 +64,7 @@ const Footer = () => {
   }
 
   if (state === 'failed') {
-    return <NoContentMessage message={translations[language].noHeader} />;
+    return <ErrorPage />;
   }
 
   return (
@@ -73,9 +72,6 @@ const Footer = () => {
       <footer id="#footer" className="footer">
         <div className="footer__container">
           <div className="footer__content">
-            {/*<MyLink className="footer__logo" to={document.data.logolink.url}>*/}
-            {/*  <img src={document.data.logo.url} alt="Logo" />*/}
-            {/*</MyLink>*/}
             <div className="footer__column">
               <Logo url={document.data.logolink.url} />
             </div>
