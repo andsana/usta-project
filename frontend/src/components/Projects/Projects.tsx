@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Select from 'react-select';
 import { usePrismicDocumentByUID } from '@prismicio/react';
 import { PrismicDocument } from '@prismicio/client';
@@ -9,7 +9,6 @@ import { translations } from '../../app/constants/translations.ts';
 import MyLink from '../MyLink/MyLink.tsx';
 import Pagination from '../Pagination/Pagination.tsx';
 import ProjectCard, { Card } from '../Projects/ProjectCard/ProjectCard.tsx';
-import NoContentMessage from '../NoContentMessage/NoContentMessage.tsx';
 import './Projects.css';
 
 interface ProjectCardSlice {
@@ -41,6 +40,7 @@ export interface ProjectHeader {
 }
 
 const Projects: React.FC<ProjectHeader> = ({ slice }) => {
+  const navigate = useNavigate();
   const { isMobile } = useScreenDetector();
   const { language } = useLanguage();
   const { category } = useParams();
@@ -49,6 +49,7 @@ const Projects: React.FC<ProjectHeader> = ({ slice }) => {
   const ITEMS_PER_PAGE = 9;
   const isHomePage = location.pathname === '/' || location.pathname === '/en';
   const projectCardsUID = slice.primary.projectcardsuid;
+  const errorPageUrl = `/${language === 'en-us' ? 'en/' : ''}404`;
 
   const [activeCategory, setActiveCategory] = useState<{
     value: string;
@@ -108,15 +109,12 @@ const Projects: React.FC<ProjectHeader> = ({ slice }) => {
   }
 
   if (state === 'failed') {
-    return <NoContentMessage message={translations[language].noProjects} />;
+    navigate(errorPageUrl);
   }
 
   if (!document?.data?.body[0]?.items?.length) {
-    return (
-      <div className="no-project-message">
-        {translations[language].noProjects}
-      </div>
-    );
+    navigate(errorPageUrl);
+    return null;
   }
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
