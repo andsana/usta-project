@@ -1,21 +1,20 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSinglePrismicDocument } from '@prismicio/react';
 import { PrismicDocument } from '@prismicio/client';
 import { useLanguage } from '../../app/hooks/useLanguage.ts';
 import { useOutsideClick } from '../../app/hooks/useOutsideClick.ts';
-import { translations } from '../../app/constants/translations.ts';
 import { useScreenDetector } from '../../app/hooks/useScreenDetector.ts';
 import {
   createAnimatedFavicon,
   stopAnimatedFavicon,
 } from '../../app/utils/animatedFavicon.ts';
 import Logo from '../Logo/Logo.tsx';
-import NoContentMessage from '../NoContentMessage/NoContentMessage.tsx';
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher.tsx';
 import MyLink from '../MyLink/MyLink.tsx';
 import SocialLinks from '../ SocialLinks/ SocialLinks.tsx';
 import MyButton from '../MyButton/MyButton.tsx';
+import ErrorPage from '../ErrorPage/ErrorPage.tsx';
 import './Header.css';
 
 interface MenuItem {
@@ -48,8 +47,10 @@ interface PrismicHeaderDocument extends PrismicDocument {
 
 const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { language } = useLanguage();
   const { isSmallDesktop } = useScreenDetector();
+
   const [headerDocument, { state }] =
     useSinglePrismicDocument<PrismicHeaderDocument>('header', {
       lang: language,
@@ -158,7 +159,9 @@ const Header = () => {
   }
 
   if (state === 'failed') {
-    return <NoContentMessage message={translations[language].noHeader} />;
+    const errorPageUrl = language.startsWith('en') ? '/en/404' : '/404';
+    navigate(errorPageUrl);
+    return <ErrorPage />;
   }
 
   return (
