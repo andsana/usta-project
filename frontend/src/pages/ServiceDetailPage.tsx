@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { SliceZone, usePrismicDocumentByUID } from '@prismicio/react';
 import { Helmet } from 'react-helmet-async';
 import { useLanguage } from '../app/hooks/useLanguage.ts';
@@ -11,13 +11,13 @@ import {
 } from '../app/utils/animatedFavicon.ts';
 import { waitForImagesToLoad } from '../app/utils/waitForImagesToLoad.ts';
 import ServiceDetailHeader from '../components/ServiceDetailHeader/ServiceDetailHeader.tsx';
-import NoContentMessage from '../components/NoContentMessage/NoContentMessage.tsx';
 import Breadcrumbs from '../components/Breadcrumbs/Breadcrumbs.tsx';
 
 const ServiceDetailPage = () => {
   const { uid } = useParams();
   const { language } = useLanguage();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [page, { state }] = usePrismicDocumentByUID(
     'servicedetail',
@@ -25,16 +25,8 @@ const ServiceDetailPage = () => {
     { lang: language },
   );
 
-  const pageTitle: string = page
-    ? page.data.title
-    : translations[language].serviceDetailPageTitle;
-
-  const breadcrumbs = (
-    <Breadcrumbs
-      items={[{ text: translations[language].services }]}
-      currentText={page && pageTitle}
-    />
-  );
+  const currentUrl = `https://ustainternational.com/${language === 'en-us' ? 'en/' : ''}services/${uid}`;
+  const errorPageUrl = `/${language === 'en-us' ? 'en/' : ''}404`;
 
   // Устанавливаем фавикон в спиннер при смене страницы
   useEffect(() => {
@@ -56,34 +48,42 @@ const ServiceDetailPage = () => {
   }
 
   if (state === 'failed') {
-    return (
-      <>
-        {breadcrumbs}
-        <NoContentMessage message={translations[language].noServiceDetails} />
-      </>
-    );
+    navigate(errorPageUrl);
+    return null;
+  }
+
+  if (!page) {
+    navigate(errorPageUrl);
+    return null;
   }
 
   return (
     <>
       <Helmet>
-        <title>{pageTitle}</title>
+        <title>{`${page.data.title} | Usta International`}</title>
+        <meta name="description" content={page.data.preview} />
+        <meta property="og:url" content={currentUrl} />
+        <meta name="robots" content="index, follow" />
+        <meta
+          property="og:title"
+          content={`${page.data.title} | Usta International`}
+        />
+        <meta property="og:description" content={page.data.preview} />
+        <meta property="og:image" content={page.data.image} />
+        <link rel="canonical" href={currentUrl} />
+        <meta name="language" content={language} />
       </Helmet>
-      {breadcrumbs}
 
-      {page && (
-        <>
-          <ServiceDetailHeader
-            title={page.data.title}
-            preview={page.data.preview}
-            image={page.data.image}
-          />
-          <SliceZone
-            slices={page.data.body}
-            components={{ ...pageComponents }}
-          />
-        </>
-      )}
+      <Breadcrumbs
+        items={[{ text: translations[language].services }]}
+        currentText={page.data.title}
+      />
+      <ServiceDetailHeader
+        title={page.data.title}
+        preview={page.data.preview}
+        image={page.data.image}
+      />
+      <SliceZone slices={page.data.body} components={{ ...pageComponents }} />
     </>
   );
 };
