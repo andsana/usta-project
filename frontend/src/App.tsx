@@ -1,16 +1,23 @@
 import { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
+import { useScreenDetector } from './app/hooks/useScreenDetector.ts';
 import Header from './components/Header/Header.tsx';
 import HomePage from './pages/HomePage.tsx';
 import ProjectsPage from './pages/ProjectsPage.tsx';
 import ProjectDetailPage from './pages/ProjectDetailPage/ProjectDetailPage.tsx';
 import ServiceDetailPage from './pages/ServiceDetailPage.tsx';
 import Footer from './components/Footer/Footer.tsx';
+import ErrorPage from './pages/ErrorPage/ErrorPage.tsx';
 import MessageIcon from './components/MessageIcon/MessageIcon.tsx';
 import './App.css';
 
 const App = () => {
   const location = useLocation();
+  const { isMobile } = useScreenDetector();
+
+  // Проверяем, находимся ли мы на странице ошибки
+  const isErrorPage =
+    location.pathname === '/404' || location.pathname === '/en/404';
 
   useEffect(() => {
     if (location.state?.scrollTo) {
@@ -25,7 +32,7 @@ const App = () => {
 
   return (
     <div className="page-wrapper">
-      <Header />
+      {!(isErrorPage && isMobile) && <Header />}
       <main className="main">
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -44,6 +51,8 @@ const App = () => {
           />
           <Route path="/services/:uid" element={<ServiceDetailPage />} />
           <Route path="/en/services/:uid" element={<ServiceDetailPage />} />
+          <Route path="/404" element={<ErrorPage />} />
+          <Route path="en/404" element={<ErrorPage />} />
         </Routes>
       </main>
       <Footer />
