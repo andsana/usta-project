@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { IoReturnUpBack } from 'react-icons/io5';
 import { useLanguage } from '../../app/hooks/useLanguage.ts';
 import { translations } from '../../app/constants/translations.ts';
-import MyLink from '../MyLink/MyLink.tsx';
+import MyLink from '../../components/MyLink/MyLink.tsx';
 import { stopAnimatedFavicon } from '../../app/utils/animatedFavicon.ts';
 import './ErrorPage.css';
 
