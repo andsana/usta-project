@@ -14,7 +14,6 @@ import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher.tsx';
 import MyLink from '../MyLink/MyLink.tsx';
 import SocialLinks from '../ SocialLinks/ SocialLinks.tsx';
 import MyButton from '../MyButton/MyButton.tsx';
-import ErrorPage from '../ErrorPage/ErrorPage.tsx';
 import './Header.css';
 
 interface MenuItem {
@@ -60,6 +59,7 @@ const Header = () => {
   const [subMenuOpen, setSubMenuOpen] = useState(false);
 
   const subNavRef = useOutsideClick<HTMLLIElement>(() => setSubMenuOpen(false));
+  const errorPageUrl = `/${language === 'en-us' ? 'en/' : ''}404`;
 
   useEffect(() => {
     if (menuOpen) {
@@ -103,6 +103,15 @@ const Header = () => {
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
   const toggleSubMenu = () => setSubMenuOpen((prev) => !prev);
+
+  if (state === 'loading') {
+    return null;
+  }
+
+  if (!headerDocument || state === 'failed') {
+    navigate(errorPageUrl);
+    return null;
+  }
 
   const renderMenuItem = (slice: Slice) => {
     const { id, primary, items } = slice;
@@ -154,47 +163,35 @@ const Header = () => {
     );
   };
 
-  if (state === 'loading') {
-    return null;
-  }
-
-  if (state === 'failed') {
-    const errorPageUrl = language.startsWith('en') ? '/en/404' : '/404';
-    navigate(errorPageUrl);
-    return <ErrorPage />;
-  }
-
   return (
-    headerDocument && (
-      <header id="headerScroll" className="header">
-        <div className="header__container">
-          <Logo url={headerDocument.data.logolink.url} />
+    <header id="headerScroll" className="header">
+      <div className="header__container">
+        <Logo url={headerDocument.data.logolink.url} />
 
-          <div className="header__inner">
-            <nav className={`header__nav ${menuOpen ? 'open' : ''}`}>
-              <ul className="header__nav-list">
-                {headerDocument.data.body.map(renderMenuItem)}
-              </ul>
-              <div className="header__social-links">
-                <SocialLinks />
-              </div>
-            </nav>
-
-            <div className="header__actions">
-              <LanguageSwitcher />
-              <button className="header__menu" onClick={toggleMenu}>
-                <span className={`icon ${menuOpen ? 'open' : ''}`}></span>
-              </button>
+        <div className="header__inner">
+          <nav className={`header__nav ${menuOpen ? 'open' : ''}`}>
+            <ul className="header__nav-list">
+              {headerDocument.data.body.map(renderMenuItem)}
+            </ul>
+            <div className="header__social-links">
+              <SocialLinks />
             </div>
+          </nav>
+
+          <div className="header__actions">
+            <LanguageSwitcher />
+            <button className="header__menu" onClick={toggleMenu}>
+              <span className={`icon ${menuOpen ? 'open' : ''}`}></span>
+            </button>
           </div>
         </div>
+      </div>
 
-        <div
-          className={`overlay ${menuOpen ? 'open' : ''}`}
-          onClick={toggleMenu}
-        ></div>
-      </header>
-    )
+      <div
+        className={`overlay ${menuOpen ? 'open' : ''}`}
+        onClick={toggleMenu}
+      ></div>
+    </header>
   );
 };
 
