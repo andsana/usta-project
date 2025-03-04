@@ -1,16 +1,21 @@
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { IoReturnUpBack } from 'react-icons/io5';
 import { useLanguage } from '../../app/hooks/useLanguage.ts';
 import { translations } from '../../app/constants/translations.ts';
 import MyLink from '../MyLink/MyLink.tsx';
+import { stopAnimatedFavicon } from '../../app/utils/animatedFavicon.ts';
 import './ErrorPage.css';
 
 const ErrorPage = () => {
   const { language } = useLanguage();
 
-  const currentUrl = language.startsWith('en')
-    ? `https://ustainternational.com/en/404`
-    : `https://ustainternational.com/404`;
+  const currentUrl = `https://ustainternational.com/${language === 'en-us' ? 'en/' : ''}404`;
+
+  // Останавливаем анимацию фавикона при монтировании компонента
+  useEffect(() => {
+    stopAnimatedFavicon();
+  }, []);
 
   return (
     <>
@@ -20,6 +25,7 @@ const ErrorPage = () => {
           name="description"
           content={translations[language].errorPageDescription}
         />
+        <meta name="robots" content="noindex, nofollow" />
         <meta property="og:url" content={currentUrl} />
         <meta
           property="og:title"
@@ -29,7 +35,6 @@ const ErrorPage = () => {
           property="og:description"
           content={translations[language].errorPageDescription}
         />
-        <meta name="robots" content="noindex, nofollow" />
         <link rel="canonical" href={currentUrl} />
         <meta name="language" content={language} />
       </Helmet>
@@ -49,7 +54,7 @@ const ErrorPage = () => {
           </p>
           <MyLink className="error__link" to="/">
             <IoReturnUpBack />
-            {translations[language].errorButton}
+            {translations[language].errorLink}
           </MyLink>
         </div>
       </div>
