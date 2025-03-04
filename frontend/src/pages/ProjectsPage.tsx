@@ -51,6 +51,7 @@ const ProjectsPage = () => {
 
   if (state === 'failed') {
     navigate(errorPageUrl);
+    return null;
   }
 
   if (!page) {
