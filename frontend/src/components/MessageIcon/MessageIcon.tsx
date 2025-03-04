@@ -22,15 +22,15 @@ const MessageIcon = () => {
           <SocialLinks className="social-links-vertical" />
         </div>
       )}
-      <button
-        className={`message-icon__button ${isOpen ? 'rotated' : ''}`}
-        onClick={toggleIcon}
-      >
-        {isOpen ? (
-          <RxCross1 className="message-icon" />
-        ) : (
-          <IoMdChatboxes className="message-icon" />
-        )}
+
+      <button className="message-icon__button-wrapper" onClick={toggleIcon}>
+        <span className={`message-icon__button ${isOpen ? 'rotated' : ''}`}>
+          {isOpen ? (
+            <RxCross1 className="message-icon" />
+          ) : (
+            <IoMdChatboxes className="message-icon" />
+          )}
+        </span>
       </button>
     </div>
   );
