@@ -115,8 +115,10 @@ const ProjectDetailPage = () => {
 
   if (projectCardsState === 'loading' || projectDetailPageState === 'loading')
     return null;
+
   if (projectCardsState === 'failed' || projectDetailPageState === 'failed') {
     navigate(errorPageUrl);
+    return null;
   }
 
   if (!project || !projectDetailPageDocument) {
@@ -162,9 +164,12 @@ const ProjectDetailPage = () => {
 
       <Breadcrumbs
         items={[
-          { text: 'Projects', to: '/projects' },
           {
-            text: project?.category || '',
+            text: translations[language].projects,
+            to: '/projects',
+          },
+          {
+            text: project.category || '',
             to: `/projects/${project.category}`,
           },
         ]}
