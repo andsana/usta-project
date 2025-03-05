@@ -10,11 +10,12 @@
 }
 
 h1 {
-    font-weight: 400;
-    font-size: 2rem;
+    font-size: 1.375rem;
+    font-weight: 600;
 
     @media (min-width: 768px) {
         font-size: 2.5rem;
+        font-weight: 400;
     }
 
     @media (min-width: 1024px) {
@@ -24,12 +25,13 @@ h1 {
 }
 
 h2 {
-    font-size: 2rem;
-    font-weight: 400;
+    font-size: 1.375rem;
+    font-weight: 600;
     margin-bottom: 1.5rem;
 
     @media (min-width: 768px) {
         font-size: 2.5rem;
+        font-weight: 400;
         margin-bottom: 2rem;
     }
 
@@ -40,13 +42,22 @@ h2 {
 
 
 h3 {
-    font-size: 2rem;
-    font-weight: 400;
+    font-size: 1.375rem;
+    font-weight: 600;
+
+    @media (min-width: 768px) {
+        font-size: 2rem;
+        font-weight: 400;
+    }
 }
 
 h4 {
-    font-size: 1.5rem;
+    font-size: 1.375rem;
     font-weight: 400;
+
+    @media (min-width: 768px) {
+        font-size: 1.5rem;
+    }
 }
 
 h5 {
