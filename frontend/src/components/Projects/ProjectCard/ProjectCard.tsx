@@ -39,10 +39,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
     <>
       <div className="project-card__text">
         <div className="project-card__title-wrapper">
+          <h4 className="project-card__title">{project.title}</h4>
           <div className="project-card__icon-wrapper">
             <MdKeyboardArrowRight className="project-card__icon-arrow" />
           </div>
-          <h4 className="project-card__title">{project.title}</h4>
         </div>
         <p className="project-card__details">
           <span className="project-card__location">{project.location}</span>
