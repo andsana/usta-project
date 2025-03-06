@@ -48,7 +48,7 @@ const LanguageSwitcher = () => {
 
   return (
     <div ref={ref} className="language-switcher">
-      <div onClick={toggleDropdown} className="language-switcher__button">
+      <button onClick={toggleDropdown} className="language-switcher__button">
         <MdLanguage className="language-switcher__icon" />
         <span className="language-switcher__text">
           {language === 'en-us' ? 'EN' : 'RU'}
@@ -56,7 +56,7 @@ const LanguageSwitcher = () => {
         {!isMobile && (
           <MdKeyboardArrowDown className="language-switcher__arrow" />
         )}
-      </div>
+      </button>
 
       {isDropdownOpen && (
         <div className="language-switcher__dropdown">

@@ -53,7 +53,7 @@ const ServiceDetailCards: React.FC<ServiceCardsProps> = ({ slice }) => {
   return (
     <div className="service-cards container block">
       <div className="service-cards__col-text">
-        <h3 className="service-cards__title">{slice.primary.titlecard}</h3>
+        <h2 className="service-cards__title">{slice.primary.titlecard}</h2>
         {slice.items.map((item, index) => (
           <div className="service-cards__col-text-item" key={index}>
             {item.subtitle && (

@@ -32,6 +32,7 @@
     top: 100%;
     right: 0;
     width: 100%;
+    height: 100%;
     background: #fff;
     padding: 16px;
     opacity: 0;
@@ -42,7 +43,8 @@
 }
 
 .header__nav.open {
-    height: calc(100vh - 64px);
+    /*height: calc(100vh - 64px);*/
+    height: auto;
     opacity: 1;
     visibility: visible;
     clip-path: inset(0 0 0 0);
@@ -75,52 +77,48 @@
 .header__nav-link {
     position: relative;
     display: inline-block;
-    text-decoration: none;
-    white-space: nowrap;
-    font-size: 1.25rem;
-    color: #111;
-    border: none;
+    font-size: 16px;
     font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: 0;
+    color: #292929;
+    white-space: nowrap;
+    text-decoration: none;
+    border: none;
     padding: 0;
     margin: 12px 0;
 }
 
 .header__nav-link:hover,
-.header__nav-link-sub-items:hover {
-    color: inherit;
+.header__nav-link-sub-items:hover,
+.header__nav-link-sub-items:hover .icon-sub {
+    color: #000;
 }
 
 .header__nav-link-sub-items {
     position: relative;
-    white-space: nowrap;
-    font-size: 1.25rem;
-    color: #111;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0;
+    font-size: 16px;
+    line-height: 1.6;
+    letter-spacing: 0;
+    color: #292929;
+    white-space: nowrap;
     border: none;
     margin: 12px 0;
+    padding: 0;
     width: 100%;
 }
 
-.icon-sub {
-    display: flex;
-    align-items: center;
-    padding-left: 28px;
+.header__nav-link-sub-items:focus,
+.header__nav-link-sub-items:active {
+    color: #292929;
 }
 
-.icon-sub::before {
-    content: "";
-    position: absolute;
-    display: block;
-    right: 0;
-    width: 24px;
-    height: 24px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23111'%3E%3Cpath d='M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z'/%3E%3C/svg%3E");
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
+.icon-sub {
+    font-size: 16px;
+    color: #292929;
 }
 
 .icon-sub.open::before {
@@ -132,18 +130,6 @@
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-}
-
-.header__message {
-    display: flex;
-    position: relative;
-    gap: 0.5rem;
-    align-items: center;
-    font-size: 1.125rem;
-}
-
-.header__message-icon {
-    font-size: 1.5rem;
 }
 
 /* Подменю (submenu) */
@@ -169,7 +155,7 @@
 }
 
 .header__nav-link.sub {
-    font-size: 1rem;
+    font-size: 16px;
     color: #555;
     margin: 16px 0;
 }
@@ -182,7 +168,7 @@
     justify-content: center;
     background: inherit;
     border: none;
-    color: #111;
+    color: #292929;
     width: 40px;
     height: 24px;
     padding: 0;
@@ -199,7 +185,7 @@
     position: relative;
     width: 18px;
     height: 2px;
-    background-color: #111;
+    background-color: #292929;
     display: block;
     transition: all 0.3s ease;
 }
@@ -211,7 +197,7 @@
     left: 0;
     width: 18px;
     height: 2px;
-    background-color: #111;
+    background-color: #292929;
     display: block;
     transition: all 0.3s ease;
 }
@@ -238,6 +224,7 @@
     top: 0;
 }
 
+
 /* Стили для планшетов */
 @media (min-width: 768px) {
     .header__container {
@@ -245,27 +232,9 @@
     }
 
     .header__nav.open {
-        height: calc(100vh - 72px);
+        height: auto;
     }
 
-    /* Оверлей */
-    .overlay {
-        position: fixed;
-        top: 72px;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
-        z-index: 3;
-    }
-
-    .overlay.open {
-        opacity: 1;
-        visibility: visible;
-    }
 }
 
 
@@ -296,8 +265,8 @@
 
     .header__nav-list {
         flex-direction: row;
+        align-items: center;
         gap: 2rem;
-        font-size: 18px;
     }
 
     .header__nav-item {
@@ -305,9 +274,13 @@
         border: none;
     }
 
-    .header__nav-link,
+    .header__nav-link {
+        margin: 0;
+    }
+
     .header__nav-link-sub-items {
-        font-size: 1.125rem;
+        width: auto;
+        gap: 2px;
         margin: 0;
     }
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { MdKeyboardArrowDown } from 'react-icons/md';
 import { useSinglePrismicDocument } from '@prismicio/react';
 import { PrismicDocument } from '@prismicio/client';
 import { useLanguage } from '../../app/hooks/useLanguage.ts';
@@ -62,24 +63,6 @@ const Header = () => {
   const errorPageUrl = `/${language === 'en-us' ? 'en/' : ''}404`;
 
   useEffect(() => {
-    if (menuOpen) {
-      // Блокируем прокрутку
-      document.body.style.overflow = 'hidden';
-      document.documentElement.style.overflow = 'hidden'; // Добавляем блокировку на html
-    } else {
-      // Разрешаем прокрутку
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = ''; // Снимаем блокировку с html
-    }
-
-    // Очистка при размонтировании компонента
-    return () => {
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = ''; // Очистка при размонтировании
-    };
-  }, [menuOpen]);
-
-  useEffect(() => {
     if (isSmallDesktop) {
       setMenuOpen(false);
       setSubMenuOpen(false);
@@ -124,7 +107,10 @@ const Header = () => {
             onClick={toggleSubMenu}
           >
             {primary.name}
-            <span className={`icon-sub ${subMenuOpen ? 'open' : ''}`}></span>
+            <MdKeyboardArrowDown
+              className={`icon-sub ${subMenuOpen ? 'open' : ''}`}
+            />
+            {/*<span className={`icon-sub ${subMenuOpen ? 'open' : ''}`}></span>*/}
           </button>
 
           <nav className={`header__nav sub ${subMenuOpen ? 'open' : ''}`}>

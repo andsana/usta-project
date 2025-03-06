@@ -23,17 +23,17 @@ const MessageIcon = () => {
         </div>
       )}
 
-      <button className="message-icon__button-wrapper" onClick={toggleIcon}>
-        <span className={`message-icon__button ${isOpen ? 'rotated' : ''}`}>
+
+        <button className={`message-icon__button ${isOpen ? 'rotated' : ''}`} onClick={toggleIcon}>
           {isOpen ? (
             <RxCross1 className="message-icon" />
           ) : (
             <IoMdChatboxes className="message-icon" />
           )}
-        </span>
-      </button>
+        </button>
     </div>
   );
 };
 
 export default MessageIcon;
+

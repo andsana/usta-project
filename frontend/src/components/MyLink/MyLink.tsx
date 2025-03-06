@@ -18,8 +18,17 @@ const MyLink = ({ to, children, className, state }: MyLinkProps) => {
   const prefixedTo =
     language === 'en-us' ? (to === '/' ? '/en' : `/en${to}`) : to;
 
+  const handleClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <Link to={prefixedTo} className={className} state={state}>
+    <Link
+      to={prefixedTo}
+      className={className}
+      state={state}
+      onClick={handleClick}
+    >
       {children}
     </Link>
   );

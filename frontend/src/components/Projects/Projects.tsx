@@ -134,7 +134,7 @@ const Projects: React.FC<ProjectHeader> = ({ slice }) => {
   };
 
   return (
-    <div className="projects container">
+    <div className="projects page container">
       <h2 className="projects__title">{slice.primary.title}</h2>
       {slice.primary.filtershow && uniqueCategories.length > 2 && (
         <div className="projects-filter__list">
@@ -147,7 +147,7 @@ const Projects: React.FC<ProjectHeader> = ({ slice }) => {
             />
           ) : (
             uniqueCategories.map((category) => (
-              <div
+              <p
                 key={category.value}
                 onClick={() => {
                   setActiveCategory(category);
@@ -158,7 +158,7 @@ const Projects: React.FC<ProjectHeader> = ({ slice }) => {
                 }`}
               >
                 {category.label}
-              </div>
+              </p>
             ))
           )}
         </div>

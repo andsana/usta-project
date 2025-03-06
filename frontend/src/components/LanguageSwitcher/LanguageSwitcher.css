@@ -5,22 +5,30 @@
 
 .language-switcher__button {
     display: flex;
+    font-size: 16px;
+    color: #292929;
     align-items: center;
-    gap: 0.25rem;
+    justify-content: center;
+    gap: 0.125rem;
     background: transparent;
-    font-size: 1.125rem;
     border: none;
     cursor: pointer;
+    padding: 0;
 }
 
-.language-switcher__icon,
 .language-switcher__arrow {
-    font-size: 1.5rem;
-    color: #111;
+    font-size: 16px;
+    color: #292929;
 }
 
-.language-switcher__text {
-    font-size: 1.125rem;
+.language-switcher__button:hover,
+.language-switcher__button:hover .language-switcher__arrow {
+    color: #000;
+}
+
+.language-switcher__button:focus,
+.language-switcher__button:active {
+    color: #292929;
 }
 
 .language-switcher__dropdown {
@@ -44,7 +52,8 @@
     padding: 16px;
     text-align: center;
     cursor: pointer;
-    color: #111;
+    font-size: 16px;
+    color: #292929;
 }
 
 @media (min-width: 768px) {

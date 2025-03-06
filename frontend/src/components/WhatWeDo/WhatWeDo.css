@@ -22,7 +22,7 @@
 }
 
 .what-we-do__col-content {
-    padding: 16px;
+    padding: 42px 16px;
 }
 
 .what-we-do__col-title {
@@ -45,8 +45,6 @@
 
 .what-we-do__col-list li {
     position: relative;
-    font-size: 18px;
-    line-height: 1.5;
     padding: 8px 0 8px 32px;
 }
 
@@ -65,6 +63,11 @@
 @media (min-width: 768px) {
     .what-we-do__col-title {
         margin: 0 0 32px 0;
+    }
+
+    .what-we-do__col-content {
+        padding-top: 72px;
+        padding-bottom: 72px;
     }
 }
 

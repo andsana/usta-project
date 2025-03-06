@@ -37,7 +37,8 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ slice }) => {
         </div>
         <div className="what-we-do__col">
           <div className="what-we-do__col-content">
-            <h3 className="what-we-do__col-title">{slice.primary.title}</h3>
+            {/*<h3 className="what-we-do__col-title">{slice.primary.title}</h3>*/}
+            <h2 className="what-we-do__col-title">{slice.primary.title}</h2>
             <p className="what-we-do__col-description">
               {slice.primary.paragraphfirst}
             </p>
