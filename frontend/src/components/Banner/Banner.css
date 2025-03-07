@@ -59,10 +59,6 @@
 }
 
 .banner__content-subtitle {
-    /*font-size: 1.125rem;*/
-    font-size: 15px;
-    letter-spacing: 0;
-    line-height: 1.6;
     margin: 0;
 }
 
@@ -91,6 +87,7 @@
 }
 
 .banner__service:hover {
+    color: #545454;
     background: #fff;
 }
 
@@ -113,12 +110,15 @@
 }
 
 .last-word::after {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     content: "";
     position: absolute;
     bottom: 0;
     right: 0;
     width: 36px;
-    height: 19.5px;
+    height: 18px;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2380b86f'%3E%3Cpath d='M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z'/%3E%3C/svg%3E");
     background-size: contain;
     background-position: center;
@@ -133,10 +133,6 @@
 
     .banner__content-col {
         padding: 48px;
-    }
-
-    .banner__content-subtitle {
-        font-size: 1.125rem;
     }
 }
 

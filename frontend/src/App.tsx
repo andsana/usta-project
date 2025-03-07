@@ -55,8 +55,8 @@ const App = () => {
           <Route path="en/404" element={<ErrorPage />} />
         </Routes>
       </main>
-      <Footer />
-      <MessageIcon />
+      {!(isErrorPage && isMobile) && <Footer />}
+      {!isErrorPage && <MessageIcon />}
     </div>
   );
 };

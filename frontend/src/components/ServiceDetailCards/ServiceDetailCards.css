@@ -67,6 +67,7 @@
     color: #80b86f;
     display: flex;
     align-items: center;
+    margin-top: 4px;
 }
 
 .service-cards__col-text-item {

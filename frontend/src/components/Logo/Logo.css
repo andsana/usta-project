@@ -9,7 +9,7 @@
     z-index: 5;
     padding: 0;
     width: max-content;
-    color: #292929;
+    color: #111;
 }
 
 .logo__usta {
@@ -21,7 +21,7 @@
 }
 
 .logo__usta:hover {
-    background: inherit;
+    color: #111;
     text-decoration: none;
 }
 

@@ -58,6 +58,7 @@
     color: #80b86f;
     display: flex;
     align-items: center;
+    margin-top: 4px;
 }
 
 @media (min-width: 768px) {

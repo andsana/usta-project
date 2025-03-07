@@ -75,7 +75,7 @@ const Footer = () => {
       <div className="footer__container">
         <div className="footer__content">
           <div className="footer__column">
-            <Logo url={document.data.logolink.url} />
+            <Logo url={document.data.logolink.url} ustaClass="footer__logo-usta" internationalClass="footer__logo-international" />
           </div>
 
           {document.data.body.map((slice) => (

@@ -16,6 +16,18 @@
     padding: 0;
 }
 
+.language-switcher__text {
+    /*padding-top: 2px;*/
+}
+
+.language-switcher__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+}
+
 .language-switcher__arrow {
     font-size: 16px;
     color: #292929;
