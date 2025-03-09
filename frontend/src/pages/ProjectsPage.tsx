@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { SliceZone, usePrismicDocumentByUID } from '@prismicio/react';
 import { useLanguage } from '../app/hooks/useLanguage.ts';
@@ -21,7 +21,6 @@ interface HeaderSlice {
 
 const ProjectsPage = () => {
   const { language } = useLanguage();
-  const location = useLocation();
   const navigate = useNavigate();
 
   const [page, { state }] = usePrismicDocumentByUID('page_new', 'projects', {
@@ -32,15 +31,23 @@ const ProjectsPage = () => {
   const currentUrl = `https://ustainternational.com/${language === 'en-us' ? 'en/' : ''}projects`;
 
   useEffect(() => {
-    createAnimatedFavicon();
-  }, [location.pathname]);
+    if (state === 'loading' || state === 'idle') return;
+
+    if (!page || state === 'failed') {
+      navigate(errorPageUrl);
+    }
+  }, [state, page, navigate, errorPageUrl]);
 
   useEffect(() => {
     if (state === 'loading') {
       createAnimatedFavicon();
-    } else if (state === 'failed') {
+    }
+
+    if (state === 'loaded' || state === 'failed') {
       stopAnimatedFavicon();
-    } else if (page) {
+    }
+
+    if (state === 'loaded' && page) {
       waitForImagesToLoad();
     }
   }, [state, page]);
@@ -49,13 +56,7 @@ const ProjectsPage = () => {
     return null;
   }
 
-  if (state === 'failed') {
-    navigate(errorPageUrl);
-    return null;
-  }
-
   if (!page) {
-    navigate(errorPageUrl);
     return null;
   }
 
