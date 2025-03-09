@@ -18,7 +18,9 @@ interface ProjectCard {
   location: string;
   category: string;
   image: { url: string; alt: string };
-  projectdetailuid: string;
+  projectdetailuid: {
+    uid: string;
+  };
 }
 
 interface ProjectCardSlice {
@@ -78,55 +80,92 @@ const ProjectDetailPage = () => {
 
   const projectData = projectCardsDocument?.data.body
     .flatMap((slice) => slice.items)
-    .find((item) => item.projectdetailuid === uid);
+    .find((item) => item.projectdetailuid.uid === uid);
 
   const project = projectStateData || projectData || null;
 
   const [projectDetailPageDocument, { state: projectDetailPageState }] =
     usePrismicDocumentByUID<ProjectDetailPageDocument>(
       'projectcarddetail',
-      project?.projectdetailuid || '',
+      // project ? project.projectdetailuid.uid : '',
+      uid ? uid : '',
       { lang: language },
     );
 
   useEffect(() => {
-    createAnimatedFavicon();
-  }, [location.pathname]);
+    if (projectCardsState === 'loading' || projectCardsState === 'idle') return;
+
+    if (!project || projectCardsState === 'failed') {
+      navigate(errorPageUrl);
+    }
+  }, [projectCardsState, project, navigate, errorPageUrl]);
 
   useEffect(() => {
-    if (projectCardsState === 'loading') {
-      createAnimatedFavicon();
-    } else if (projectCardsState !== 'failed') {
-      stopAnimatedFavicon();
-    } else if (projectCardsDocument) {
-      waitForImagesToLoad();
+    if (
+      projectDetailPageState === 'loading' ||
+      projectDetailPageState === 'idle'
+    )
+      return;
+
+    // if (!projectDetailPageDocument && projectDetailPageState === 'failed') {
+    //   return; // Даём шанс повторному запросу, не делаем редирект сразу
+    // }
+
+    if (!projectDetailPageDocument || projectDetailPageState === 'failed') {
+      navigate(errorPageUrl);
     }
-  }, [projectCardsState, projectCardsDocument]);
+  }, [
+    project,
+    projectDetailPageState,
+    projectDetailPageDocument,
+    navigate,
+    errorPageUrl,
+  ]);
 
   useEffect(() => {
-    if (projectDetailPageState === 'loading') {
+    // Запуск анимации, если хотя бы один документ загружается
+    if (
+      projectCardsState === 'loading' ||
+      projectDetailPageState === 'loading'
+    ) {
       createAnimatedFavicon();
-    } else if (projectDetailPageState !== 'failed') {
+    }
+
+    // Остановка анимации, если оба документа загружены или произошла ошибка
+    if (
+      (projectCardsState === 'loaded' || projectCardsState === 'failed') &&
+      (projectDetailPageState === 'loaded' ||
+        projectDetailPageState === 'failed')
+    ) {
       stopAnimatedFavicon();
-    } else if (projectDetailPageDocument) {
+    }
+
+    // Ожидание загрузки изображений, если оба документа загружены
+    if (
+      projectCardsState === 'loaded' &&
+      projectDetailPageState === 'loaded' &&
+      projectCardsDocument &&
+      projectDetailPageDocument
+    ) {
       waitForImagesToLoad();
     }
-  }, [projectDetailPageState, projectDetailPageDocument]);
+  }, [
+    projectCardsState,
+    projectDetailPageState,
+    projectCardsDocument,
+    projectDetailPageDocument,
+  ]);
 
-  if (projectCardsState === 'loading' || projectDetailPageState === 'loading')
-    return null;
-
-  if (projectCardsState === 'failed' || projectDetailPageState === 'failed') {
-    navigate(errorPageUrl);
+  // Спиннер во время загрузки данных
+  if (projectCardsState === 'loading' || projectDetailPageState === 'loading') {
     return null;
   }
 
   if (!project || !projectDetailPageDocument) {
-    navigate(errorPageUrl);
     return null;
   }
 
-  const currentUrl = `https://ustainternational.com/${language === 'en-us' ? 'en/' : ''}projects/${project.category}/${uid}`;
+  const currentUrl = `https://ustainternational.com/${language === 'en-us' ? 'en/' : ''}projects/${project && project.category}/${uid}`;
 
   const renderDetailItem = (title: string, content: string) => (
     <div className="project-detail__col-item">
@@ -135,9 +174,9 @@ const ProjectDetailPage = () => {
     </div>
   );
 
-  const filteredSdgItems = projectDetailPageDocument.data.sdg.filter(
-    (item) => item.sdgitem.url,
-  );
+  const filteredSdgItems =
+    projectDetailPageDocument &&
+    projectDetailPageDocument.data.sdg.filter((item) => item.sdgitem.url);
 
   return (
     <div className="project-detail">
