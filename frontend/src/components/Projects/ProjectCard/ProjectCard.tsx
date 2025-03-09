@@ -14,21 +14,24 @@ export interface Card {
     alt: string;
   };
   featured: boolean;
-  projectdetailuid?: string;
+  projectdetailuid: {
+    uid?: string;
+  };
 }
 
 export interface ProjectCardProps {
   project: Card;
 }
 
+const createSlug = (input: string) => {
+  if (typeof input !== 'string') {
+    return '';
+  }
+  return input.replace(/\s|,/g, '-').toLowerCase();
+};
+
 const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const { language } = useLanguage();
-
-  const createSlug = (input: string) =>
-    input.replace(/\s|,/g, '-').toLowerCase();
-  const slugProjectdetailuid = project.projectdetailuid
-    ? createSlug(project.projectdetailuid)
-    : '';
 
   const slugCategory =
     language === 'ru'
@@ -62,10 +65,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
     </>
   );
 
-  return slugProjectdetailuid ? (
+  return project.projectdetailuid.uid ? (
     <MyLink
       className="project-card"
-      to={`/projects/${slugCategory}/${slugProjectdetailuid}`}
+      to={`/projects/${slugCategory}/${project.projectdetailuid.uid}`}
       state={{ projectData: project }}
     >
       {projectCardContent}
