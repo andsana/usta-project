@@ -37,11 +37,16 @@ interface ProjectCardsDocument extends PrismicDocument {
   data: ProjectCardsData;
 }
 
+interface RichTextBlock {
+  type: 'paragraph' | 'list-item';
+  text: string;
+}
+
 interface Slice {
   id: string;
   slice_type: string;
   primary: { title?: string };
-  items: { paragraph: string }[];
+  items: { richtext: RichTextBlock[] }[];
 }
 
 interface SdgItem {
@@ -224,6 +229,12 @@ const ProjectDetailPage = () => {
             <div className="project-detail__title-row">
               <div className="project-detail__title-col">
                 <h1 className="project-detail__title">{project.title}</h1>
+
+                {projectDetailPageDocument.data.preview && (
+                  <p className="project-detail__preview">
+                    {projectDetailPageDocument.data.preview}
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -272,18 +283,43 @@ const ProjectDetailPage = () => {
         </div>
       </div>
 
-      <div className="project-detail__article block container">
-        {projectDetailPageDocument.data.preview && (
-          <p>{projectDetailPageDocument.data.preview}</p>
-        )}
+      <div className="project-detail__article block">
+        {/*{projectDetailPageDocument.data.preview && (*/}
+        {/*  <p>{projectDetailPageDocument.data.preview}</p>*/}
+        {/*)}*/}
         {projectDetailPageDocument.data.body.map((slice) => {
           if (slice.slice_type === 'singletitleparagraps') {
             return (
               <div key={slice.id} className="project-detail__content">
-                {slice.primary.title && <h2>{slice.primary.title}</h2>}
-                {slice.items.map((item, index) => (
-                  <p key={index}>{item.paragraph}</p>
-                ))}
+                {slice.primary.title && (
+                  <h2 className="project-detail__content-title">
+                    {slice.primary.title}
+                  </h2>
+                )}
+
+                {slice.items.map((item, index) => {
+                  const paragraphs = item.richtext.filter(
+                    (block) => block.type === 'paragraph',
+                  );
+                  const listItems = item.richtext.filter(
+                    (block) => block.type === 'list-item',
+                  );
+
+                  return (
+                    <div key={index}>
+                      {paragraphs.map((block, blockIndex) => (
+                        <p key={blockIndex}>{block.text}</p>
+                      ))}
+                      {listItems.length > 0 && (
+                        <ul className="project-detail__content-list">
+                          {listItems.map((block, blockIndex) => (
+                            <li key={blockIndex}>{block.text}</li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             );
           }
