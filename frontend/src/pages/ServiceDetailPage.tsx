@@ -31,7 +31,11 @@ const ServiceDetailPage = () => {
     if (state === 'loading' || state === 'idle') return;
 
     if (!page || state === 'failed') {
-      navigate(errorPageUrl);
+      stopAnimatedFavicon();
+
+      setTimeout(() => {
+        navigate(errorPageUrl);
+      }, 100);
     }
   }, [state, page, navigate, errorPageUrl]);
 
@@ -44,7 +48,7 @@ const ServiceDetailPage = () => {
       waitForImagesToLoad();
     }
 
-    if (state === 'failed') {
+    if (state === 'failed' || !page) {
       stopAnimatedFavicon();
     }
   }, [state, page]);
