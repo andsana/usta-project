@@ -31,8 +31,6 @@ const Banner: React.FC<BannerProps> = ({ slice }) => {
     return null;
   }
 
-  console.log('slice', slice);
-
   const bannerStyle =
     slice.primary.video.url && !isMobile
       ? { backgroundImage: 'none' }
