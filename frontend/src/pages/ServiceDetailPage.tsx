@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { SliceZone, usePrismicDocumentByUID } from '@prismicio/react';
 import { Helmet } from 'react-helmet-async';
 import { useLanguage } from '../app/hooks/useLanguage.ts';
@@ -16,7 +16,6 @@ import Breadcrumbs from '../components/Breadcrumbs/Breadcrumbs.tsx';
 const ServiceDetailPage = () => {
   const { uid } = useParams();
   const { language } = useLanguage();
-  const location = useLocation();
   const navigate = useNavigate();
 
   const [page, { state }] = usePrismicDocumentByUID(
@@ -28,18 +27,25 @@ const ServiceDetailPage = () => {
   const currentUrl = `https://ustainternational.com/${language === 'en-us' ? 'en/' : ''}services/${uid}`;
   const errorPageUrl = `/${language === 'en-us' ? 'en/' : ''}404`;
 
-  // Устанавливаем фавикон в спиннер при смене страницы
   useEffect(() => {
-    createAnimatedFavicon();
-  }, [location.pathname]);
+    if (state === 'loading' || state === 'idle') return;
+
+    if (!page || state === 'failed') {
+      navigate(errorPageUrl);
+    }
+  }, [state, page, navigate, errorPageUrl]);
 
   useEffect(() => {
     if (state === 'loading') {
       createAnimatedFavicon();
-    } else if (state === 'failed') {
-      stopAnimatedFavicon();
-    } else if (page) {
+    }
+
+    if (state === 'loaded' && page) {
       waitForImagesToLoad();
+    }
+
+    if (state === 'failed') {
+      stopAnimatedFavicon();
     }
   }, [state, page]);
 
@@ -47,13 +53,7 @@ const ServiceDetailPage = () => {
     return null;
   }
 
-  if (state === 'failed') {
-    navigate(errorPageUrl);
-    return null;
-  }
-
   if (!page) {
-    navigate(errorPageUrl);
     return null;
   }
 
