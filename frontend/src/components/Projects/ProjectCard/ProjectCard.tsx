@@ -23,10 +23,7 @@ export interface ProjectCardProps {
   project: Card;
 }
 
-const createSlug = (input: string) => {
-  if (typeof input !== 'string') {
-    return '';
-  }
+const createSlug = (input: string): string => {
   return input.replace(/\s|,/g, '-').toLowerCase();
 };
 
