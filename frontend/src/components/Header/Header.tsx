@@ -75,13 +75,17 @@ const Header = () => {
   }, [location]);
 
   useEffect(() => {
-    createAnimatedFavicon();
-  }, [location.pathname]);
-
-  useEffect(() => {
     if (state === 'loading') createAnimatedFavicon();
     else stopAnimatedFavicon();
-  }, [state, headerDocument]);
+  }, [state]);
+
+  useEffect(() => {
+    if (state === 'loading' || state === 'idle') return;
+
+    if (!headerDocument || state === 'failed') {
+      navigate(errorPageUrl);
+    }
+  }, [state, headerDocument, navigate, errorPageUrl]);
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
@@ -91,8 +95,7 @@ const Header = () => {
     return null;
   }
 
-  if (!headerDocument || state === 'failed') {
-    navigate(errorPageUrl);
+  if (!headerDocument) {
     return null;
   }
 

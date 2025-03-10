@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { PrismicDocument } from '@prismicio/client';
 import { useSinglePrismicDocument } from '@prismicio/react';
 import { useLanguage } from '../../app/hooks/useLanguage.ts';
@@ -42,7 +42,6 @@ interface FooterPrismicDocument extends PrismicDocument {
 }
 
 const Footer = () => {
-  const location = useLocation();
   const navigate = useNavigate();
   const { language } = useLanguage();
 
@@ -52,21 +51,25 @@ const Footer = () => {
     'footer',
     { lang: language },
   );
-  useEffect(() => {
-    createAnimatedFavicon();
-  }, [location.pathname]);
 
   useEffect(() => {
     if (state === 'loading') createAnimatedFavicon();
     else stopAnimatedFavicon();
   }, [state, document]);
 
+  useEffect(() => {
+    if (state === 'loading' || state === 'idle') return;
+
+    if (!document || state === 'failed') {
+      navigate(errorPageUrl);
+    }
+  }, [state, document, navigate, errorPageUrl]);
+
   if (state === 'loading') {
     return null;
   }
 
-  if (!document || state === 'failed') {
-    navigate(errorPageUrl);
+  if (!document) {
     return null;
   }
 
@@ -75,7 +78,11 @@ const Footer = () => {
       <div className="footer__container">
         <div className="footer__content">
           <div className="footer__column">
-            <Logo url={document.data.logolink.url} ustaClass="footer__logo-usta" internationalClass="footer__logo-international" />
+            <Logo
+              url={document.data.logolink.url}
+              ustaClass="footer__logo-usta"
+              internationalClass="footer__logo-international"
+            />
           </div>
 
           {document.data.body.map((slice) => (
