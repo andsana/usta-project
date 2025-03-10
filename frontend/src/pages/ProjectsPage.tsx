@@ -43,12 +43,12 @@ const ProjectsPage = () => {
       createAnimatedFavicon();
     }
 
-    if (state === 'loaded' || state === 'failed') {
-      stopAnimatedFavicon();
-    }
-
     if (state === 'loaded' && page) {
       waitForImagesToLoad();
+    }
+
+    if (state === 'failed') {
+      stopAnimatedFavicon();
     }
   }, [state, page]);
 
