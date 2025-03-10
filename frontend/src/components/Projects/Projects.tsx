@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Select from 'react-select';
 import { usePrismicDocumentByUID } from '@prismicio/react';
 import { PrismicDocument } from '@prismicio/client';
@@ -40,7 +40,6 @@ export interface ProjectHeader {
 }
 
 const Projects: React.FC<ProjectHeader> = ({ slice }) => {
-  const navigate = useNavigate();
   const { isMobile } = useScreenDetector();
   const { language } = useLanguage();
   const { category } = useParams();
@@ -49,7 +48,6 @@ const Projects: React.FC<ProjectHeader> = ({ slice }) => {
   const ITEMS_PER_PAGE = 9;
   const isHomePage = location.pathname === '/' || location.pathname === '/en';
   const projectCardsUID = slice.primary.projectcardsuid;
-  const errorPageUrl = `/${language === 'en-us' ? 'en/' : ''}404`;
 
   const [activeCategory, setActiveCategory] = useState<{
     value: string;
@@ -108,12 +106,7 @@ const Projects: React.FC<ProjectHeader> = ({ slice }) => {
     return null;
   }
 
-  if (state === 'failed') {
-    navigate(errorPageUrl);
-  }
-
   if (!document?.data?.body[0]?.items?.length) {
-    navigate(errorPageUrl);
     return null;
   }
 
