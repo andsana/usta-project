@@ -1,7 +1,6 @@
 import React from 'react';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { useLanguage } from '../../../app/hooks/useLanguage.ts';
-import { transliterate } from '../../../app/utils/transliterate.ts';
 import MyLink from '../../MyLink/MyLink.tsx';
 import './ProjectCard.css';
 
@@ -9,6 +8,7 @@ export interface Card {
   title: string;
   location: string;
   category: string;
+  categoryen?: string;
   image: {
     url: string;
     alt: string;
@@ -32,7 +32,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 
   const slugCategory =
     language === 'ru'
-      ? createSlug(transliterate(project.category || ''))
+      ? createSlug(project.categoryen || '')
       : createSlug(project.category || '');
 
   const projectCardContent = (
