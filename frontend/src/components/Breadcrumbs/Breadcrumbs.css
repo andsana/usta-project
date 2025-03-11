@@ -2,8 +2,9 @@
     font-size: 14px;
     margin-top: 20px;
     margin-bottom: 20px;
-    padding-top: 18px;
-    padding-bottom: 18px;
+    padding-top: 17px;
+    padding-bottom: 17px;
+    height: 56px;
 }
 
 .breadcrumbs__link {
