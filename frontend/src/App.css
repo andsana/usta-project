@@ -3,7 +3,7 @@
     font-size: 16px;
     line-height: 1.6;
     letter-spacing: 0;
-    color: #4C4C4C;
+    color: #292929;
     font-weight: 400;
 }
 
@@ -20,7 +20,6 @@ h1 {
     line-height: 1.3;
     letter-spacing: 0.06em;
     font-weight: 400;
-    color: #545454;
 
     @media (min-width: 768px) {
         font-size: 44px;
@@ -35,7 +34,6 @@ h2 {
     letter-spacing: 0.06em;
     font-weight: 400;
     margin-bottom: 1.5rem;
-    color: #545454;
 
     @media (min-width: 768px) {
         font-size: 35px;
@@ -54,7 +52,6 @@ h4 {
     font-weight: 400;
     line-height: 1.6;
     letter-spacing: 0;
-    color: #545454;
 }
 
 
@@ -70,7 +67,12 @@ button {
     font-weight: 500;
     font-family: inherit;
     background: inherit;
+    color: inherit;
     cursor: pointer;
+}
+
+a {
+    color: inherit;
 }
 
 .card {
