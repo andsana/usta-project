@@ -1,4 +1,5 @@
 import React from 'react';
+import RenderText from '../RenderText/RenderText.tsx';
 import './ServiceDetailCards.css';
 
 export interface ListItem {
@@ -24,32 +25,6 @@ export interface ServiceCardsProps {
 const ServiceDetailCards: React.FC<ServiceCardsProps> = ({ slice }) => {
   if (!slice || !slice.primary || !slice.items) return null;
 
-  const renderText = (
-    text: string,
-    spans?: Array<{ start: number; end: number; type: string }>,
-  ) => {
-    if (!spans || spans.length === 0) return text;
-
-    return spans
-      .reduce<{ elements: React.ReactNode[]; lastIndex: number }>(
-        (acc, span, index) => {
-          const beforeText = text.slice(acc.lastIndex, span.start);
-          const boldText = text.slice(span.start, span.end);
-
-          return {
-            elements: [
-              ...acc.elements,
-              beforeText && <span key={`before-${index}`}>{beforeText}</span>,
-              <strong key={`bold-${index}`}>{boldText}</strong>,
-            ],
-            lastIndex: span.end,
-          };
-        },
-        { elements: [], lastIndex: 0 },
-      )
-      .elements.concat(text.slice(spans[spans.length - 1].end));
-  };
-
   return (
     <div className="service-cards container block">
       <div className="service-cards__col-text">
@@ -61,7 +36,9 @@ const ServiceDetailCards: React.FC<ServiceCardsProps> = ({ slice }) => {
             )}
             <ul>
               {item.list.map((listItem, index) => (
-                <li key={index}>{renderText(listItem.text, listItem.spans)}</li>
+                <li key={index}>
+                  <RenderText text={listItem.text} spans={listItem.spans} />
+                </li>
               ))}
             </ul>
           </div>
