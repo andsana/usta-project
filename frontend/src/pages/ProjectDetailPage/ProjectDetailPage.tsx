@@ -11,6 +11,7 @@ import {
 } from '../../app/utils/animatedFavicon.ts';
 import { waitForImagesToLoad } from '../../app/utils/waitForImagesToLoad.ts';
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs.tsx';
+import RenderText from '../../components/RenderText/RenderText.tsx';
 import './ProjectDetailPage.css';
 
 interface ProjectCard {
@@ -40,6 +41,7 @@ interface ProjectCardsDocument extends PrismicDocument {
 interface RichTextBlock {
   type: 'paragraph' | 'list-item';
   text: string;
+  spans?: Array<{ start: number; end: number; type: string }>;
 }
 
 interface Slice {
@@ -308,12 +310,19 @@ const ProjectDetailPage = () => {
                   return (
                     <div key={index}>
                       {paragraphs.map((block, blockIndex) => (
-                        <p key={blockIndex}>{block.text}</p>
+                        <p key={blockIndex}>
+                          <RenderText text={block.text} spans={block.spans} />
+                        </p>
                       ))}
                       {listItems.length > 0 && (
                         <ul className="project-detail__content-list">
                           {listItems.map((block, blockIndex) => (
-                            <li key={blockIndex}>{block.text}</li>
+                            <li key={blockIndex}>
+                              <RenderText
+                                text={block.text}
+                                spans={block.spans}
+                              />
+                            </li>
                           ))}
                         </ul>
                       )}
