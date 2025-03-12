@@ -120,7 +120,7 @@ const Footer = () => {
               <SocialLinks />
             </div>
             <div className="footer__contact-mail">
-              <strong>{document.data.mailtitle}: </strong>
+              <span>{document.data.mailtitle}: </span>
               <a
                 className="footer-link"
                 href={`mailto:${document.data.emailaddress}`}

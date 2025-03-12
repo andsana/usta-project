@@ -78,7 +78,7 @@
     position: relative;
     display: inline-block;
     font-size: inherit;
-    font-weight: 400;
+    font-weight: inherit;
     color: #292929;
     white-space: nowrap;
     text-decoration: none;
@@ -99,6 +99,7 @@
     justify-content: space-between;
     align-items: center;
     font-size: inherit;
+    font-weight: inherit;
     color: #292929;
     white-space: nowrap;
     border: none;

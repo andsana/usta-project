@@ -26,7 +26,7 @@ const RenderText: React.FC<RenderTextProps> = ({ text, spans }) => {
               elements: [
                 ...acc.elements,
                 beforeText && <span key={`before-${index}`}>{beforeText}</span>,
-                <strong key={`bold-${index}`}>{boldText}</strong>,
+                <span style={{fontWeight: 400}} key={`bold-${index}`}>{boldText}</span>,
               ],
               lastIndex: span.end,
             };
