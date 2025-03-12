@@ -8,6 +8,7 @@
 
 .breadcrumbs__link {
     position: relative;
+    font-weight: inherit;
 }
 
 .breadcrumbs__link:hover {
@@ -29,7 +30,7 @@
 }
 
 .breadcrumbs__current {
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .breadcrumbs__separator {
