@@ -37,20 +37,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 
   const projectCardContent = (
     <>
-      <div className="project-card__text">
-        <div className="project-card__title-wrapper">
-          <h4 className="project-card__title">{project.title}</h4>
-          <div className="project-card__icon-wrapper">
-            <MdKeyboardArrowRight className="project-card__icon-arrow" />
-          </div>
-        </div>
-        <p className="project-card__details">
-          <span className="project-card__location">{project.location}</span>
-          <span className="project-card__separator"></span>
-          {project.category}
-        </p>
-      </div>
-
       <div className="project-card__image-wrapper">
         <img
           className="project-card__image"
@@ -58,6 +44,19 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           alt={project.image.alt}
           loading="lazy"
         />
+      </div>
+
+      <div className="project-card__text">
+        <div className="project-card__title-wrapper">
+          <h4 className="project-card__title">{project.title}</h4>
+          <div className="project-card__icon-wrapper">
+            <MdKeyboardArrowRight className="project-card__icon-arrow" />
+          </div>
+        </div>
+        <div className="project-card__details">
+          <span className="project-card__location">{project.location}</span>
+          <span className="project-card__category">{project.category}</span>
+        </div>
       </div>
     </>
   );

@@ -34,6 +34,7 @@
 .service-cards__col-image-wrapper img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
 }
 
 .service-cards__col-text {
