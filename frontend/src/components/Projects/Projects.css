@@ -77,8 +77,8 @@
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
-    row-gap: 24px;
-    margin-bottom: 18px;
+    row-gap: 42px;
+    margin-bottom: 42px;
 }
 
 .projects__button {
