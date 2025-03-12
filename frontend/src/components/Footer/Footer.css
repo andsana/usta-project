@@ -42,7 +42,6 @@
 }
 
 .footer__menu-section h6 {
-    font-weight: 400;
     margin: 8px 0;
 }
 
@@ -56,7 +55,7 @@
 }
 
 .footer__contact-mail span {
-    font-weight: 400;
+    font-weight: 600;
 }
 
 .footer-link::after {
@@ -76,7 +75,6 @@
 }
 
 .footer__contact h6 {
-    font-weight: 400;
     margin: 0;
 }
 
