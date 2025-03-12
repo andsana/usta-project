@@ -9,12 +9,12 @@
     color: #292929;
     font-weight: inherit;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     gap: 0.125rem;
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: 0;
+    padding: 16px 10px;
 }
 
 .language-switcher__icon {
@@ -23,6 +23,7 @@
     justify-content: center;
     width: 18px;
     height: 18px;
+    z-index: 6;
 }
 
 .language-switcher__arrow {
@@ -42,36 +43,35 @@
 
 .language-switcher__dropdown {
     position: absolute;
-    left: 50%;
-    top: calc(100% + 8px);
-    transform: translateX(-50%);
+    top: 0;
+    right: 0;
     background-color: #fff;
     border-radius: 24px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    width: max-content;
+    width: 100%;
     transition: opacity 0.3s ease, transform 0.3s ease;
     z-index: 5;
+    text-align: right;
+
+}
+
+.language-switcher__text {
+    z-index: 6;
 }
 
 .language-switcher__option {
     background: transparent;
     border: none;
-    padding: 16px;
-    text-align: center;
     cursor: pointer;
     font-size: 16px;
     color: #292929;
     font-weight: inherit;
+    text-align: right;
+    width: 100%;
+    padding: 45px 10px 16px 0;
 }
 
-@media (min-width: 768px) {
-    .language-switcher__dropdown {
-        left: auto;
-        right: 12px;
-        transform: translateX(50%);
-    }
-}
 
 
