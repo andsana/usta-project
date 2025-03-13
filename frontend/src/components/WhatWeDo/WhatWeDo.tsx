@@ -1,14 +1,24 @@
 import React from 'react';
 import './WhatWeDo.css';
+import MyLink from '../MyLink/MyLink.tsx';
 
 interface Item {
   item: string;
+  serviceuid: { uid: string };
+}
+
+interface RichTextBlock {
+  type: 'image' | 'embed';
+  url?: string;
+  oembed?: {
+    html: string;
+  };
 }
 
 interface WhatWeDoSliceProps {
   primary: {
     title: string;
-    image: { url: string };
+    richtext: RichTextBlock[];
     paragraphfirst: string;
     paragraphsecond: string;
     paragraphthird?: string;
@@ -25,38 +35,55 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ slice }) => {
     return null;
   }
 
+  const oembeds = slice.primary.richtext.filter(
+    (block) => block.type === 'embed' && block.oembed && block.oembed.html,
+  );
+
+  const images = slice.primary.richtext.filter(
+    (block) => block.type === 'image' && block.url,
+  );
+
   return (
     <div className="what-we-do block container">
-      <div className="what-we-do__wrapper">
-        <div className="what-we-do__col">
-          <img
-            className="what-we-do__image"
-            src={slice.primary.image.url}
-            alt={slice.primary.title}
+      {/*<div className="what-we-do__col-content">*/}
+      {oembeds.length > 0 &&
+        oembeds.map((block, blockIndex) => (
+          <div
+            className="what-we-do__col what-we-do__col-embed"
+            key={blockIndex}
+            dangerouslySetInnerHTML={{ __html: block.oembed!.html }}
           />
-        </div>
-        <div className="what-we-do__col">
-          <div className="what-we-do__col-content">
-            <h2 className="what-we-do__col-title">{slice.primary.title}</h2>
-            <p className="what-we-do__col-description">
-              {slice.primary.paragraphfirst}
-            </p>
-            <ul className="what-we-do__col-list">
-              {slice.items.map((item, index) => (
-                <li key={index}>{item.item}</li>
-              ))}
-            </ul>
-            <p className="what-we-do__col-description">
-              {slice.primary.paragraphsecond}
-            </p>
-            {slice.primary.paragraphthird && (
-              <p className="what-we-do__col-description">
-                {slice.primary.paragraphthird}
-              </p>
-            )}
+        ))}
+
+      {images.length > 0 &&
+        images.map((block, blockIndex) => (
+          <div className="what-we-do__col what-we-do__col-image-wrapper">
+            <img src={block.url} alt="pic" key={blockIndex} loading="lazy" />
           </div>
-        </div>
+        ))}
+
+      <div className="what-we-do__col info">
+        <h2 className="what-we-do__col-title">{slice.primary.title}</h2>
+        <p className="what-we-do__col-description">
+          {slice.primary.paragraphfirst}
+        </p>
+        <ul className="what-we-do__col-list">
+          {slice.items.map((item, index) => (
+            <MyLink key={index} to={`/services/${item.serviceuid.uid}`}>
+              <li key={index}>{item.item}</li>
+            </MyLink>
+          ))}
+        </ul>
+        <p className="what-we-do__col-description">
+          {slice.primary.paragraphsecond}
+        </p>
+        {slice.primary.paragraphthird && (
+          <p className="what-we-do__col-description">
+            {slice.primary.paragraphthird}
+          </p>
+        )}
       </div>
+      {/*</div>*/}
     </div>
   );
 };

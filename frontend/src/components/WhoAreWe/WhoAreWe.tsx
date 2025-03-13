@@ -1,15 +1,20 @@
 import React from 'react';
 import './WhoAreWe.css';
 
-interface Item {
-  paragraph: string;
+interface RichTextBlock {
+  type: 'paragraph' | 'image' | 'embed';
+  text?: string;
+  url?: string;
+  oembed?: {
+    html: string;
+  };
 }
 
 interface WhoAreWeSliceProps {
   primary: {
     title: string;
   };
-  items: Item[];
+  items: { richtext: RichTextBlock[] }[];
 }
 
 interface WhoAreWeProps {
@@ -21,20 +26,60 @@ const WhoAreWe: React.FC<WhoAreWeProps> = ({ slice }) => {
     return null;
   }
 
+  console.log('slice', slice);
+
   return (
     <div id="#about-us" className="who-are-we container block">
-        <div className="who-are-we__col">
-          <h2 className="who-are-we__col-title">{slice.primary.title}</h2>
-        </div>
-        <div className="who-are-we__col">
-          <div className="who-are-we__col-content">
-            {slice.items.map((item, index) => (
-              <p className="who-are-we__col-description" key={index}>
-                {item.paragraph}
-              </p>
-            ))}
-          </div>
-        </div>
+      <h2 className="who-are-we__col-title">{slice.primary.title}</h2>
+      <div className="who-are-we__content">
+        {slice.items.map((item, index) => {
+          // Фильтруем элементы по типам
+          const paragraphs = item.richtext.filter(
+            (block) => block.type === 'paragraph' && block.text,
+          );
+
+          const oembeds = item.richtext.filter(
+            (block) =>
+              block.type === 'embed' && block.oembed && block.oembed.html,
+          );
+
+          const images = item.richtext.filter(
+            (block) => block.type === 'image' && block.url,
+          );
+
+          return (
+            <React.Fragment key={index}>
+              {paragraphs.length > 0 &&
+                paragraphs.map((block, blockIndex) => (
+                  <p className="who-are-we__description" key={blockIndex}>
+                    {block.text}
+                  </p>
+                ))}
+
+              {oembeds.length > 0 &&
+                oembeds.map((block, blockIndex) => (
+                  <div
+                    className="who-are-we__embed"
+                    key={blockIndex}
+                    dangerouslySetInnerHTML={{ __html: block.oembed!.html }}
+                  />
+                ))}
+
+              {images.length > 0 &&
+                images.map((block, blockIndex) => (
+                  <div className="who-are-we__image-wrapper">
+                    <img
+                      src={block.url}
+                      alt="pic"
+                      key={blockIndex}
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
+            </React.Fragment>
+          );
+        })}
+      </div>
     </div>
   );
 };

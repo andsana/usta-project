@@ -2,49 +2,86 @@
     scroll-margin-top: 72px;
 }
 
-.who-are-we__col {
-    flex: 0 0 100%;
+.who-are-we__content {
+    display: grid;
+    grid-template-columns: 1fr; /* Две колонки одинаковой ширины */
+    grid-template-rows: auto; /* Две строки */
+    align-items: flex-start;
 }
 
-.who-are-we__col-content {
-    margin-left: 0;
+.who-are-we__description {
+    margin: 0 0 24px 0;
 }
 
-@media (min-width: 768px) {
-    .who-are-we {
-        scroll-margin-top: 108px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 8px;
-    }
+.who-are-we__description:last-child {
+    margin-bottom: 0;
+}
 
-    .who-are-we__container .about-company__col-wrapper:last-child {
-        margin-bottom: 0;
-    }
+.who-are-we__embed {
+    margin-right: -16px;
+    margin-left: -16px;
+    margin-bottom: 24px;
+}
 
-    .who-are-we__col-description {
-        margin: 0 0 24px 0;
-    }
+.who-are-we__embed iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 16 / 9;
+    border: none;
+    overflow: hidden;
+}
 
-    .who-are-we__col .who-are-we__col-description:last-child {
-        margin-bottom: 0;
-    }
+.who-are-we__image-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f7;
+    margin-right: -16px;
+    margin-left: -16px;
+    margin-bottom: 24px;
+    overflow: hidden;
+}
+
+.who-are-we__image-wrapper img {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: center;
 }
 
 @media (min-width: 1024px) {
     .who-are-we {
-        scroll-margin-top: 144px;
+        scroll-margin-top: 108px;
     }
 
-    .who-are-we__col {
-        flex: 0 0 calc(50% - 4px);
+    .who-are-we__content {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Две колонки одинаковой ширины */
+        grid-template-rows: auto 1fr; /* Две строки */
+        column-gap: 8px;
     }
 
-    .who-are-we__col-content {
-        margin-left: 56px;
+    .who-are-we__description {
+        grid-column: 1;
+    }
+
+    .who-are-we__embed,
+    .who-are-we__image-wrapper {
+        grid-column: 2; /* Второй элемент во второй колонке */
+        grid-row: 1 / 3; /* Растягивается на две строки */
+        margin-right: 0;
+        margin-left: 0;
+        margin-bottom: 0;
+        overflow: hidden;
+    }
+
+    .who-are-we__description {
+        padding-right: 24px;
     }
 }
+
 
 
 
