@@ -69,9 +69,15 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ slice }) => {
         </p>
         <ul className="what-we-do__col-list">
           {slice.items.map((item, index) => (
-            <MyLink key={index} to={`/services/${item.serviceuid.uid}`}>
-              <li key={index}>{item.item}</li>
-            </MyLink>
+            <li key={index}>
+              <MyLink
+                className="what-we-do__col-list__link"
+                key={index}
+                to={`/services/${item.serviceuid.uid}`}
+              >
+                {item.item}
+              </MyLink>
+            </li>
           ))}
         </ul>
         <p className="what-we-do__col-description">
