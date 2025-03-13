@@ -41,6 +41,7 @@
 .project-card__icon-wrapper {
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-shrink: 0;
     margin: 0;
 }
@@ -52,7 +53,7 @@
 .project-card__icon-arrow {
     font-size: 24px;
     color: #80b86f;
-    margin-top: 4px;
+    margin-top: 2px;
 }
 
 .project-card:hover .project-card__icon-wrapper {
