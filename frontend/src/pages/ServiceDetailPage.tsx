@@ -79,7 +79,7 @@ const ServiceDetailPage = () => {
       </Helmet>
 
       <Breadcrumbs
-        items={[{ text: translations[language].services }]}
+        items={[{ text: translations[language].services, to: '#services' }]}
         currentText={page.data.title}
       />
       <ServiceDetailHeader
