@@ -13,6 +13,8 @@
 .breadcrumbs__link {
     position: relative;
     font-weight: inherit;
+    font-size: inherit;
+    padding: 0;
 }
 
 .breadcrumbs__link:hover {

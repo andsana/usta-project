@@ -2,6 +2,7 @@ import React from 'react';
 import { useLanguage } from '../../app/hooks/useLanguage.ts';
 import { translations } from '../../app/constants/translations.ts';
 import MyLink from '../MyLink/MyLink.tsx';
+import MyButton from '../MyButton/MyButton.tsx';
 import './Breadcrumbs.css';
 
 interface Breadcrumb {
@@ -31,9 +32,17 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
           {items.map((item, index) => (
             <React.Fragment key={index}>
               {item.to ? (
-                <MyLink className="breadcrumbs__link" to={item.to}>
-                  {item.text}
-                </MyLink>
+                item.to.startsWith('#') ? (
+                  <MyButton
+                    linkUrl={item.to}
+                    linkName={item.text}
+                    className="breadcrumbs__link"
+                  />
+                ) : (
+                  <MyLink className="breadcrumbs__link" to={item.to}>
+                    {item.text}
+                  </MyLink>
+                )
               ) : (
                 <span>{item.text}</span>
               )}
