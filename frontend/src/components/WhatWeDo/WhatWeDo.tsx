@@ -1,6 +1,6 @@
 import React from 'react';
-import './WhatWeDo.css';
 import MyLink from '../MyLink/MyLink.tsx';
+import './WhatWeDo.css';
 
 interface Item {
   item: string;
@@ -62,7 +62,7 @@ const WhatWeDo: React.FC<WhatWeDoProps> = ({ slice }) => {
           </div>
         ))}
 
-      <div className="what-we-do__col info">
+      <div id="#services" className="what-we-do__col info">
         <h2 className="what-we-do__col-title">{slice.primary.title}</h2>
         <p className="what-we-do__col-description">
           {slice.primary.paragraphfirst}
