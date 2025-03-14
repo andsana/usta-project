@@ -83,6 +83,7 @@
 
 .projects__button {
     font-size: 18px;
+    font-weight: 600;
     color: #292929;
     display: inline-block;
     background: #80b86f;
