@@ -63,7 +63,6 @@
     }
 
     .who-are-we__content {
-        display: grid;
         grid-template-columns: 1fr 1fr; /* Две колонки одинаковой ширины */
         grid-template-rows: auto 1fr; /* Две строки */
         column-gap: 8px;

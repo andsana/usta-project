@@ -1,6 +1,6 @@
 import { useLanguage } from '../app/hooks/useLanguage.ts';
 import { useNavigate } from 'react-router-dom';
-import { usePrismicDocumentByUID } from '@prismicio/react';
+import { SliceZone, usePrismicDocumentByUID } from '@prismicio/react';
 import { useEffect } from 'react';
 import {
   createAnimatedFavicon,
@@ -10,28 +10,26 @@ import { waitForImagesToLoad } from '../app/utils/waitForImagesToLoad.ts';
 import { Helmet } from 'react-helmet-async';
 import { translations } from '../app/constants/translations.ts';
 import Breadcrumbs from '../components/Breadcrumbs/Breadcrumbs.tsx';
-import { PrismicDocument } from '@prismicio/client';
+import { pageComponents } from '../app/constants/pageComponents.ts';
 
-interface ArtificialGlacierMonitoringSystemPageData {
-  title: string;
-}
-
-interface ArtificialGlacierMonitoringSystemDocument extends PrismicDocument {
-  data: ArtificialGlacierMonitoringSystemPageData;
+interface Slice {
+  slice_type: string;
+  primary: {
+    pagetitle: string;
+  };
 }
 
 const ArtificialGlacierMonitoringSystemPage = () => {
   const { language } = useLanguage();
   const navigate = useNavigate();
 
-  const [page, { state }] =
-    usePrismicDocumentByUID<ArtificialGlacierMonitoringSystemDocument>(
-      'page_new',
-      'artificial-glacier-monitoring-system',
-      {
-        lang: language,
-      },
-    );
+  const [page, { state }] = usePrismicDocumentByUID(
+    'page_new',
+    'artificial-glacier-monitoring-system',
+    {
+      lang: language,
+    },
+  );
 
   console.log('ArtificialGlacierMonitoring', page);
 
@@ -68,17 +66,25 @@ const ArtificialGlacierMonitoringSystemPage = () => {
     return null;
   }
 
+  const slice = page.data.body.find(
+    (slice: Slice) => slice.slice_type === 'glacier_monitoring',
+  );
+
+  const pageTitle = slice?.primary.pagetitle
+    ? `${slice.primary.pagetitle} | Usta International`
+    : translations[language].artificialGlacierMonitoringSystemPageTitle;
+
   return (
     <>
       <Helmet>
-        <title>{page.data.title} | Usta International</title>
+        <title>{pageTitle}</title>
         <meta
           name="description"
           content={translations[language].homeDescription}
         />
         <meta name="robots" content="index, follow" />
         <meta property="og:url" content={currentUrl} />
-        <meta property="og:title" content={page.data.title} />
+        <meta property="og:title" content={pageTitle} />
         <meta
           property="og:description"
           content={translations[language].homeDescription}
@@ -91,11 +97,8 @@ const ArtificialGlacierMonitoringSystemPage = () => {
         <meta name="language" content={language} />
       </Helmet>
 
-      <Breadcrumbs currentText={page.data.title} />
-
-      <div className="projects page container">
-        <h2 className="projects__title">{page.data.title}</h2>
-      </div>
+      <Breadcrumbs currentText={slice?.primary.pagetitle} />
+      <SliceZone slices={page.data.body} components={{ ...pageComponents }} />
     </>
   );
 };

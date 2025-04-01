@@ -1,0 +1,25 @@
+.artificialGlacierMonitoringSystem__content {
+    display: grid;
+    align-items: flex-start;
+    grid-template-columns: 1fr; /* По умолчанию одна колонка */
+    margin-bottom: 42px;
+}
+
+.artificialGlacierMonitoringSystem__image {
+    width: 100%;
+    height: auto;
+}
+
+@media (min-width: 768px) {
+    .artificialGlacierMonitoringSystem__content {
+        grid-template-columns: 1fr 1fr;
+        column-gap: 64px;
+        margin-bottom: 72px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .artificialGlacierMonitoringSystem__content {
+        margin-bottom: 96px;
+    }
+}
