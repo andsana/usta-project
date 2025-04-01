@@ -10,6 +10,7 @@ import Footer from './components/Footer/Footer.tsx';
 import ErrorPage from './pages/ErrorPage/ErrorPage.tsx';
 import MessageIcon from './components/MessageIcon/MessageIcon.tsx';
 import './App.css';
+import ArtificialGlacierMonitoringSystemPage from './pages/ArtificialGlacierMonitoringSystemPage.tsx';
 
 const App = () => {
   const location = useLocation();
@@ -51,6 +52,11 @@ const App = () => {
           />
           <Route path="/services/:uid" element={<ServiceDetailPage />} />
           <Route path="/en/services/:uid" element={<ServiceDetailPage />} />
+
+          <Route
+            path="/en/artificial-glacier-monitoring-system"
+            element={<ArtificialGlacierMonitoringSystemPage />}
+          />
           <Route path="/404" element={<ErrorPage />} />
           <Route path="en/404" element={<ErrorPage />} />
         </Routes>

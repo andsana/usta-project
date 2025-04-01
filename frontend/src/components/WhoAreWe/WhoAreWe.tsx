@@ -26,8 +26,6 @@ const WhoAreWe: React.FC<WhoAreWeProps> = ({ slice }) => {
     return null;
   }
 
-  console.log('slice', slice);
-
   return (
     <div id="#about-us" className="who-are-we container block">
       <h2 className="who-are-we__col-title">{slice.primary.title}</h2>
