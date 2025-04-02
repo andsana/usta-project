@@ -1,5 +1,7 @@
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import MyLink from '../MyLink/MyLink.tsx';
 import 'leaflet/dist/leaflet.css';
+import './MapComponent.css';
 
 interface GlacierData {
   name: string;
@@ -35,9 +37,16 @@ const MapComponent = () => {
       {glaciers.map((glacier) => (
         <Marker key={glacier.id} position={[glacier.lat, glacier.lng]}>
           <Popup>
-            <a href={`/glaciers/${glacier.id}`} style={{ textDecoration: 'underline', color: 'blue' }}>
+            {/*<MyLink to={`/glacier-details/${glacier.id}`} style={{ textDecoration: 'underline', color: 'blue' }}>*/}
+            {/*  {glacier.name}: {glacier.data}*/}
+            {/*</MyLink>*/}
+
+            <MyLink
+              className="mapComponent__marker"
+              to={`/glacier-details/${glacier.id}`}
+            >
               {glacier.name}: {glacier.data}
-            </a>
+            </MyLink>
           </Popup>
         </Marker>
       ))}

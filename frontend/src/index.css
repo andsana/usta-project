@@ -17,9 +17,9 @@ a {
     text-decoration: none;
 }
 
-a:hover {
-    color: inherit;
-}
+/*a:hover {*/
+/*    color: inherit;*/
+/*}*/
 
 body {
     margin: 0;
