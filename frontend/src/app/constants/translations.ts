@@ -13,6 +13,7 @@ export const translations = {
       'Usta International — инженерное сообщество из Центральной Азии. Мы проектируем здания и решаем сложные инженерные задачи по всему миру...',
     projectsPageTitle: 'Проекты | Usta International',
     artificialGlacierMonitoringSystemPageTitle: 'Cистема мониторинга искусственных ледников | Usta International',
+    glacierDetailsBreadcrumbs: 'Cистема мониторинга искусственных ледников',
     error: 'Ошибка',
     errorMetaTitle: 'Ошибка 404 – Страница не найдена | Usta International',
     errorPageDescription:
@@ -33,6 +34,7 @@ export const translations = {
       'Usta International is an engineering community from Central Asia. We design administrative and industrial buildings, develop solutions for agriculture, and tackle complex engineering challenges...',
     projectsPageTitle: 'Projects | Usta International',
     artificialGlacierMonitoringSystemPageTitle: 'Artificial Glacier Monitoring System | Usta International',
+    glacierDetailsBreadcrumbs: 'Artificial Glacier Monitoring System',
     error: 'Error',
     errorMetaTitle: 'Error 404 – Page Not Found | Usta International',
     errorPageDescription:

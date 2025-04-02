@@ -11,6 +11,7 @@ import ErrorPage from './pages/ErrorPage/ErrorPage.tsx';
 import MessageIcon from './components/MessageIcon/MessageIcon.tsx';
 import './App.css';
 import ArtificialGlacierMonitoringSystemPage from './pages/ArtificialGlacierMonitoringSystemPage.tsx';
+import GlacierDetailsPage from './components/GlacierDetailsPage/GlacierDetailsPage.tsx';
 
 const App = () => {
   const location = useLocation();
@@ -57,6 +58,11 @@ const App = () => {
             path="/en/artificial-glacier-monitoring-system"
             element={<ArtificialGlacierMonitoringSystemPage />}
           />
+          <Route
+            path="/en/glacier-details/:id"
+            element={<GlacierDetailsPage />}
+          />
+
           <Route path="/404" element={<ErrorPage />} />
           <Route path="en/404" element={<ErrorPage />} />
         </Routes>
