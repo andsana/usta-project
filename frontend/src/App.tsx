@@ -53,16 +53,19 @@ const App = () => {
           />
           <Route path="/services/:uid" element={<ServiceDetailPage />} />
           <Route path="/en/services/:uid" element={<ServiceDetailPage />} />
-
+          <Route
+            path="/artificial-glacier-monitoring-system"
+            element={<ArtificialGlacierMonitoringSystemPage />}
+          />
           <Route
             path="/en/artificial-glacier-monitoring-system"
             element={<ArtificialGlacierMonitoringSystemPage />}
           />
+          <Route path="/glacier-details/:id" element={<GlacierDetailsPage />} />
           <Route
             path="/en/glacier-details/:id"
             element={<GlacierDetailsPage />}
           />
-
           <Route path="/404" element={<ErrorPage />} />
           <Route path="en/404" element={<ErrorPage />} />
         </Routes>
