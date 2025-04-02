@@ -1,5 +1,6 @@
 import React from 'react';
 import './ArtificialGlacierMonitoringSystem.css';
+import Map from '../MapComponent/MapComponent.tsx';
 
 interface RichTextBlock {
   type: 'image' | 'embed';
@@ -89,6 +90,7 @@ const ArtificialGlacierMonitoringSystem: React.FC<
       </div>
 
       <h2>{slice.primary.maptitle}</h2>
+      <Map />
     </div>
   );
 };
