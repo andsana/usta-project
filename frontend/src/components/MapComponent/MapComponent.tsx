@@ -16,13 +16,13 @@ const glaciers: GlacierData[] = [
     name: 'Glacier 1',
     lat: 41.365334,
     lng: 71.043201,
-    data: '28% от 100%',
+    data: '110.28%',
     id: '1',
   },
-  { name: 'Glacier 2', lat: 41.375, lng: 71.053, data: '35% от 100%', id: '2' },
-  { name: 'Glacier 3', lat: 41.355, lng: 71.033, data: '45% от 100%', id: '3' },
-  { name: 'Glacier 4', lat: 41.37, lng: 71.02, data: '60% от 100%', id: '4' },
-  { name: 'Glacier 5', lat: 41.36, lng: 71.06, data: '75% от 100%', id: '5' },
+  { name: 'Glacier 2', lat: 41.375, lng: 71.053, data: '99.2%', id: '2' },
+  { name: 'Glacier 3', lat: 41.355, lng: 71.033, data: '94.6%', id: '3' },
+  { name: 'Glacier 4', lat: 41.37, lng: 71.02, data: '75.9%', id: '4' },
+  { name: 'Glacier 5', lat: 41.36, lng: 71.06, data: '69.5%', id: '5' },
 ];
 
 const MapComponent = () => {
