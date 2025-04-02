@@ -1,4 +1,5 @@
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import L from 'leaflet';
 import MyLink from '../MyLink/MyLink.tsx';
 import 'leaflet/dist/leaflet.css';
 import './MapComponent.css';
@@ -26,6 +27,16 @@ const glaciers: GlacierData[] = [
 ];
 
 const MapComponent = () => {
+  // Настройка кастомной иконки
+  const markerIcon = new L.Icon({
+    iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png', // Стандартная иконка Leaflet (или используйте свою)
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+    shadowSize: [41, 41],
+  });
+
   return (
     <MapContainer
       center={[41.365334, 71.043201]}
@@ -35,12 +46,12 @@ const MapComponent = () => {
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
       {glaciers.map((glacier) => (
-        <Marker key={glacier.id} position={[glacier.lat, glacier.lng]}>
+        <Marker
+          key={glacier.id}
+          position={[glacier.lat, glacier.lng]}
+          icon={markerIcon}
+        >
           <Popup>
-            {/*<MyLink to={`/glacier-details/${glacier.id}`} style={{ textDecoration: 'underline', color: 'blue' }}>*/}
-            {/*  {glacier.name}: {glacier.data}*/}
-            {/*</MyLink>*/}
-
             <MyLink
               className="mapComponent__marker"
               to={`/glacier-details/${glacier.id}`}
