@@ -86,6 +86,8 @@ const ServiceDetailPage = () => {
         title={page.data.title}
         preview={page.data.preview}
         image={page.data.image}
+        video={page.data.video}
+        youtube={page.data.youtube}
       />
       <SliceZone slices={page.data.body} components={{ ...pageComponents }} />
     </>
