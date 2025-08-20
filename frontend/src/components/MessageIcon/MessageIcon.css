@@ -12,14 +12,17 @@
     0% {
         transform: scale(0);
         opacity: 0;
+        border: 1px solid #80b86f; /* зелёный */
     }
     50% {
         transform: scale(1.2);
         opacity: 0.5;
+        border: 1px solid #80b86f; /* остаётся зелёный */
     }
     100% {
         transform: scale(1.5);
         opacity: 0;
+        border: 1px solid #70705a; /* плавно становится серым */
     }
 }
 
@@ -32,12 +35,13 @@
     right: 0;
     width: 100%;
     height: 100%;
-    background: transparent;
-    border: 1px solid #70705a;
+    border: 1px solid #80b86f; /* изначально зелёный */
     border-radius: 50%;
     opacity: 0;
     animation: wave 1.5s infinite ease-out;
+    transition: background 1.5s ease-out;
 }
+
 
 .message-icon__button {
     width: 60px;
