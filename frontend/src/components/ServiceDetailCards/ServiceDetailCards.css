@@ -19,24 +19,38 @@
     flex-direction: row-reverse;
 }
 
-.service-cards__col-image {
+/* Общие стили для медиа-контейнера (изображение или видео) */
+.service-cards__col-media {
     max-width: 100vw;
     flex: 0 0 auto;
-
+    position: relative;
 }
 
-.service-cards__col-image-wrapper {
+/* Стили для обертки изображения, видео */
+.service-cards__image-wrapper,
+.service-cards__video-wrapper {
     aspect-ratio: 16 / 9;
     width: 100%;
     overflow: hidden;
+    position: relative;
 }
 
-.service-cards__col-image-wrapper img {
+.service-cards__image-wrapper img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
+.service-cards__video-wrapper iframe {
+    /*position: absolute;*/
+    width: 100%;
+    height: 100%;
+    border: none;
+    /*position: static;*/
+    object-fit: cover;
+}
+
+/* Текстовая колонка */
 .service-cards__col-text {
     max-width: 100%;
     flex: 0 0 auto;
@@ -89,7 +103,8 @@
         gap: 0;
     }
 
-    .service-cards__col-image {
+    /* Медиа-колонка (изображение или видео) */
+    .service-cards__col-media {
         max-width: 50%;
         flex: 0 0 50%;
         order: -1;

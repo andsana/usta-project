@@ -16,7 +16,10 @@ export interface ServiceCardsProps {
   slice: {
     primary: {
       titlecard: string;
-      imagecard: { url: string; alt?: string };
+      imagecard: { url: string | null; alt?: string };
+      youtubecard: {
+        html: string | null;
+      };
     };
     items: ServiceCardsItem[];
   };
@@ -25,10 +28,33 @@ export interface ServiceCardsProps {
 const ServiceDetailCards: React.FC<ServiceCardsProps> = ({ slice }) => {
   if (!slice || !slice.primary || !slice.items) return null;
 
+  const { titlecard, imagecard, youtubecard } = slice.primary;
+
+// 1. Определяем что показывать
+  let mediaContent = null;
+
+  if (imagecard.url) {
+    mediaContent = (
+      <div className="service-cards__image-wrapper">
+        <img
+          src={imagecard.url}
+          alt={imagecard.alt || ''}
+          loading="lazy"
+        />
+      </div>
+    );
+  } else if (youtubecard.html) {
+    mediaContent = (
+      <div
+        className="service-cards__video-wrapper"
+        dangerouslySetInnerHTML={{ __html: youtubecard.html }}
+      />
+    );
+  }
   return (
     <div className="service-cards container block">
       <div className="service-cards__col-text">
-        <h2 className="service-cards__title">{slice.primary.titlecard}</h2>
+        <h2 className="service-cards__title">{titlecard}</h2>
         {slice.items.map((item, index) => (
           <div className="service-cards__col-text-item" key={index}>
             {item.subtitle && (
@@ -44,15 +70,13 @@ const ServiceDetailCards: React.FC<ServiceCardsProps> = ({ slice }) => {
           </div>
         ))}
       </div>
-      <div className="service-cards__col-image">
-        <div className="service-cards__col-image-wrapper">
-          <img
-            src={slice.primary.imagecard.url}
-            alt={slice.primary.imagecard.alt || slice.primary.titlecard}
-            loading="lazy"
-          />
+
+      {/* Медиа-контент */}
+      {mediaContent && (
+        <div className="service-cards__col-media">
+          {mediaContent}
         </div>
-      </div>
+      )}
     </div>
   );
 };
