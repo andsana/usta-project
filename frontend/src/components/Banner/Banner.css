@@ -183,12 +183,13 @@
 
 @media (min-width: 1201px) {
     .banner__service {
-        flex: 0 0 calc(25% - 4px);
+        /*flex: 0 0 calc(25% - 4px);*/
+        flex: 0 0 calc(20% - 4px);
     }
 }
 
 @media (min-width: 1401px) {
     .banner__services {
-        padding-right: 324px;
+        /*padding-right: 324px;*/
     }
 }
