@@ -43,4 +43,9 @@
     margin: 0 4px;
 }
 
-
+/* Стили для десктопов */
+@media (min-width: 1024px) {
+    .breadcrumbs {
+        height: 56px;
+    }
+}
